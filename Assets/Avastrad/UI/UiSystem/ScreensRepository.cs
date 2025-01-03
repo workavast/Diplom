@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Avastrad.UI.UiSystem.Example;
 using UnityEngine;
 
 namespace Avastrad.UI.UiSystem
@@ -32,12 +31,12 @@ namespace Avastrad.UI.UiSystem
         {
             switch (screenType)
             {
-                case ScreenType.FirstScreen:
-                    return GetScreen<FirstScreen>();
-                case ScreenType.SecondScreen:
-                    return GetScreen<SecondScreen>();
-                case ScreenType.ThirdScreen:
-                    return GetScreen<ThirdScreen>();
+                // case ScreenType.FirstScreen:
+                //     return GetScreen<FirstScreen>();
+                // case ScreenType.SecondScreen:
+                //     return GetScreen<SecondScreen>();
+                // case ScreenType.ThirdScreen:
+                //     return GetScreen<ThirdScreen>();
                 default:
                     throw new ArgumentOutOfRangeException($"invalid parameter: {screenType}");
             }
