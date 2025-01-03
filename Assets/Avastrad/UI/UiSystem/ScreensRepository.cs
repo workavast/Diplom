@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BlackRed.Game.UI;
 using UnityEngine;
 
 namespace Avastrad.UI.UiSystem
@@ -31,12 +32,10 @@ namespace Avastrad.UI.UiSystem
         {
             switch (screenType)
             {
-                // case ScreenType.FirstScreen:
-                //     return GetScreen<FirstScreen>();
-                // case ScreenType.SecondScreen:
-                //     return GetScreen<SecondScreen>();
-                // case ScreenType.ThirdScreen:
-                //     return GetScreen<ThirdScreen>();
+                case ScreenType.Gameplay:
+                    return GetScreen<GameplayScreen>();
+                case ScreenType.GameplayMenu:
+                    return GetScreen<GameplayMenuScreen>();
                 default:
                     throw new ArgumentOutOfRangeException($"invalid parameter: {screenType}");
             }

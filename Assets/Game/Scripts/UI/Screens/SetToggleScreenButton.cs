@@ -1,0 +1,33 @@
+using Avastrad.UI.UiSystem;
+using UnityEngine;
+using UnityEngine.UI;
+using Zenject;
+
+namespace BlackRed.Game.UI
+{
+    [RequireComponent(typeof(Button))]
+    public class SetToggleScreenButton : MonoBehaviour
+    {
+        [SerializeField] private ScreenType screenType;
+        [SerializeField] private bool isActive;
+
+        [Inject] private readonly ScreensController _screensController;
+        
+        private Button _button;
+        
+        private void Awake()
+        {
+            _button = GetComponent<Button>();
+            _button.onClick.AddListener(ToggleScreen);
+        }
+
+        private void OnDestroy()
+        {
+            if (_button != null)
+                _button.onClick.RemoveListener(ToggleScreen);
+        }
+
+        private void ToggleScreen() 
+            => _screensController.ToggleScreen(screenType, isActive);
+    }
+}
