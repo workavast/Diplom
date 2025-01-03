@@ -11,7 +11,7 @@ namespace App.PlayerEntities
         
         private NetParticlesSpawner _netParticlesSpawner;
 
-        private void Awake()
+        private void Start()
         {
             _netParticlesSpawner = FindFirstObjectByType<NetParticlesSpawner>();
         }
@@ -30,6 +30,15 @@ namespace App.PlayerEntities
                 else
                     OnCollision(hit.Point, hit.Normal);
             }
+        }
+
+        public void ShootView()
+        {
+            var isHit = Runner.LagCompensation.Raycast(shootPoint.position, shootPoint.forward, 
+                100f, Object.InputAuthority, out var hit);
+            
+            if (isHit) 
+                _netParticlesSpawner.SpawnParticleEffect(ParticleType.BulletCollision, hit.Point, hit.Normal);
         }
         
         private void OnCollision(Vector3 hitPoint, Vector3 normal)

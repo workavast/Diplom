@@ -61,18 +61,22 @@ namespace App.PlayerEntities
                 _playerView.Move(moveDirection, config.MoveSpeed, config.Gravity, Runner.DeltaTime);
                 _playerView.SetLookPoint(lookPoint);
                 
-                if (!HasStateAuthority)
-                    return;
-
                 if (input.Buttons.IsSet(PlayerButtons.Fire) && AttackDelay.ExpiredOrNotRunning(Runner)) 
-                    Shoot();
+                    TryShoot();
             }
         }
 
-        private void Shoot()
+        private void TryShoot()
         {
-            AttackDelay = TickTimer.CreateFromSeconds(Runner, config.AttackDaley);
-            shooter.Shoot();
+            if (HasStateAuthority)
+            {
+                AttackDelay = TickTimer.CreateFromSeconds(Runner, config.AttackDaley);
+                shooter.Shoot();   
+            }
+            else
+            {
+                shooter.ShootView();
+            }
         }
         
         public void TakeDamage(int damage, PlayerRef shooter)//shooter need to give him points
