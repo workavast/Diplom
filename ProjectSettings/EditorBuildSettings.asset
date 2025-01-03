@@ -8,6 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/App/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Photon/FusionDemos/IntroSample/Sample/Scenes/FusionDemoMenu.unity
+    guid: c3ffe7353c670464cbfd03781bc51365
+  - enabled: 1
+    path: Assets/Photon/FusionDemos/IntroSample/Sample/Scenes/FusionDemoGameplayHost.unity
+    guid: fbd15a0cc3b2cee488ce7272d2f4f146
+  - enabled: 1
+    path: Assets/Photon/FusionDemos/IntroSample/Sample/Scenes/FusionDemoGameplayShared.unity
+    guid: 10a09311c051d1a47bcfacdc204a352a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
