@@ -1,5 +1,4 @@
 using System;
-using App.Bullets;
 using App.EventBus;
 using App.PlayerInput;
 using Avastrad.EventBusFramework;
@@ -12,6 +11,7 @@ namespace App.PlayerEntities
     [RequireComponent(typeof(PlayerView))]
     public class NetPlayerController : NetworkBehaviour
     {
+        [SerializeField] private Shooter shooter;
         [SerializeField] private PlayerEntityConfig config;
         
         [Networked, HideInInspector] private int HealthPoints { get; set; }
@@ -20,7 +20,6 @@ namespace App.PlayerEntities
         public PlayerRef PlayerRef => Object.InputAuthority;
 
         private PlayersRepository _playersRepository;
-        private NetBulletsSpawner _netBulletsSpawner;
         private PlayerView _playerView;
         private IEventBus _eventBus;
 
@@ -32,9 +31,8 @@ namespace App.PlayerEntities
             _playersRepository = playersRepository;
         }
         
-        public void Initialize(NetBulletsSpawner netBulletsSpawner, IEventBus eventBus)
+        public void Initialize(IEventBus eventBus)
         {
-            _netBulletsSpawner = netBulletsSpawner;
             _eventBus = eventBus;
         }
         
@@ -60,20 +58,23 @@ namespace App.PlayerEntities
             {
                 var moveDirection = Vector3.right * input.HorizontalInput + Vector3.forward * input.VerticalInput;
                 var lookPoint = new Vector3(input.LookPoint.x, _playerView.transform.position.y, input.LookPoint.y);
-                _playerView.Move(moveDirection, Runner.DeltaTime);
+                _playerView.Move(moveDirection, config.MoveSpeed, config.Gravity, Runner.DeltaTime);
                 _playerView.SetLookPoint(lookPoint);
                 
                 if (!HasStateAuthority)
                     return;
-                
-                if (input.Buttons.IsSet(PlayerButtons.Fire) && AttackDelay.ExpiredOrNotRunning(Runner))
-                {
-                    AttackDelay = TickTimer.CreateFromSeconds(Runner, config.AttackDaley);
-                    _netBulletsSpawner.Spawn(_playerView.transform.position, _playerView.transform.forward, PlayerRef);
-                }
+
+                if (input.Buttons.IsSet(PlayerButtons.Fire) && AttackDelay.ExpiredOrNotRunning(Runner)) 
+                    Shoot();
             }
         }
 
+        private void Shoot()
+        {
+            AttackDelay = TickTimer.CreateFromSeconds(Runner, config.AttackDaley);
+            shooter.Shoot();
+        }
+        
         public void TakeDamage(int damage, PlayerRef shooter)//shooter need to give him points
         {
             HealthPoints -= damage;

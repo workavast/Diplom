@@ -5,8 +5,6 @@ namespace App.PlayerEntities
     [RequireComponent(typeof(CharacterController))]
     public class PlayerView : MonoBehaviour
     {
-        [SerializeField] private PlayerEntityConfig config;
-
         private CharacterController _characterController;
         
         private void Awake()
@@ -14,10 +12,10 @@ namespace App.PlayerEntities
             _characterController = GetComponent<CharacterController>();
         }
 
-        public void Move(Vector3 direction, float deltaTime)
+        public void Move(Vector3 direction, float moveSpeed, float gravity, float deltaTime)
         {
-            var gravityVelocity = config.Gravity * deltaTime * Vector3.up;
-            var moveVelocity = config.MoveSpeed * deltaTime * direction.normalized;
+            var gravityVelocity = gravity * deltaTime * Vector3.up;
+            var moveVelocity = moveSpeed * deltaTime * direction.normalized;
             _characterController.Move(gravityVelocity + moveVelocity);
         }
 

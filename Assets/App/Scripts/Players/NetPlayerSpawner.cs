@@ -1,4 +1,3 @@
-using App.Bullets;
 using App.PlayerEntities;
 using Avastrad.EventBusFramework;
 using Fusion;
@@ -9,7 +8,6 @@ namespace App.Players
 {
     public class NetPlayerSpawner : NetworkBehaviour
     {
-        [SerializeField] private NetBulletsSpawner netBulletsSpawner;
         [SerializeField] private NetPlayerController netPlayerControllerPrefab;
 
         [Inject] private IEventBus _eventBus;
@@ -23,7 +21,7 @@ namespace App.Players
         public NetPlayerController Spawn(PlayerRef playerRef, Vector3 position, Quaternion rotation)
         {
             var netPlayerController = Runner.Spawn(netPlayerControllerPrefab, position, rotation, playerRef);
-            netPlayerController.Initialize(netBulletsSpawner, _eventBus);
+            netPlayerController.Initialize(_eventBus);
 
             return netPlayerController;
         }
