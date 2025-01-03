@@ -1,8 +1,8 @@
-using BlackRed.Game.UI;
+using App.UI;
 using UnityEngine;
 using Zenject;
 
-namespace BlackRed.Game.Session
+namespace App.Session
 {
     public class SessionCreatorInstaller : MonoInstaller
     {

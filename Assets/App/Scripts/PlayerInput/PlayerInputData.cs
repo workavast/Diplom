@@ -1,7 +1,7 @@
 using Fusion;
 using UnityEngine;
 
-namespace BlackRed.Game.PlayerInput
+namespace App.PlayerInput
 {
     public struct PlayerInputData : INetworkInput
     {

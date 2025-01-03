@@ -3,7 +3,7 @@ using Avastrad.UI.UiSystem;
 using UnityEngine;
 using Zenject;
 
-namespace BlackRed.Game.UI
+namespace App.UI
 {
     public class ScreensControllerInstaller : MonoInstaller
     {

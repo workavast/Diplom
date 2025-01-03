@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BlackRed.Game.UI
+namespace App.UI
 {
     public class WaitScreen : MonoBehaviour
     {

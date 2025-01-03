@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Fusion;
 
-namespace BlackRed.Game.Players.SessionDatas
+namespace App.Players.SessionDatas
 {
     public interface IPlayerSessionDatasRepository
     {

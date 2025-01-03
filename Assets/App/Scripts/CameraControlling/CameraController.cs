@@ -1,11 +1,11 @@
-using BlackRed.Game.NetworkRunning;
-using BlackRed.Game.PlayerEntities;
+using App.NetworkRunning;
+using App.PlayerEntities;
 using Fusion;
 using Unity.Cinemachine;
 using UnityEngine;
 using Zenject;
 
-namespace BlackRed.Game.CameraControlling
+namespace App.CameraControlling
 {
     public class CameraController : MonoBehaviour
     {

@@ -1,12 +1,12 @@
-using BlackRed.Game.Session;
-using BugStrategy.ScenesLoading;
+using App.ScenesLoading;
+using App.Session;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using WebSocketSharp;
 using Zenject;
 
-namespace BlackRed.Game.UI.SessionCreation
+namespace App.UI.SessionCreation
 {
     [RequireComponent(typeof(Button))]
     public class ConnectToSessionHandler : MonoBehaviour

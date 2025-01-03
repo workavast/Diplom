@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace BlackRed.Game.InstantiateProviding
+namespace App.InstantiateProviding
 {
     public class InstantiateProviderInstaller : MonoInstaller
     {

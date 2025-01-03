@@ -1,4 +1,4 @@
-namespace BlackRed.Game.Players
+namespace App.Players
 {
     public static class PlayerData
     {

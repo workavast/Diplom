@@ -5,7 +5,7 @@ using Fusion.Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace BlackRed.Game
+namespace App
 {
     [DisallowMultipleComponent]
     public class OnServerDisconnected : MonoBehaviour, INetworkRunnerCallbacks

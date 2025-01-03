@@ -1,9 +1,9 @@
-using BlackRed.Game.Session;
+using App.Session;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace BlackRed.Game.UI.SessionCreation
+namespace App.UI.SessionCreation
 {
     [RequireComponent(typeof(Button))]
     public class QuickStartSessionButton : MonoBehaviour

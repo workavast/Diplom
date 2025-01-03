@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
-namespace BlackRed.Game.ParticlesSpawning
+namespace App.ParticlesSpawning
 {
     public class NetParticlesSpawner : NetworkBehaviour
     {

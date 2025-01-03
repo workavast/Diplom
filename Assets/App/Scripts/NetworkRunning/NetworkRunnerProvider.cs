@@ -1,11 +1,11 @@
 using System;
 using System.Threading.Tasks;
-using BlackRed.Game.InstantiateProviding;
+using App.InstantiateProviding;
 using Fusion;
 using UnityEngine;
 using Zenject;
 
-namespace BlackRed.Game.NetworkRunning
+namespace App.NetworkRunning
 {
     public class NetworkRunnerProvider
     {

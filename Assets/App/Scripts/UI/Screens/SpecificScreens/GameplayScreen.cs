@@ -1,6 +1,6 @@
 using Avastrad.UI.UiSystem;
 
-namespace BlackRed.Game.UI
+namespace App.UI.Screens
 {
     public class GameplayScreen : ScreenBase
     {

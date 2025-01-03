@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace BlackRed.Game.UI
+namespace App.UI.Screens
 {
     [RequireComponent(typeof(Button))]
     public class SetToggleScreenButton : MonoBehaviour

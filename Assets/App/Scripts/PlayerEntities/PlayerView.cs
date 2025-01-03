@@ -1,7 +1,6 @@
-using App.Scripts.PlayerEntities;
 using UnityEngine;
 
-namespace BlackRed.Game.PlayerEntities
+namespace App.PlayerEntities
 {
     [RequireComponent(typeof(CharacterController))]
     public class PlayerView : MonoBehaviour

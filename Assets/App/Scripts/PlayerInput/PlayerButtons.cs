@@ -1,4 +1,4 @@
-namespace BlackRed.Game.PlayerInput
+namespace App.PlayerInput
 {
     public enum PlayerButtons
     {

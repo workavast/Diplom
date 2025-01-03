@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
-namespace BugStrategy.ScenesLoading
+namespace App.ScenesLoading
 {
     public class ScenesLoadingInstaller : MonoInstaller
     {

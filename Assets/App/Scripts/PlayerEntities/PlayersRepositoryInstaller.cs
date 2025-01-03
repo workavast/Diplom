@@ -1,6 +1,6 @@
 using Zenject;
 
-namespace BlackRed.Game.PlayerEntities
+namespace App.PlayerEntities
 {
     public class PlayersRepositoryInstaller : MonoInstaller
     {

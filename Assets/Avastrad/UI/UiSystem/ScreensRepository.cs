@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using BlackRed.Game.UI;
+using App.UI.Screens;
 using UnityEngine;
 
 namespace Avastrad.UI.UiSystem

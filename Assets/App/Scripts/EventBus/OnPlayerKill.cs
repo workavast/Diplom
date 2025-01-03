@@ -1,7 +1,7 @@
 using Avastrad.EventBusFramework;
 using Fusion;
 
-namespace BlackRed.Game.EventBus
+namespace App.EventBus
 {
     public struct OnPlayerKill : IEvent
     {

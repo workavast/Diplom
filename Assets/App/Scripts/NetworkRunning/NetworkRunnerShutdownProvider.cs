@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Fusion;
 using Fusion.Sockets;
 
-namespace BlackRed.Game.NetworkRunning
+namespace App.NetworkRunning
 {
     public class NetworkRunnerShutdownProvider : INetworkRunnerCallbacks
     {

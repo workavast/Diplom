@@ -2,7 +2,7 @@ using Fusion;
 using UnityEngine;
 using Zenject;
 
-namespace BlackRed.Game.NetworkRunning
+namespace App.NetworkRunning
 {
     public class NetworkRunnerInstaller : MonoInstaller
     {

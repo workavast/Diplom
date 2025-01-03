@@ -1,6 +1,6 @@
 using Zenject;
 
-namespace BlackRed.Game.Players.DeathsCounting
+namespace App.Players.DeathsCounting
 {
     public class DeathsCounterInstaller : MonoInstaller
     {

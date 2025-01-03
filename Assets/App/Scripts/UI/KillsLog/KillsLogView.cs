@@ -3,7 +3,7 @@ using System.Linq;
 using Fusion;
 using UnityEngine;
 
-namespace BlackRed.Game.UI.KillsLog
+namespace App.UI.KillsLog
 {
     public class KillsLogView : MonoBehaviour
     {

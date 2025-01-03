@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
-namespace BlackRed.Game.PlayerEntities
+namespace App.PlayerEntities
 {
     public class PlayersRepository
     {

@@ -1,10 +1,10 @@
 using System;
+using App.Players.SessionDatas;
 using Avastrad.PoolSystem;
-using BlackRed.Game.Players.SessionDatas;
 using TMPro;
 using UnityEngine;
 
-namespace BlackRed.Game.UI.PlayersDataView
+namespace App.UI.PlayersDataView
 {
     public class TableRow : MonoBehaviour, IPoolable<TableRow>
     {

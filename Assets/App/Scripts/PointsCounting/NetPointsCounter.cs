@@ -1,10 +1,10 @@
+using App.EventBus;
+using App.Players.SessionDatas;
 using Avastrad.EventBusFramework;
-using BlackRed.Game.EventBus;
-using BlackRed.Game.Players.SessionDatas;
 using Fusion;
 using Zenject;
 
-namespace BlackRed.Game.PointsCounting
+namespace App.PointsCounting
 {
     public class NetPointsCounter : NetworkBehaviour, IEventReceiver<OnPlayerKill>
     {

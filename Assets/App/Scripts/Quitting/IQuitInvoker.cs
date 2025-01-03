@@ -1,4 +1,4 @@
-namespace BlackRed.Game.Quitting
+namespace App.Quitting
 {
     public interface IQuitInvoker
     {

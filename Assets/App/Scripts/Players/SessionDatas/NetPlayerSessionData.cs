@@ -3,7 +3,7 @@ using Fusion;
 using UnityEngine;
 using Zenject;
 
-namespace BlackRed.Game.Players.SessionDatas
+namespace App.Players.SessionDatas
 {
     [RequireComponent(typeof(NetworkObject))]
     [RequireComponent(typeof(NetPlayerReSpawner))]

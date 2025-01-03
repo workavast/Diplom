@@ -1,8 +1,8 @@
-using BlackRed.Game.Players;
+using App.Players;
 using TMPro;
 using UnityEngine;
 
-namespace BlackRed.Game.UI
+namespace App.UI
 {
     [RequireComponent(typeof(TMP_InputField))]
     public class NickNameUpdater : MonoBehaviour

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BlackRed.Game.Bullets
+namespace App.Bullets
 {
     public class BulletView : MonoBehaviour
     {

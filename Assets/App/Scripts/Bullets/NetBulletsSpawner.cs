@@ -1,7 +1,7 @@
 using Fusion;
 using UnityEngine;
 
-namespace BlackRed.Game.Bullets
+namespace App.Bullets
 {
     public class NetBulletsSpawner : NetworkBehaviour
     {

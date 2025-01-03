@@ -1,6 +1,6 @@
 using System;
 
-namespace BugStrategy.ScenesLoading
+namespace App.ScenesLoading
 {
     public interface ISceneLoader
     {

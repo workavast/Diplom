@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace App.Scripts.PlayerEntities
+namespace App.PlayerEntities
 {
     [CreateAssetMenu(fileName = nameof(PlayerEntityConfig), menuName = Constants.AppName + "/Configs/" + nameof(PlayerEntityConfig))]
     public class PlayerEntityConfig : ScriptableObject

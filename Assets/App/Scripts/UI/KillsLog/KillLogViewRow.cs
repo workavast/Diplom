@@ -3,7 +3,7 @@ using Avastrad.CustomTimer;
 using TMPro;
 using UnityEngine;
 
-namespace BlackRed.Game.UI.KillsLog
+namespace App.UI.KillsLog
 {
     public class KillLogViewRow : MonoBehaviour
     {

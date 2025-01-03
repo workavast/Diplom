@@ -1,4 +1,4 @@
-namespace App.Scripts
+namespace App
 {
     public static class Constants
     {

@@ -4,7 +4,7 @@ using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
 
-namespace BlackRed.Game.PlayerInput
+namespace App.PlayerInput
 {
     [DisallowMultipleComponent]
     public class NetworkInputProvider : MonoBehaviour, INetworkRunnerCallbacks

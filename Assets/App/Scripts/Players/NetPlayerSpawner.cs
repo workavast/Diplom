@@ -1,11 +1,11 @@
+using App.Bullets;
+using App.PlayerEntities;
 using Avastrad.EventBusFramework;
-using BlackRed.Game.Bullets;
-using BlackRed.Game.PlayerEntities;
 using Fusion;
 using UnityEngine;
 using Zenject;
 
-namespace BlackRed.Game.Players
+namespace App.Players
 {
     public class NetPlayerSpawner : NetworkBehaviour
     {

@@ -1,11 +1,10 @@
-using System;
+using App.Players.SessionDatas;
 using Avastrad.PoolSystem;
-using BlackRed.Game.Players.SessionDatas;
 using Fusion;
 using UnityEngine;
 using Zenject;
 
-namespace BlackRed.Game.UI.PlayersDataView
+namespace App.UI.PlayersDataView
 {
     public class PlayersTable : MonoBehaviour
     {

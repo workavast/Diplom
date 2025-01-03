@@ -1,9 +1,9 @@
 using System;
+using App.UI.PlayersDataView;
 using Avastrad.UI.UiSystem;
-using BlackRed.Game.UI.PlayersDataView;
 using UnityEngine;
 
-namespace BlackRed.Game.UI
+namespace App.UI.Screens
 {
     public class GameplayMenuScreen : ScreenBase
     {

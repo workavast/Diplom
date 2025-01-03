@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BlackRed.Game.InstantiateProviding
+namespace App.InstantiateProviding
 {
     public interface IInstantiateProvider
     {

@@ -1,9 +1,9 @@
 using System;
-using BlackRed.Game.PlayerEntities;
+using App.PlayerEntities;
 using Fusion;
 using UnityEngine;
 
-namespace BlackRed.Game.Bullets
+namespace App.Bullets
 {
     [RequireComponent(typeof(NetBulletController))]
     public class NetBulletCollisionProvider : NetworkBehaviour

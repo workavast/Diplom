@@ -1,10 +1,10 @@
 using System;
+using App.EventBus;
+using App.Players.SessionDatas;
 using Avastrad.EventBusFramework;
-using BlackRed.Game.EventBus;
-using BlackRed.Game.Players.SessionDatas;
 using Fusion;
 
-namespace BlackRed.Game.Players.KillsCounting
+namespace App.Players.KillsCounting
 {
     public class KillsCounter : IEventReceiver<OnPlayerKill>, IDisposable
     {

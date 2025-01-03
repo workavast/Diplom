@@ -1,9 +1,9 @@
-using BlackRed.Game.Quitting;
+using App.Quitting;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace BlackRed.Game.UI
+namespace App.UI
 {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Button))]

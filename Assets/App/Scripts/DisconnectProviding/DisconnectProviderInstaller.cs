@@ -1,6 +1,6 @@
 using Zenject;
 
-namespace BlackRed.Game.DisconnectProviding
+namespace App.DisconnectProviding
 {
     public class DisconnectProviderInstaller : MonoInstaller
     {

@@ -1,4 +1,4 @@
-namespace BlackRed.Game.ParticlesSpawning
+namespace App.ParticlesSpawning
 {
     public enum ParticleType
     {

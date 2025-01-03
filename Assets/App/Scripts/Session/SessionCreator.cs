@@ -1,7 +1,7 @@
 using System;
-using BlackRed.Game.NetworkRunning;
-using BlackRed.Game.UI;
-using BugStrategy.ScenesLoading;
+using App.NetworkRunning;
+using App.ScenesLoading;
+using App.UI;
 using Fusion;
 using Fusion.Photon.Realtime;
 using shortid;
@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using WebSocketSharp;
 
-namespace BlackRed.Game.Session
+namespace App.Session
 {
     public class SessionCreator
     {

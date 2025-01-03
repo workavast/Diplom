@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
-namespace BlackRed.Game.Players.SessionDatas
+namespace App.Players.SessionDatas
 {
     public class PlayerSessionDatasRepository : IPlayerSessionDatasRepository
     {

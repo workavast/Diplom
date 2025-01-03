@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BlackRed.Game.Players
+namespace App.Players
 {
     public class PlayerSpawnPointsProvider : MonoBehaviour
     {

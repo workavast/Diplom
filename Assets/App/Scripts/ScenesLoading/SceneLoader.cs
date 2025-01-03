@@ -1,10 +1,10 @@
 using System;
-using BlackRed.Game.NetworkRunning;
+using App.NetworkRunning;
 using Fusion;
 using UnityEngine.SceneManagement;
 using Zenject;
 
-namespace BugStrategy.ScenesLoading
+namespace App.ScenesLoading
 {
     public class SceneLoader : ISceneLoader
     {

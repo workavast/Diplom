@@ -1,6 +1,6 @@
 using Zenject;
 
-namespace BlackRed.Game.EventBus
+namespace App.EventBus
 {
     public class EventBusInstaller : MonoInstaller
     {

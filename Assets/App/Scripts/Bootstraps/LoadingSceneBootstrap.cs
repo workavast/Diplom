@@ -1,8 +1,8 @@
-using BugStrategy.ScenesLoading;
+using App.ScenesLoading;
 using UnityEngine;
 using Zenject;
 
-namespace BlackRed.Game.Bootstraps
+namespace App.Bootstraps
 {
     public class LoadingSceneBootstrap : MonoBehaviour
     {

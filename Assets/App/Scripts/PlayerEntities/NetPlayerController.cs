@@ -1,14 +1,13 @@
 using System;
-using App.Scripts.PlayerEntities;
+using App.Bullets;
+using App.EventBus;
+using App.PlayerInput;
 using Avastrad.EventBusFramework;
-using BlackRed.Game.Bullets;
-using BlackRed.Game.EventBus;
-using BlackRed.Game.PlayerInput;
 using Fusion;
 using UnityEngine;
 using Zenject;
 
-namespace BlackRed.Game.PlayerEntities
+namespace App.PlayerEntities
 {
     [RequireComponent(typeof(PlayerView))]
     public class NetPlayerController : NetworkBehaviour

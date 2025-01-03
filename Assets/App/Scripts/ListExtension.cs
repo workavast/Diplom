@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
-namespace BlackRed.Game
+namespace App
 {
     public static class ListExtension
     {

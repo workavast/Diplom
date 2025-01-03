@@ -1,4 +1,4 @@
-namespace BugStrategy.ScenesLoading
+namespace App.ScenesLoading
 {
     public static class ScenesConfig
     {

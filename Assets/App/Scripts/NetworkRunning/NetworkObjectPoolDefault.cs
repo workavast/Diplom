@@ -3,7 +3,7 @@ using Fusion;
 using UnityEngine;
 using Zenject;
 
-namespace BlackRed.Game.NetworkRunning
+namespace App.NetworkRunning
 {
     [DisallowMultipleComponent]
     public class NetworkObjectPoolDefault : NetworkObjectProviderDefault

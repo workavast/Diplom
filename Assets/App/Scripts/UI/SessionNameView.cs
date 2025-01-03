@@ -1,10 +1,10 @@
-using BlackRed.Game.NetworkRunning;
+using App.NetworkRunning;
 using Fusion;
 using TMPro;
 using UnityEngine;
 using Zenject;
 
-namespace BlackRed.Game.UI
+namespace App.UI
 {
     public class SessionNameView : MonoBehaviour
     {

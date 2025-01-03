@@ -1,6 +1,6 @@
 using Zenject;
 
-namespace BlackRed.Game.Players.SessionDatas
+namespace App.Players.SessionDatas
 {
     public class PlayerSessionDatasRepositoryInstaller : MonoInstaller
     {

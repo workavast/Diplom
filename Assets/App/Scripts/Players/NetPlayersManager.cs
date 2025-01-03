@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
-using BlackRed.Game.DisconnectProviding;
-using BlackRed.Game.NetworkRunning;
-using BlackRed.Game.Players.SessionDatas;
+using App.DisconnectProviding;
+using App.NetworkRunning;
+using App.Players.SessionDatas;
 using Fusion;
 using UnityEngine;
 using Zenject;
 
-namespace BlackRed.Game.Players
+namespace App.Players
 {
     public class NetPlayersManager : NetworkBehaviour, IPlayerJoined, IPlayerLeft
     {

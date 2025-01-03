@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace BlackRed.Game.Quitting
+namespace App.Quitting
 {
     public class QuitProvider : IQuitProvider, IQuitInvoker
     {

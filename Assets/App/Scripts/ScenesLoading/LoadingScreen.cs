@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace BugStrategy.ScenesLoading
+namespace App.ScenesLoading
 {
     public class LoadingScreen : MonoBehaviour, ILoadingScreen
     {

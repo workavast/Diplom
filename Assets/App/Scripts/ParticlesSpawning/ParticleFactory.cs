@@ -4,7 +4,7 @@ using Avastrad.EnumValuesLibrary;
 using Avastrad.PoolSystem;
 using UnityEngine;
 
-namespace BlackRed.Game.ParticlesSpawning
+namespace App.ParticlesSpawning
 {
     public class ParticleFactory : MonoBehaviour
     {

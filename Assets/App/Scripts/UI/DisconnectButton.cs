@@ -1,9 +1,9 @@
-using BlackRed.Game.DisconnectProviding;
+using App.DisconnectProviding;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace BlackRed.Game.UI
+namespace App.UI
 {
     [RequireComponent(typeof(Button))]
     public class DisconnectButton : MonoBehaviour

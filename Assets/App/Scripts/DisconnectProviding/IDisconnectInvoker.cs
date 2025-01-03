@@ -1,4 +1,4 @@
-namespace BlackRed.Game.DisconnectProviding
+namespace App.DisconnectProviding
 {
     public interface IDisconnectInvoker
     {

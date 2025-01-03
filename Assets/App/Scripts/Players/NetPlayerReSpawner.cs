@@ -1,9 +1,9 @@
 using System;
-using BlackRed.Game.PlayerEntities;
+using App.PlayerEntities;
 using Fusion;
 using UnityEngine;
 
-namespace BlackRed.Game.Players
+namespace App.Players
 {
     public class NetPlayerReSpawner : NetworkBehaviour
     {

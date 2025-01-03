@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace BlackRed.Game
+namespace App
 {
     public static class ScenesData
     {

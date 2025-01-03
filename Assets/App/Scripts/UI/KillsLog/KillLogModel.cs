@@ -1,10 +1,10 @@
 using System;
+using App.EventBus;
 using Avastrad.EventBusFramework;
-using BlackRed.Game.EventBus;
 using Fusion;
 using Zenject;
 
-namespace BlackRed.Game.UI.KillsLog
+namespace App.UI.KillsLog
 {
     public class KillLogModel : NetworkBehaviour, IEventReceiver<OnPlayerKill>
     {

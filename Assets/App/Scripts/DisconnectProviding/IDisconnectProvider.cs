@@ -1,6 +1,6 @@
 using System;
 
-namespace BlackRed.Game.DisconnectProviding
+namespace App.DisconnectProviding
 {
     public interface IDisconnectProvider
     {

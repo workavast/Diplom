@@ -1,9 +1,9 @@
-using BlackRed.Game.ParticlesSpawning;
-using BlackRed.Game.PlayerEntities;
+using App.ParticlesSpawning;
+using App.PlayerEntities;
 using Fusion;
 using UnityEngine;
 
-namespace BlackRed.Game.Bullets
+namespace App.Bullets
 {
     [RequireComponent(typeof(BulletView))]
     [RequireComponent(typeof(NetworkObject))]
