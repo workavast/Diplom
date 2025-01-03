@@ -1,4 +1,5 @@
 using System;
+using App.Scripts.PlayerEntities;
 using Avastrad.EventBusFramework;
 using BlackRed.Game.Bullets;
 using BlackRed.Game.EventBus;
@@ -12,8 +13,7 @@ namespace BlackRed.Game.PlayerEntities
     [RequireComponent(typeof(PlayerView))]
     public class NetPlayerController : NetworkBehaviour
     {
-        [SerializeField] private int initialHealthPoints = 100;
-        [SerializeField] private float attackDaley = 0.5f;
+        [SerializeField] private PlayerEntityConfig config;
         
         [Networked, HideInInspector] private int HealthPoints { get; set; }
         [Networked, HideInInspector] private TickTimer AttackDelay { get; set; }
@@ -47,7 +47,7 @@ namespace BlackRed.Game.PlayerEntities
         public override void Spawned()
         {
             _playersRepository.Add(Object.InputAuthority, _playerView);
-            HealthPoints = initialHealthPoints;
+            HealthPoints = config.InitialHealthPoints;
         }
 
         public override void Despawned(NetworkRunner runner, bool hasState)
@@ -69,7 +69,7 @@ namespace BlackRed.Game.PlayerEntities
                 
                 if (input.Buttons.IsSet(PlayerButtons.Fire) && AttackDelay.ExpiredOrNotRunning(Runner))
                 {
-                    AttackDelay = TickTimer.CreateFromSeconds(Runner, attackDaley);
+                    AttackDelay = TickTimer.CreateFromSeconds(Runner, config.AttackDaley);
                     _netBulletsSpawner.Spawn(_playerView.transform.position, _playerView.transform.forward, PlayerRef);
                 }
             }

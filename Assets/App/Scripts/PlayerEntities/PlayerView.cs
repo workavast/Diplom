@@ -1,3 +1,4 @@
+using App.Scripts.PlayerEntities;
 using UnityEngine;
 
 namespace BlackRed.Game.PlayerEntities
@@ -5,8 +6,7 @@ namespace BlackRed.Game.PlayerEntities
     [RequireComponent(typeof(CharacterController))]
     public class PlayerView : MonoBehaviour
     {
-        [SerializeField] private float moveSpeed = 5;
-        [SerializeField] private float gravity = -9.8f;
+        [SerializeField] private PlayerEntityConfig config;
 
         private CharacterController _characterController;
         
@@ -17,8 +17,8 @@ namespace BlackRed.Game.PlayerEntities
 
         public void Move(Vector3 direction, float deltaTime)
         {
-            var gravityVelocity = gravity * deltaTime * Vector3.up;
-            var moveVelocity = moveSpeed * deltaTime * direction.normalized;
+            var gravityVelocity = config.Gravity * deltaTime * Vector3.up;
+            var moveVelocity = config.MoveSpeed * deltaTime * direction.normalized;
             _characterController.Move(gravityVelocity + moveVelocity);
         }
 

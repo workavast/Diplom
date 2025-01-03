@@ -6,16 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Game/Scenes/BootstrapScene.unity
+    path: Assets/App/Scenes/BootstrapScene.unity
     guid: 367ab29901ff7ab4782a8669bab611dd
   - enabled: 1
-    path: Assets/Game/Scenes/ScenesLoadingScene.unity
+    path: Assets/App/Scenes/ScenesLoadingScene.unity
     guid: d6766a9780730714da308e7d231da19f
   - enabled: 1
-    path: Assets/Game/Scenes/MainMenuScene.unity
+    path: Assets/App/Scenes/MainMenuScene.unity
     guid: 4d3d76769a9d583459e3a9bf5b86e908
   - enabled: 1
-    path: Assets/Game/Scenes/GameplayScene.unity
+    path: Assets/App/Scenes/GameplayScene.unity
     guid: b5251af9fe942b143b48f3639862d6fd
   - enabled: 1
     path: Assets/Photon/FusionDemos/IntroSample/Sample/Scenes/FusionDemoMenu.unity

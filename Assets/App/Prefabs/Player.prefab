@@ -58,6 +58,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -137,8 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34975efcb9ab4295a9a2034e610d410b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialHealthPoints: 100
-  attackDaley: 0.2
+  config: {fileID: 11400000, guid: 2e235d0bd95dfe34f95a57e634acc985, type: 2}
 --- !u!114 &3872098561446610495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,8 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dca9430a4c0429093690f3a4dd5892a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  gravity: -9.8
+  config: {fileID: 11400000, guid: 2e235d0bd95dfe34f95a57e634acc985, type: 2}
 --- !u!114 &7541546581567901005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,6 +174,7 @@ MonoBehaviour:
   - {fileID: 5137442269118526432}
   - {fileID: 8581854729729584098}
   - {fileID: 7942052991263362750}
+  ForceRemoteRenderTimeframe: 0
 --- !u!143 &-658295760547561401
 CharacterController:
   m_ObjectHideFlags: 0
@@ -188,7 +190,6 @@ CharacterController:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -211,6 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 378411a89480da345945c2f888327a2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stateAuthorityChangeErrorCorrectionDelta: 0.15
   gravity: -20
   jumpImpulse: 8
   acceleration: 10
@@ -363,6 +365,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
