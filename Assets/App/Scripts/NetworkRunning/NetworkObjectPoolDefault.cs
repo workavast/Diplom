@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using App.DiProviding;
 using Fusion;
 using UnityEngine;
 using Zenject;
@@ -9,14 +10,14 @@ namespace App.NetworkRunning
     public class NetworkObjectPoolDefault : NetworkObjectProviderDefault
     {
         [Tooltip("The objects to be pooled, leave it empty to pool every Network Object spawned")] [SerializeField]
-        private List<NetworkObject> _poolableObjects;
-        private DiContainer _diContainer;
-        private Dictionary<NetworkObjectTypeId, Stack<NetworkObject>> _free = new();
+        private List<NetworkObject> poolableObjects;
+        private IDiProvider _diProvider;
+        private readonly Dictionary<NetworkObjectTypeId, Stack<NetworkObject>> _free = new();
 
         [Inject]
-        public void Construct(DiContainer diContainer)
+        public void Construct(IDiProvider diContainer)
         {
-            _diContainer = diContainer;
+            _diProvider = diContainer;
         }
         
         protected override NetworkObject InstantiatePrefab(NetworkRunner runner, NetworkObject prefab)
@@ -30,7 +31,7 @@ namespace App.NetworkRunning
             else
             {
                 instance = Instantiate(prefab);
-                _diContainer.InjectGameObject(instance.gameObject);
+                _diProvider.DiContainer.InjectGameObject(instance.gameObject);
             }
 
             return instance;
@@ -69,7 +70,7 @@ namespace App.NetworkRunning
         private NetworkObject GetNewInstance(NetworkObject prefab)
         {
             var instance = Instantiate(prefab);
-            _diContainer.InjectGameObject(instance.gameObject);
+            _diProvider.DiContainer.InjectGameObject(instance.gameObject);
 
             if (!_free.TryGetValue(prefab.NetworkTypeId, out var stack))
             {
@@ -82,7 +83,7 @@ namespace App.NetworkRunning
 
         private bool ShouldPool(NetworkObject prefab)
         {
-            if (_poolableObjects.Count <= 0)
+            if (poolableObjects.Count <= 0)
                 return true;
 
             return IsPoolableObject(prefab);
@@ -90,7 +91,7 @@ namespace App.NetworkRunning
 
         private bool IsPoolableObject(NetworkObject networkObject)
         {
-            foreach (var poolableObject in _poolableObjects)
+            foreach (var poolableObject in poolableObjects)
                 if (networkObject == poolableObject)
                     return true;
 

@@ -27,7 +27,7 @@ namespace App.Players
             _playerSpawnPointsProvider = playerSpawnPointsProvider;
             _playerSpawner = playerSpawner;
             _isInitialized = true;
-            
+         
             if (HasStateAuthority) 
                 SpawnPlayer();
         }

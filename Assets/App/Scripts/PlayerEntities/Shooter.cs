@@ -1,6 +1,8 @@
+using App.Damage;
 using App.ParticlesSpawning;
 using Fusion;
 using UnityEngine;
+using Zenject;
 
 namespace App.PlayerEntities
 {
@@ -8,6 +10,8 @@ namespace App.PlayerEntities
     {
         [SerializeField] private Transform shootPoint;
         [field: SerializeField] public int Damage { get; private set; } = 10;
+
+        [Inject] private IDamageApplicator _damageApplicator;
         
         private NetParticlesSpawner _netParticlesSpawner;
 
@@ -26,9 +30,9 @@ namespace App.PlayerEntities
                 var netPlayerController = hit.GameObject.GetComponent<NetPlayerController>();
 
                 if (netPlayerController != null)
-                    OnCollisionPlayer(netPlayerController, hit.Point, hit.Normal);
+                    TryDamagePlayer(netPlayerController, hit.Point, hit.Normal);
                 else
-                    OnCollision(hit.Point, hit.Normal);
+                    SpawnHitEffect(hit.Point, hit.Normal);
             }
         }
 
@@ -41,20 +45,20 @@ namespace App.PlayerEntities
                 _netParticlesSpawner.SpawnParticleEffect(ParticleType.BulletCollision, hit.Point, hit.Normal);
         }
         
-        private void OnCollision(Vector3 hitPoint, Vector3 normal)
+        private void SpawnHitEffect(Vector3 hitPoint, Vector3 normal)
         {
             if (HasInputAuthority)
                 _netParticlesSpawner.SpawnParticleEffect(ParticleType.BulletCollision, hitPoint, normal);
         }
 
-        private void OnCollisionPlayer(NetPlayerController netPlayerController, Vector3 hitPoint, Vector3 normal)
+        private void TryDamagePlayer(NetPlayerController netPlayerController, Vector3 hitPoint, Vector3 normal)
         {
             if (netPlayerController.PlayerRef == Object.InputAuthority)
                 return;
 
-            netPlayerController.TakeDamage(Damage, Object.InputAuthority);
+            _damageApplicator.TryApplyDamage(Damage, netPlayerController, Object.InputAuthority);
 
-            OnCollision(hitPoint, normal);
+            SpawnHitEffect(hitPoint, normal);
         }
 
         private void OnDrawGizmos()

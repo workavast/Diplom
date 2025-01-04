@@ -1,4 +1,5 @@
 using System;
+using App.Damage;
 using App.EventBus;
 using App.PlayerInput;
 using Avastrad.EventBusFramework;
@@ -9,7 +10,7 @@ using Zenject;
 namespace App.PlayerEntities
 {
     [RequireComponent(typeof(PlayerView))]
-    public class NetPlayerController : NetworkBehaviour
+    public class NetPlayerController : NetworkBehaviour, IDamageable
     {
         [SerializeField] private Shooter shooter;
         [SerializeField] private PlayerEntityConfig config;
@@ -26,13 +27,9 @@ namespace App.PlayerEntities
         public event Action OnDeath;
 
         [Inject]
-        public void Construct(PlayersRepository playersRepository)
+        public void Construct(PlayersRepository playersRepository, IEventBus eventBus)
         {
             _playersRepository = playersRepository;
-        }
-        
-        public void Initialize(IEventBus eventBus)
-        {
             _eventBus = eventBus;
         }
         
