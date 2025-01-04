@@ -1,6 +1,6 @@
 namespace App
 {
-    public static class Constants
+    public static class Consts
     {
         public const string AppName = "Diplom";
     }

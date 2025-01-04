@@ -9,7 +9,7 @@ namespace App.PlayerEntities
     public class Shooter : NetworkBehaviour
     {
         [SerializeField] private Transform shootPoint;
-        [field: SerializeField] public int Damage { get; private set; } = 10;
+        [SerializeField] private PlayerEntityConfig config;
 
         [Inject] private IDamageApplicator _damageApplicator;
         
@@ -56,7 +56,7 @@ namespace App.PlayerEntities
             if (netPlayerController.PlayerRef == Object.InputAuthority)
                 return;
 
-            _damageApplicator.TryApplyDamage(Damage, netPlayerController, Object.InputAuthority);
+            _damageApplicator.TryApplyDamage(config.Damage, netPlayerController, Object.InputAuthority);
 
             SpawnHitEffect(hitPoint, normal);
         }

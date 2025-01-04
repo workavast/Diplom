@@ -15,8 +15,8 @@ namespace App.PlayerEntities
         [SerializeField] private Shooter shooter;
         [SerializeField] private PlayerEntityConfig config;
         
-        [Networked, HideInInspector] private int HealthPoints { get; set; }
-        [Networked, HideInInspector] private TickTimer AttackDelay { get; set; }
+        [Networked] private int HealthPoints { get; set; }
+        [Networked] private TickTimer AttackDelay { get; set; }
 
         public PlayerRef PlayerRef => Object.InputAuthority;
 
