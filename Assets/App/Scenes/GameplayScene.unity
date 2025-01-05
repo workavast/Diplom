@@ -6151,6 +6151,71 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1292711291010359930, guid: 0b567f8106eda864faa47d8b796fbe0d, type: 3}
   m_PrefabInstance: {fileID: 2070785553}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2114773789
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2114773792}
+  - component: {fileID: 2114773791}
+  - component: {fileID: 2114773790}
+  m_Layer: 0
+  m_Name: EnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2114773790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114773789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 3798699146
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 2114773791}
+  ForceRemoteRenderTimeframe: 0
+--- !u!114 &2114773791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114773789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e411a7a8f932b04b9e537f4d3b57f61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  netEnemyPrefab: {fileID: 4582882483414412412, guid: 3d6283c483fa42a49bdd35bd6c99d787, type: 3}
+--- !u!4 &2114773792
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114773789}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -3.75, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2125640826
 GameObject:
   m_ObjectHideFlags: 0
@@ -6502,3 +6567,4 @@ SceneRoots:
   - {fileID: 1185629414}
   - {fileID: 1301617276}
   - {fileID: 830009533}
+  - {fileID: 2114773792}
