@@ -15,7 +15,7 @@ namespace App.UI
             {
                 Debug.LogWarning($"Ypo forgot serialize {nameof(ScreensController)}");
 
-                screensController = FindObjectOfType<ScreensController>();
+                screensController = FindFirstObjectByType<ScreensController>();
 
                 if (screensController == null)
                     throw new NullReferenceException($"Cant find {nameof(ScreensController)} on the scene");

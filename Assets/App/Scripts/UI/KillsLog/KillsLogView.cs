@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Fusion;
 using UnityEngine;
 
 namespace App.UI.KillsLog
@@ -39,7 +38,7 @@ namespace App.UI.KillsLog
             }
         }
 
-        private void ShowLog(PlayerRef killer, PlayerRef killed)
+        private void ShowLog(string killer, string killed)
         {
             var row = _unActiveRows.Count > 0 
                 ? _unActiveRows.Pop() 

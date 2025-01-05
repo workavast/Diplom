@@ -1,4 +1,5 @@
 using App.Damage;
+using App.Entities;
 using App.ParticlesSpawning;
 using Fusion;
 using UnityEngine;
@@ -14,10 +15,12 @@ namespace App.PlayerEntities
         [Inject] private IDamageApplicator _damageApplicator;
         
         private NetParticlesSpawner _netParticlesSpawner;
-
+        private IEntity _entity;
+        
         private void Start()
         {
             _netParticlesSpawner = FindFirstObjectByType<NetParticlesSpawner>();
+            _entity = GetComponent<IEntity>();
         }
 
         public void Shoot(bool hasStateAuthority)
@@ -31,7 +34,7 @@ namespace App.PlayerEntities
                     Debug.LogWarning("Hit it self");
 
                 if (hasStateAuthority)
-                    _damageApplicator.TryApplyDamage(config.Damage, hit.GameObject, Object.InputAuthority);
+                    _damageApplicator.TryApplyDamage(config.Damage, hit.GameObject, _entity);
                 
                 SpawnHitEffect(hit.Point, hit.Normal);
             }

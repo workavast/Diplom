@@ -21,12 +21,12 @@ namespace App.CameraControlling
             _playersRepository.OnPlayerAdd += OnPlayerViewAdded;
         }
 
-        private void OnPlayerViewAdded(PlayerRef playerRef, PlayerView playerView)
+        private void OnPlayerViewAdded(PlayerRef playerRef, NetPlayerController netPlayer)
         {
             if (playerRef != _networkRunnerProvider.GetNetworkRunner().LocalPlayer)
                 return;
-
-            _playerView = playerView;
+            
+            _playerView = netPlayer.PlayerView;
             cinemachineVirtualCamera.LookAt = _playerView.transform;
             cinemachineVirtualCamera.Follow = _playerView.transform;
         }

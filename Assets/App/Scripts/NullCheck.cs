@@ -30,7 +30,7 @@ namespace App
             {
                 Debug.LogWarning("t is null");
 
-                t = Object.FindObjectOfType<T>(true);
+                t = Object.FindFirstObjectByType<T>(FindObjectsInactive.Include);
                 if (t == null)
                     throw new NullReferenceException("cant find t on the scene");
             }

@@ -1,4 +1,4 @@
-using App.Enemy;
+using App.Entities;
 using App.PlayerEntities;
 using Fusion;
 using UnityEngine;
@@ -11,10 +11,6 @@ namespace App.Damage
         public float PlayerDamageScale { get; }
         public float EnemyDamageScale { get; }
 
-        public void TryApplyDamage(int damage, GameObject receiver, PlayerRef shooter);
-        public void TryApplyDamage(int damage, NetPlayerController receiver, PlayerRef shooter);
-        public void TryApplyDamage(int damage, NetEnemy receiver, PlayerRef shooter);
-
-        public void ApplyDamage(int damage, IDamageable damageable, PlayerRef shooter);
+        public void TryApplyDamage(float damage, GameObject receiver, IEntity shooter);
     }
 }

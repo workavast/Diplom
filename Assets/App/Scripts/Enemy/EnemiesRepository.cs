@@ -6,30 +6,45 @@ namespace App.Enemy
 {
     public class EnemiesRepository
     {
-        private readonly List<EnemyView> _playerViews = new();
+        private readonly Dictionary<int, NetEnemy> _enemiesById = new();
+        private readonly List<NetEnemy> _enemies = new();
 
-        public event Action<EnemyView> OnAdd;
-        public event Action<EnemyView> OnRemove;
+        public event Action<NetEnemy> OnAdd;
+        public event Action<NetEnemy> OnRemove;
 
-        public void Add(EnemyView enemyView)
+        public void Add(NetEnemy enemy)
         {
-            if (_playerViews.Contains(enemyView))
+            if (_enemies.Contains(enemy))
             {
-                Debug.LogError($"Duplicate exception: {enemyView}");
+                Debug.LogError($"Duplicate exception: {enemy}");
                 return;
             }
             else
             {
-                _playerViews.Add(enemyView);
+                _enemiesById.Add(enemy.Identifier.Id, enemy);
+                _enemies.Add(enemy);
             }
 
-            OnAdd?.Invoke(enemyView);
+            OnAdd?.Invoke(enemy);
         }
 
-        public void Remove(EnemyView enemyView)
+        public void Remove(NetEnemy enemy)
         {
-            _playerViews.Remove(enemyView);
-            OnRemove?.Invoke(enemyView);
+            _enemiesById.Remove(enemy.Identifier.Id);
+            _enemies.Remove(enemy);
+            OnRemove?.Invoke(enemy);
+        }
+        
+        public bool TryGet(int identifier, out NetEnemy enemy)
+        {
+            if (_enemiesById.TryGetValue(identifier, out var value))
+            {
+                enemy = value;
+                return true;
+            }
+
+            enemy = null;
+            return false;
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using App.Entities;
 using App.EventBus;
 using Avastrad.EventBusFramework;
 using Fusion;
@@ -6,13 +7,14 @@ using Zenject;
 
 namespace App.UI.KillsLog
 {
-    public class KillLogModel : NetworkBehaviour, IEventReceiver<OnPlayerKill>
+    public class KillLogModel : NetworkBehaviour, IEventReceiver<OnKill>
     {
-        [Inject] private IEventBus _eventBus;
-        
+        [Inject] private readonly IEventBus _eventBus;
+        [Inject] private readonly EntitiesRepository _entitiesRepository;
+
         public EventBusReceiverIdentifier EventBusReceiverIdentifier { get; } = new();
 
-        public event Action<PlayerRef, PlayerRef> OnKillLog;
+        public event Action<string, string> OnKillLog;
 
         public override void Spawned()
         {
@@ -24,11 +26,14 @@ namespace App.UI.KillsLog
             _eventBus.UnSubscribe(this);
         }
 
-        public void OnEvent(OnPlayerKill t) 
-            => Rpc_OnKill(t.Killer, t.KilledPlayer);
+        public void OnEvent(OnKill t)
+        {
+            if (_entitiesRepository.TryGet(t.Killer, out var killer) && _entitiesRepository.TryGet(t.Killed, out var killed))
+                Rpc_OnKill(killer.GetName(), killed.GetName());
+        }
 
         [Rpc(RpcSources.StateAuthority, RpcTargets.All, InvokeLocal = true)]
-        private void Rpc_OnKill(PlayerRef killer, PlayerRef killed) 
+        private void Rpc_OnKill(string killer, string killed) 
             => OnKillLog?.Invoke(killer, killed);
     }
 }

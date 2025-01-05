@@ -1,4 +1,5 @@
 using System;
+using App.Entities;
 using App.EventBus;
 using App.Players.SessionDatas;
 using Avastrad.EventBusFramework;
@@ -6,17 +7,21 @@ using Fusion;
 
 namespace App.Players.KillsCounting
 {
-    public class KillsCounter : IEventReceiver<OnPlayerKill>, IDisposable
+    public class KillsCounter : IEventReceiver<OnKill>, IDisposable
     {
         private readonly IEventBus _eventBus;
         private readonly PlayerSessionDatasRepository _playerSessionDatasRepository;
+        private readonly EntitiesRepository _entitiesRepository;
 
         public EventBusReceiverIdentifier EventBusReceiverIdentifier { get; } = new();
 
-        public KillsCounter(IEventBus eventBus, PlayerSessionDatasRepository playerSessionDatasRepository)
+        public KillsCounter(IEventBus eventBus, PlayerSessionDatasRepository playerSessionDatasRepository, 
+            EntitiesRepository entitiesRepository)
         {
             _eventBus = eventBus;
             _playerSessionDatasRepository = playerSessionDatasRepository;
+            _entitiesRepository = entitiesRepository;
+            
             _eventBus.Subscribe(this);
         }
 
@@ -27,8 +32,11 @@ namespace App.Players.KillsCounting
                 sessionData.ChangeKills(1);
         }
 
-        public void OnEvent(OnPlayerKill t) 
-            => AddKills(t.Killer);
+        public void OnEvent(OnKill t)
+        {
+            if (_entitiesRepository.TryGetPlayer(t.Killer, out var player)) 
+                AddKills(player.PlayerRef);
+        }
 
         public void Dispose()
         {

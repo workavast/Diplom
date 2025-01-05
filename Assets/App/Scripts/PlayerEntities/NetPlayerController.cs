@@ -1,5 +1,6 @@
 using System;
 using App.Damage;
+using App.Entities;
 using App.EventBus;
 using App.PlayerInput;
 using Avastrad.EventBusFramework;
@@ -10,18 +11,19 @@ using Zenject;
 namespace App.PlayerEntities
 {
     [RequireComponent(typeof(PlayerView))]
-    public class NetPlayerController : NetworkBehaviour, IDamageable
+    public class NetPlayerController : NetworkBehaviour, IEntity, IDamageable
     {
         [SerializeField] private Shooter shooter;
         [SerializeField] private PlayerEntityConfig config;
-        
-        [Networked] private int HealthPoints { get; set; }
+
+        [Networked] public int HealthPoints { get; private set; }
         [Networked] private TickTimer AttackDelay { get; set; }
 
+        public EntityIdentifier Identifier { get; } = new();
         public PlayerRef PlayerRef => Object.InputAuthority;
+        public PlayerView PlayerView { get; private set; }
 
         private PlayersRepository _playersRepository;
-        private PlayerView _playerView;
         private IEventBus _eventBus;
 
         public event Action OnDeath;
@@ -35,18 +37,18 @@ namespace App.PlayerEntities
         
         private void Awake()
         {
-            _playerView = GetComponent<PlayerView>();
+            PlayerView = GetComponent<PlayerView>();
         }
 
         public override void Spawned()
         {
-            _playersRepository.Add(Object.InputAuthority, _playerView);
+            _playersRepository.Add(Object.InputAuthority, this);
             HealthPoints = config.InitialHealthPoints;
         }
 
         public override void Despawned(NetworkRunner runner, bool hasState)
         {
-            _playersRepository.Remove(Object.InputAuthority);
+            _playersRepository.Remove(this);
         }
 
         public override void FixedUpdateNetwork()
@@ -54,34 +56,39 @@ namespace App.PlayerEntities
             if (GetInput(out PlayerInputData input))
             {
                 var moveDirection = Vector3.right * input.HorizontalInput + Vector3.forward * input.VerticalInput;
-                var lookPoint = new Vector3(input.LookPoint.x, _playerView.transform.position.y, input.LookPoint.y);
-                _playerView.Move(moveDirection, config.MoveSpeed, config.Gravity, Runner.DeltaTime);
-                _playerView.SetLookPoint(lookPoint);
+                var lookPoint = new Vector3(input.LookPoint.x, PlayerView.transform.position.y, input.LookPoint.y);
+                PlayerView.Move(moveDirection, config.MoveSpeed, config.Gravity, Runner.DeltaTime);
+                PlayerView.SetLookPoint(lookPoint);
                 
                 if (input.Buttons.IsSet(PlayerButtons.Fire) && AttackDelay.ExpiredOrNotRunning(Runner)) 
                     Shoot();
             }
         }
 
+        public string GetName()
+        {
+            return "PLAYER";
+        }
+        
+        public void TakeDamage(float damage, IEntity shooter)//shooter need to give him points
+        {
+            HealthPoints -= (int)damage;
+            if (HasStateAuthority)
+            {
+                if (HealthPoints <= 0)
+                {
+                    _eventBus.Invoke(new OnKill(Identifier.Id, shooter.Identifier.Id));
+                    OnDeath?.Invoke();
+                }
+            }
+        }
+        
         private void Shoot()
         {
             if (HasStateAuthority) 
                 AttackDelay = TickTimer.CreateFromSeconds(Runner, config.AttackDaley);
 
             shooter.Shoot(HasStateAuthority);
-        }
-        
-        public void TakeDamage(int damage, PlayerRef shooter)//shooter need to give him points
-        {
-            HealthPoints -= damage;
-            if (HasStateAuthority)
-            {
-                if (HealthPoints <= 0)
-                {
-                    _eventBus.Invoke(new OnPlayerKill(Object.InputAuthority, shooter));
-                    OnDeath?.Invoke();
-                }
-            }
         }
     }
 }

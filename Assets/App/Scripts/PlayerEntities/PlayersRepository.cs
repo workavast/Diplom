@@ -7,37 +7,45 @@ namespace App.PlayerEntities
 {
     public class PlayersRepository
     {
-        private readonly Dictionary<PlayerRef, PlayerView> _playerViews = new();
+        private readonly Dictionary<PlayerRef, NetPlayerController> _players = new();
+        private readonly Dictionary<int, NetPlayerController> _playersById = new();
 
-        public event Action<PlayerRef, PlayerView> OnPlayerAdd;
+        public event Action<PlayerRef, NetPlayerController> OnPlayerAdd;
         public event Action<PlayerRef> OnPlayerRemove;
         
-        public void Add(PlayerRef playerRef, PlayerView playerView)
+        public void Add(PlayerRef playerRef, NetPlayerController player)
         {
-            if (_playerViews.TryGetValue(playerRef, out var view))
+            if (_players.ContainsKey(playerRef))
             {
-                if (view == null)
-                {
-                    _playerViews[playerRef] = playerView;
-                }
-                else
-                {
-                    Debug.LogError($"Duplicate exception: {playerRef} | {playerView}");
-                    return;
-                }
+                Debug.LogError($"Duplicate exception: {playerRef} | {player}");
+                return;
             }
             else
             {
-                _playerViews.Add(playerRef, playerView);
+                _players.Add(playerRef, player);
+                _playersById.Add(player.Identifier.Id, player);
             }
             
-            OnPlayerAdd?.Invoke(playerRef, playerView);
+            OnPlayerAdd?.Invoke(playerRef, player);
+        }
+        
+        public void Remove(NetPlayerController player)
+        {
+            _players.Remove(player.PlayerRef);
+            _playersById.Remove(player.Identifier.Id);
+            OnPlayerRemove?.Invoke(player.PlayerRef);
         }
 
-        public void Remove(PlayerRef playerRef)
+        public bool TryGet(int identifier, out NetPlayerController player)
         {
-            _playerViews.Remove(playerRef);
-            OnPlayerRemove?.Invoke(playerRef);
+            if (_playersById.TryGetValue(identifier, out var value))
+            {
+                player = value;
+                return true;
+            }
+
+            player = null;
+            return false;
         }
     }
 }
