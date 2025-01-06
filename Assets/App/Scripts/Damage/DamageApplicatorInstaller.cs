@@ -5,12 +5,12 @@ namespace App.Damage
 {
     public class DamageApplicatorInstaller : MonoInstaller
     {
-        [SerializeField] private bool hasFriendlyFire;
+        [SerializeField] private bool hasPlayersFriendlyFire;
+        [SerializeField] private bool hasEnemiesFriendlyFire;
         
         public override void InstallBindings()
         {
-            Debug.Log("InstallBindings - InstallBindings");
-            Container.BindInterfacesAndSelfTo<DamageApplicator>().FromNew().AsSingle().WithArguments(hasFriendlyFire).NonLazy();
+            Container.Bind<DamageApplicatorFactory>().FromNew().AsSingle().WithArguments(hasPlayersFriendlyFire, hasEnemiesFriendlyFire);
         }
     }
 }

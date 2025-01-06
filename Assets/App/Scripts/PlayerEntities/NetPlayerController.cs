@@ -2,6 +2,7 @@ using System;
 using App.Damage;
 using App.Entities;
 using App.EventBus;
+using App.PlayerEntities.Shooting;
 using App.PlayerInput;
 using Avastrad.EventBusFramework;
 using Fusion;
@@ -13,26 +14,30 @@ namespace App.PlayerEntities
     [RequireComponent(typeof(PlayerView))]
     public class NetPlayerController : NetworkBehaviour, IEntity, IDamageable
     {
-        [SerializeField] private Shooter shooter;
+        [SerializeField] private Transform shootPoint;
         [SerializeField] private PlayerEntityConfig config;
 
-        [Networked] public int HealthPoints { get; private set; }
+        public GameObject GameObject => gameObject;
+        [Networked, HideInInspector] public int HealthPoints { get; private set; }
         [Networked] private TickTimer AttackDelay { get; set; }
-
+        
         public EntityIdentifier Identifier { get; } = new();
+        public EntityType EntityType => EntityType.Player;
         public PlayerRef PlayerRef => Object.InputAuthority;
         public PlayerView PlayerView { get; private set; }
 
+        private Shooter _shooter;
         private PlayersRepository _playersRepository;
         private IEventBus _eventBus;
 
         public event Action OnDeath;
 
         [Inject]
-        public void Construct(PlayersRepository playersRepository, IEventBus eventBus)
+        public void Construct(PlayersRepository playersRepository, IEventBus eventBus, ShooterFactory shooterFactory)
         {
             _playersRepository = playersRepository;
             _eventBus = eventBus;
+            _shooter = shooterFactory.CreateShoot(this, shootPoint, config);
         }
         
         private void Awake()
@@ -88,7 +93,12 @@ namespace App.PlayerEntities
             if (HasStateAuthority) 
                 AttackDelay = TickTimer.CreateFromSeconds(Runner, config.AttackDaley);
 
-            shooter.Shoot(HasStateAuthority);
+            _shooter.Shoot(HasStateAuthority);
+        }
+
+        private void OnDrawGizmos()
+        {
+            _shooter.OnDrawGizmos();
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace App.ParticlesSpawning
+namespace App.Particles
 {
     public enum ParticleType
     {

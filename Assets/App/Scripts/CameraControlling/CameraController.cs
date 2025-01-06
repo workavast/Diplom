@@ -9,7 +9,7 @@ namespace App.CameraControlling
 {
     public class CameraController : MonoBehaviour
     {
-        [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
+        [SerializeField] private CinemachineCamera cinemachineVirtualCamera;
         
         [Inject] private NetworkRunnerProvider _networkRunnerProvider;
         [Inject] private PlayersRepository _playersRepository;

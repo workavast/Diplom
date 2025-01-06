@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
-namespace App.ParticlesSpawning
+namespace App.Particles
 {
-    public class NetParticlesSpawner : NetworkBehaviour
+    public class NetParticlesFactory : NetworkBehaviour
     {
         [SerializeField] private ParticleFactory particleFactory;
 
@@ -18,13 +18,13 @@ namespace App.ParticlesSpawning
         };
         
         public void SpawnParticleEffect(ParticleType particleType, Vector3 point, Vector3 normal) 
-            => Rpc_SpawnPArticleEffect(_particleBytes[particleType], point, normal);
+            => Rpc_SpawnParticleEffect(_particleBytes[particleType], point, normal);
 
         private void Spawn(byte particleByte, Vector3 point, Vector3 normal)
             => particleFactory.Create(_particleTypes[particleByte], point, Quaternion.LookRotation(normal));
 
-        [Rpc(sources: RpcSources.All, targets: RpcTargets.All)]
-        private void Rpc_SpawnPArticleEffect(byte particleByte, Vector3 point, Vector3 normal) 
+        // [Rpc(sources: RpcSources.All, targets: RpcTargets.All)]
+        private void Rpc_SpawnParticleEffect(byte particleByte, Vector3 point, Vector3 normal) 
             => Spawn(particleByte, point, normal);
     }
 }

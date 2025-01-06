@@ -1,68 +1,42 @@
-using App.Enemy;
+using System;
 using App.Entities;
-using App.PlayerEntities;
-using Fusion;
 using UnityEngine;
 
 namespace App.Damage
 {
-    public class DamageApplicator : IDamageApplicator
+    public abstract class DamageApplicator : IDamageApplicator
     {
         public bool FriendlyFire { get; }
-        public float PlayerDamageScale { get; }
-        public float EnemyDamageScale { get; }
+        public float DamageScale { get; }
 
-        public DamageApplicator(bool hasFriendlyFire)
+        protected DamageApplicator(bool hasFriendlyFire)
         {
             FriendlyFire = hasFriendlyFire;
-            PlayerDamageScale = EnemyDamageScale = 1;
+            DamageScale = 1;
         }
 
         public void TryApplyDamage(float damage, GameObject receiver, IEntity shooter)
         {
-            TryApplyDamageByPlayer(damage, receiver, shooter);
-        }
-        
-        public void TryApplyDamage(float damage, NetPlayerController receiver, IEntity shooter)
-        {
-            if (FriendlyFire)
-                receiver.TakeDamage(damage, shooter);
-        }
-        
-        public void TryApplyDamage(float damage, NetEnemy receiver, IEntity shooter)
-        {
-            receiver.TakeDamage(damage, shooter);
-        }
-        
-        public void ApplyDamage(float damage, IDamageable damageable, IEntity shooter)
-        {
-            damageable.TakeDamage(damage, shooter);
-        }
-
-        private void TryApplyDamageByPlayer(float damage, GameObject receiver, IEntity shooter)
-        {
-            damage *= PlayerDamageScale;
+            var receiverEntity = receiver.GetComponent<IEntity>();
+            var damageable = receiver.GetComponent<IDamageable>();
             
-            var player = receiver.GetComponent<NetPlayerController>();
-            if (player != null)
-                TryApplyDamage(damage, player, shooter);
+            if (receiverEntity == null || damageable == null)
+                return;
 
-            var enemy = receiver.GetComponent<NetEnemy>();
-            if (enemy != null)
-                TryApplyDamage(damage, enemy, shooter);
+            switch (receiverEntity.EntityType)
+            {
+                case EntityType.Default:
+                    DamageDefault(damage, damageable, shooter);
+                    break;
+                case EntityType.Player:
+                    DamagePlayer(damage, damageable, shooter);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
         
-        // private void TryApplyDamageByEnemy(float damage, GameObject receiver)
-        // {
-        //     damage *= EnemyDamageScale;
-        //     
-        //     var player = receiver.GetComponent<NetPlayerController>();
-        //     if (player != null)
-        //         TryApplyDamage(damage, player);
-        //
-        //     var enemy = receiver.GetComponent<NetEnemy>();
-        //     if (enemy != null)
-        //         TryApplyDamage(damage, enemy);
-        // }
+        protected abstract void DamagePlayer(float damage, IDamageable receiver, IEntity shooter);
+        protected abstract void DamageDefault(float damage, IDamageable receiver, IEntity shooter);
     }
 }

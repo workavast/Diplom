@@ -3,7 +3,7 @@ using Avastrad.CustomTimer;
 using Avastrad.PoolSystem;
 using UnityEngine;
 
-namespace App.ParticlesSpawning
+namespace App.Particles
 {
     public class ParticleHolder : MonoBehaviour, IPoolable<ParticleHolder, ParticleType>
     {

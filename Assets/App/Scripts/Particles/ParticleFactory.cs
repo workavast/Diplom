@@ -4,7 +4,7 @@ using Avastrad.EnumValuesLibrary;
 using Avastrad.PoolSystem;
 using UnityEngine;
 
-namespace App.ParticlesSpawning
+namespace App.Particles
 {
     public class ParticleFactory : MonoBehaviour
     {
@@ -35,6 +35,8 @@ namespace App.ParticlesSpawning
 
         public ParticleHolder Create(ParticleType particleType, Vector3 position, Quaternion rotation)
         {
+            Debug.Log("Create Particle");
+            
             _pool.ExtractElement(particleType, out var particleHolder);
             particleHolder.transform.position = position;
             particleHolder.transform.rotation = rotation;

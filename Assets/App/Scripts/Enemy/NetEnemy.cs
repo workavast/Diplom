@@ -2,6 +2,8 @@ using System;
 using App.Damage;
 using App.Entities;
 using App.EventBus;
+using App.PlayerEntities;
+using App.PlayerEntities.Shooting;
 using Avastrad.EventBusFramework;
 using Fusion;
 using UnityEngine;
@@ -12,13 +14,28 @@ namespace App.Enemy
     [RequireComponent(typeof(EnemyView))]
     public class NetEnemy : NetworkBehaviour, IEntity, IDamageable
     {
-        public EntityIdentifier Identifier { get; } = new();
+        [SerializeField] private Transform shootPoint;
+        [SerializeField] private PlayerEntityConfig config;
         
         [Networked] public int HealthPoints { get; private set; }
-        [Inject] private IEventBus _eventBus;
-        [Inject] private EnemiesRepository _enemiesRepository;
+        
+        public EntityIdentifier Identifier { get; } = new();
+        public EntityType EntityType => EntityType.Default;
+        public GameObject GameObject => gameObject;
 
+        private Shooter _shooter;
+        private IEventBus _eventBus;
+        private EnemiesRepository _enemiesRepository;
+        
         public Action OnDeath;
+        
+        [Inject]
+        public void Construct(EnemiesRepository enemiesRepository, IEventBus eventBus, ShooterFactory shooterFactory)
+        {
+            _enemiesRepository = enemiesRepository;
+            _eventBus = eventBus;
+            _shooter = shooterFactory.CreateShoot(this, shootPoint, config);
+        }
         
         public override void Spawned()
         {
@@ -50,9 +67,12 @@ namespace App.Enemy
             }
         }
         
-        public string GetName()
+        public string GetName() 
+            => nameof(NetEnemy);
+        
+        private void OnDrawGizmos()
         {
-            return "throw new NotImplementedException();";
+            _shooter.OnDrawGizmos();
         }
     }
 }

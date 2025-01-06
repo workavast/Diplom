@@ -172,6 +172,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39f427d68dab40acb318807dcd390658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootPoint: {fileID: 8074423664287962504}
+  config: {fileID: 11400000, guid: 2e235d0bd95dfe34f95a57e634acc985, type: 2}
+  _HealthPoints: 0
 --- !u!114 &8924442713109921284
 MonoBehaviour:
   m_ObjectHideFlags: 0
