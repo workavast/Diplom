@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -36,6 +37,17 @@ namespace App.UI.KillsLog
                     _unActiveRows.Push(rows[i]);
                 }
             }
+        }
+
+        private void OnDestroy()
+        {
+            // killLogModel.OnKillLog -= ShowLog;
+
+            // foreach (var row in _unActiveRows.ToArray()) 
+                // row.OnExistEnd -= HideRow;
+            
+            // foreach (var row in _activeRows.ToArray()) 
+                // row.OnExistEnd -= HideRow;
         }
 
         private void ShowLog(string killer, string killed)

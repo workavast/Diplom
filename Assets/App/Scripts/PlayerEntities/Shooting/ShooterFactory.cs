@@ -1,6 +1,7 @@
 using App.Damage;
 using App.Entities;
 using App.Particles;
+using App.Weapons;
 using UnityEngine;
 
 namespace App.PlayerEntities.Shooting
@@ -16,7 +17,7 @@ namespace App.PlayerEntities.Shooting
             _netParticlesFactory = netParticlesFactory;
         }
         
-        public Shooter CreateShoot(IEntity entity, Transform shootPoint, PlayerEntityConfig config)
+        public Shooter CreateShoot(IEntity entity, Transform shootPoint, WeaponConfig config)
         {
             var damageApplicator = _damageApplicatorFactory.CreateDamageApplicator(entity.EntityType);
             return new Shooter(entity, shootPoint, config, damageApplicator, _netParticlesFactory);

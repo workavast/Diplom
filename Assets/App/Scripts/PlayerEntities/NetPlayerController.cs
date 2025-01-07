@@ -2,8 +2,8 @@ using System;
 using App.Damage;
 using App.Entities;
 using App.EventBus;
-using App.PlayerEntities.Shooting;
 using App.PlayerInput;
+using App.Weapons;
 using Avastrad.EventBusFramework;
 using Fusion;
 using UnityEngine;
@@ -17,27 +17,28 @@ namespace App.PlayerEntities
         [SerializeField] private Transform shootPoint;
         [SerializeField] private PlayerEntityConfig config;
 
-        public GameObject GameObject => gameObject;
         [Networked, HideInInspector] public int HealthPoints { get; private set; }
         [Networked] private TickTimer AttackDelay { get; set; }
         
+        public GameObject GameObject => gameObject;
         public EntityIdentifier Identifier { get; } = new();
         public EntityType EntityType => EntityType.Player;
         public PlayerRef PlayerRef => Object.InputAuthority;
         public PlayerView PlayerView { get; private set; }
 
-        private Shooter _shooter;
+        private Weapon _weapon;
         private PlayersRepository _playersRepository;
         private IEventBus _eventBus;
 
         public event Action OnDeath;
 
         [Inject]
-        public void Construct(PlayersRepository playersRepository, IEventBus eventBus, ShooterFactory shooterFactory)
+        public void Construct(PlayersRepository playersRepository, IEventBus eventBus, WeaponFactory weaponFactory)
         {
             _playersRepository = playersRepository;
             _eventBus = eventBus;
-            _shooter = shooterFactory.CreateShoot(this, shootPoint, config);
+            
+            _weapon = weaponFactory.Create(WeaponId.Pistol, this, shootPoint);
         }
         
         private void Awake()
@@ -93,12 +94,12 @@ namespace App.PlayerEntities
             if (HasStateAuthority) 
                 AttackDelay = TickTimer.CreateFromSeconds(Runner, config.AttackDaley);
 
-            _shooter.Shoot(HasStateAuthority);
+            _weapon.Shoot(HasStateAuthority);
         }
 
         private void OnDrawGizmos()
         {
-            _shooter.OnDrawGizmos();
+            _weapon.OnDrawGizmos();
         }
     }
 }

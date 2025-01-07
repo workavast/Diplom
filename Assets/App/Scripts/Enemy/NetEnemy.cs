@@ -3,7 +3,7 @@ using App.Damage;
 using App.Entities;
 using App.EventBus;
 using App.PlayerEntities;
-using App.PlayerEntities.Shooting;
+using App.Weapons;
 using Avastrad.EventBusFramework;
 using Fusion;
 using UnityEngine;
@@ -23,18 +23,18 @@ namespace App.Enemy
         public EntityType EntityType => EntityType.Default;
         public GameObject GameObject => gameObject;
 
-        private Shooter _shooter;
+        private Weapon _weapon;
         private IEventBus _eventBus;
         private EnemiesRepository _enemiesRepository;
         
         public Action OnDeath;
         
         [Inject]
-        public void Construct(EnemiesRepository enemiesRepository, IEventBus eventBus, ShooterFactory shooterFactory)
+        public void Construct(EnemiesRepository enemiesRepository, IEventBus eventBus, WeaponFactory weaponFactory)
         {
             _enemiesRepository = enemiesRepository;
             _eventBus = eventBus;
-            _shooter = shooterFactory.CreateShoot(this, shootPoint, config);
+            _weapon = weaponFactory.Create(WeaponId.Pistol, this, shootPoint);
         }
         
         public override void Spawned()
@@ -72,7 +72,7 @@ namespace App.Enemy
         
         private void OnDrawGizmos()
         {
-            _shooter.OnDrawGizmos();
+            _weapon.OnDrawGizmos();
         }
     }
 }

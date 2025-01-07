@@ -1,6 +1,7 @@
 using App.Damage;
 using App.Entities;
 using App.Particles;
+using App.Weapons;
 using Fusion;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace App.PlayerEntities.Shooting
     public class Shooter
     {
         private readonly Transform _shootPoint;
-        private readonly PlayerEntityConfig _config;
+        private readonly WeaponConfig _config;
         private readonly NetParticlesFactory _netParticlesFactory;
         private readonly IDamageApplicator _damageApplicator;
         private readonly IEntity _entity;
@@ -17,7 +18,7 @@ namespace App.PlayerEntities.Shooting
         private NetworkRunner Runner => _entity.Runner;
         private PlayerRef InputAuthority => _entity.Object.InputAuthority;
 
-        public Shooter(IEntity entity, Transform shootPoint, PlayerEntityConfig config, IDamageApplicator damageApplicator, 
+        public Shooter(IEntity entity, Transform shootPoint, WeaponConfig config, IDamageApplicator damageApplicator, 
             NetParticlesFactory netParticlesFactory)
         {
             _entity = entity;
@@ -38,7 +39,7 @@ namespace App.PlayerEntities.Shooting
                     Debug.LogWarning("Hit it self");
 
                 if (hasStateAuthority)
-                    _damageApplicator.TryApplyDamage(_config.Damage, hit.GameObject, _entity);
+                    _damageApplicator.TryApplyDamage(_config.DamagePerBullet, hit.GameObject, _entity);
                 
                 SpawnHitEffect(hit.Point, hit.Normal);
             }
