@@ -14,6 +14,9 @@ namespace App.UI.KillsLog
 
         public EventBusReceiverIdentifier EventBusReceiverIdentifier { get; } = new();
 
+        /// <summary>
+        /// return killer and killed
+        /// </summary>
         public event Action<string, string> OnKillLog;
 
         public override void Spawned()
