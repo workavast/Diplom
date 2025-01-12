@@ -9,7 +9,7 @@ namespace App.Weapons
         
         public override void InstallBindings()
         {
-            weaponsConfigs.Initialize();
+            weaponsConfigs.Initialize(true);
             Container.BindInstance(weaponsConfigs).AsSingle();
             // Container.BindInterfacesAndSelfTo<WeaponsConfigsDictionary>().FromNew().AsSingle();
             Container.BindInterfacesAndSelfTo<WeaponFactory>().FromNew().AsSingle();

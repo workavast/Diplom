@@ -1,4 +1,5 @@
 using System.Collections;
+using App.Weapons;
 using Fusion;
 using UnityEngine;
 
@@ -26,6 +27,7 @@ namespace App.Enemy
         public NetEnemy Spawn(Vector3 position, Quaternion rotation)
         {
             var netEnemy = Runner.Spawn(netEnemyPrefab, position, rotation);
+            netEnemy.SetWeapon(WeaponId.Pistol);
 
             netEnemy.OnDeath += () => StartCoroutine(Spawn());
             

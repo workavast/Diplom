@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,9 +15,9 @@ namespace App.Weapons
 
         private bool _isInitialized;
 
-        public void Initialize()
+        public void Initialize(bool forceInitialisation)
         {
-            if (_isInitialized)
+            if (_isInitialized && !forceInitialisation)
             {
                 Debug.LogError("Is already initialized");
                 return;
@@ -34,6 +33,7 @@ namespace App.Weapons
             }
 
             _isInitialized = true;
+            Debug.Log("Initialized");
         }
     }
 }

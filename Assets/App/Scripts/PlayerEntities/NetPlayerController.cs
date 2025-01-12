@@ -26,19 +26,23 @@ namespace App.PlayerEntities
         public PlayerRef PlayerRef => Object.InputAuthority;
         public PlayerView PlayerView { get; private set; }
 
-        private Weapon _weapon;
+        //Injected fields
         private PlayersRepository _playersRepository;
+        private WeaponFactory _weaponFactory;
         private IEventBus _eventBus;
-
+        
+        private Weapon _weapon;
+            
         public event Action OnDeath;
 
         [Inject]
-        public void Construct(PlayersRepository playersRepository, IEventBus eventBus, WeaponFactory weaponFactory)
+        public void Construct(PlayersRepository playersRepository, WeaponFactory weaponFactory, IEventBus eventBus)
         {
             _playersRepository = playersRepository;
+            _weaponFactory = weaponFactory;
             _eventBus = eventBus;
             
-            _weapon = weaponFactory.Create(WeaponId.Pistol, this, shootPoint);
+            SetWeapon(WeaponId.None);
         }
         
         private void Awake()
@@ -87,6 +91,11 @@ namespace App.PlayerEntities
                     OnDeath?.Invoke();
                 }
             }
+        }
+
+        public void SetWeapon(WeaponId weaponId)
+        {
+            _weapon = _weaponFactory.Create(weaponId, this, shootPoint);
         }
         
         private void Shoot()

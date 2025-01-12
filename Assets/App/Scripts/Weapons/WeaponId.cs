@@ -2,7 +2,7 @@ namespace App.Weapons
 {
     public enum WeaponId
     {
-        Default = 0,
+        None = 0,
         
         Pistol = 1,
         

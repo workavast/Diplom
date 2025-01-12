@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 814f15ad20ec46c298d827f8432f78b2, type: 3}
-  m_Name: WeaponConfig
+  m_Name: PistolWeaponConfig
   m_EditorClassIdentifier: 
   <Id>k__BackingField: 1
   <BulletsPerShoot>k__BackingField: 1

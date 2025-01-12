@@ -1,5 +1,6 @@
 using System;
 using App.PlayerEntities;
+using App.Weapons;
 using Fusion;
 using UnityEngine;
 
@@ -73,7 +74,7 @@ namespace App.Players
         
         private void SpawnPlayer()
         {
-            _netPlayerController = _playerSpawner.Spawn(Object.InputAuthority, _playerSpawnPointsProvider.GetRandomFreeSpawnPoint());
+            _netPlayerController = _playerSpawner.Spawn(Object.InputAuthority, _playerSpawnPointsProvider.GetRandomFreeSpawnPoint(), WeaponId.Pistol);
             _netPlayerController.OnDeath += OnPlayerDeath;
             PlayerIsAlive = true;
             OnPlayerSpawned?.Invoke(_netPlayerController);

@@ -23,18 +23,23 @@ namespace App.Enemy
         public EntityType EntityType => EntityType.Default;
         public GameObject GameObject => gameObject;
 
-        private Weapon _weapon;
-        private IEventBus _eventBus;
+        //Injected fields
         private EnemiesRepository _enemiesRepository;
+        private WeaponFactory _weaponFactory;
+        private IEventBus _eventBus;
+        
+        private Weapon _weapon;
         
         public Action OnDeath;
         
         [Inject]
-        public void Construct(EnemiesRepository enemiesRepository, IEventBus eventBus, WeaponFactory weaponFactory)
+        public void Construct(EnemiesRepository enemiesRepository, WeaponFactory weaponFactory, IEventBus eventBus)
         {
             _enemiesRepository = enemiesRepository;
+            _weaponFactory = weaponFactory;
             _eventBus = eventBus;
-            _weapon = weaponFactory.Create(WeaponId.Pistol, this, shootPoint);
+
+            SetWeapon(WeaponId.None);
         }
         
         public override void Spawned()
@@ -69,6 +74,11 @@ namespace App.Enemy
         
         public string GetName() 
             => nameof(NetEnemy);
+        
+        public void SetWeapon(WeaponId weaponId)
+        {
+            _weapon = _weaponFactory.Create(weaponId, this, shootPoint);
+        }
         
         private void OnDrawGizmos()
         {
