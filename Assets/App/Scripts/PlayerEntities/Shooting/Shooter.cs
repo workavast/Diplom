@@ -28,7 +28,7 @@ namespace App.PlayerEntities.Shooting
             _netParticlesFactory = netParticlesFactory;
         }
         
-        public void Shoot(bool hasStateAuthority)
+        public bool Shoot(bool hasStateAuthority, out ProjectileData projectileData)
         {
             var isHit = Runner.LagCompensation.Raycast(_shootPoint.position, _shootPoint.forward, 
                 100f, InputAuthority, out var hit);
@@ -40,9 +40,18 @@ namespace App.PlayerEntities.Shooting
 
                 if (hasStateAuthority)
                     _damageApplicator.TryApplyDamage(_config.DamagePerBullet, hit.GameObject, _entity);
-                
-                SpawnHitEffect(hit.Point, hit.Normal);
+
+                projectileData = new ProjectileData(hit.Point, hit.Normal);
+                return true;
             }
+            
+            projectileData = default;
+            return true;
+        }
+
+        public void ShootView(ref ProjectileData projectileData)
+        {
+            SpawnHitEffect(projectileData.HitPosition, projectileData.HitNormal);
         }
         
         private void SpawnHitEffect(Vector3 hitPoint, Vector3 normal) 

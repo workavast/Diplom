@@ -35,12 +35,8 @@ namespace App.Particles
 
         public ParticleHolder Create(ParticleType particleType, Vector3 position, Quaternion rotation)
         {
-            Debug.Log("Create Particle");
-            
             _pool.ExtractElement(particleType, out var particleHolder);
-            particleHolder.transform.position = position;
-            particleHolder.transform.rotation = rotation;
-            
+            particleHolder.transform.SetPositionAndRotation(position, rotation);
             return particleHolder;
         }
 

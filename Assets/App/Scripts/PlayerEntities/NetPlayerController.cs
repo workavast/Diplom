@@ -1,7 +1,5 @@
-using System;
-using App.Damage;
+using App.Enemy;
 using App.Entities;
-using App.EventBus;
 using App.PlayerInput;
 using App.Weapons;
 using Avastrad.EventBusFramework;
@@ -12,52 +10,36 @@ using Zenject;
 namespace App.PlayerEntities
 {
     [RequireComponent(typeof(PlayerView))]
-    public class NetPlayerController : NetworkBehaviour, IEntity, IDamageable
+    public class NetPlayerController : NetEntityBase
     {
-        [SerializeField] private Transform shootPoint;
-        [SerializeField] private PlayerEntityConfig config;
-
-        [Networked, HideInInspector] public int HealthPoints { get; private set; }
-        [Networked] private TickTimer AttackDelay { get; set; }
-        
-        public GameObject GameObject => gameObject;
-        public EntityIdentifier Identifier { get; } = new();
-        public EntityType EntityType => EntityType.Player;
-        public PlayerRef PlayerRef => Object.InputAuthority;
-        public PlayerView PlayerView { get; private set; }
-
-        //Injected fields
         private PlayersRepository _playersRepository;
-        private WeaponFactory _weaponFactory;
-        private IEventBus _eventBus;
-        
-        private Weapon _weapon;
-            
-        public event Action OnDeath;
+        public PlayerView PlayerView { get; private set; }
+        public PlayerRef PlayerRef => Object.InputAuthority;
+
+        public override EntityType EntityType => EntityType.Player;
 
         [Inject]
-        public void Construct(PlayersRepository playersRepository, WeaponFactory weaponFactory, IEventBus eventBus)
+        public void Construct(PlayersRepository playersRepository, IEventBus eventBus)
         {
             _playersRepository = playersRepository;
-            _weaponFactory = weaponFactory;
-            _eventBus = eventBus;
-            
-            SetWeapon(WeaponId.None);
+            base.Construct(eventBus);
         }
-        
-        private void Awake()
+
+        protected override void Awake()
         {
+            base.Awake();
             PlayerView = GetComponent<PlayerView>();
         }
 
         public override void Spawned()
         {
+            base.Spawned();
             _playersRepository.Add(Object.InputAuthority, this);
-            HealthPoints = config.InitialHealthPoints;
         }
 
         public override void Despawned(NetworkRunner runner, bool hasState)
         {
+            base.Despawned(runner, hasState);
             _playersRepository.Remove(this);
         }
 
@@ -69,46 +51,17 @@ namespace App.PlayerEntities
                 var lookPoint = new Vector3(input.LookPoint.x, PlayerView.transform.position.y, input.LookPoint.y);
                 PlayerView.Move(moveDirection, config.MoveSpeed, config.Gravity, Runner.DeltaTime);
                 PlayerView.SetLookPoint(lookPoint);
-                
-                if (input.Buttons.IsSet(PlayerButtons.Fire) && AttackDelay.ExpiredOrNotRunning(Runner)) 
-                    Shoot();
-            }
-        }
 
-        public string GetName()
-        {
-            return "PLAYER";
-        }
-        
-        public void TakeDamage(float damage, IEntity shooter)//shooter need to give him points
-        {
-            HealthPoints -= (int)damage;
-            if (HasStateAuthority)
-            {
-                if (HealthPoints <= 0)
+                if ((HasStateAuthority || HasInputAuthority) && input.Buttons.IsSet(PlayerButtons.Fire))
                 {
-                    _eventBus.Invoke(new OnKill(Identifier.Id, shooter.Identifier.Id));
-                    OnDeath?.Invoke();
+                    NetWeapon = GetComponent<NetWeapon>();
+                    NetWeapon.TryShoot();
                 }
             }
         }
 
-        public void SetWeapon(WeaponId weaponId)
-        {
-            _weapon = _weaponFactory.Create(weaponId, this, shootPoint);
-        }
-        
-        private void Shoot()
-        {
-            if (HasStateAuthority) 
-                AttackDelay = TickTimer.CreateFromSeconds(Runner, config.AttackDaley);
-
-            _weapon.Shoot(HasStateAuthority);
-        }
-
-        private void OnDrawGizmos()
-        {
-            _weapon.OnDrawGizmos();
-        }
+        public override string GetName() 
+            => "PLAYER";
     }
 }
+

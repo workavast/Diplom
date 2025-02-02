@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 7942052991263362750}
   - component: {fileID: 1625900555111658174}
   - component: {fileID: 2904001272448192457}
+  - component: {fileID: 861037711003020237}
   m_Layer: 3
   m_Name: Enemy
   m_TagString: Untagged
@@ -174,7 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 8074423664287962504}
   config: {fileID: 11400000, guid: 2e235d0bd95dfe34f95a57e634acc985, type: 2}
-  _HealthPoints: 0
+  _NetHealthPoints: 0
 --- !u!114 &8924442713109921284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,6 +209,7 @@ MonoBehaviour:
   - {fileID: 8924442713109921284}
   - {fileID: 8581854729729584098}
   - {fileID: 7942052991263362750}
+  - {fileID: 861037711003020237}
   ForceRemoteRenderTimeframe: 0
 --- !u!143 &-658295760547561401
 CharacterController:
@@ -341,6 +343,20 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &861037711003020237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072648177644592389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52d49ad24abe45699d19540d4aadce87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootPoint: {fileID: 8074423664287962504}
+  _NetEquippedWeapon: 0
 --- !u!1 &5814060831797141807
 GameObject:
   m_ObjectHideFlags: 0

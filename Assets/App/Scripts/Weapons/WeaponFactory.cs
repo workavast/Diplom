@@ -15,12 +15,12 @@ namespace App.Weapons
             _shooterFactory = shooterFactory;
         }
         
-        public Weapon Create(WeaponId weaponId, IEntity entity, Transform shootPoint)
+        public (WeaponConfig, Shooter) Create(WeaponId weaponId, IEntity entity, Transform shootPoint)
         {
             var config = _weaponsConfigs.WeaponConfigs[weaponId];
             var shooter = _shooterFactory.CreateShoot(entity, shootPoint, config);
             
-            return new Weapon(config, shooter);
+            return (config, shooter);
         }
     }
 }

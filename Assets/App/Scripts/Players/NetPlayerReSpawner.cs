@@ -65,7 +65,6 @@ namespace App.Players
 
             PlayerIsAlive = false;
             _netPlayerController.OnDeath -= OnPlayerDeath;
-            Runner.Despawn(_netPlayerController.Object);
             PrepareSpawn();
         }
         

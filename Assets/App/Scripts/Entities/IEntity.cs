@@ -10,7 +10,7 @@ namespace App.Entities
         GameObject GameObject { get; }
         NetworkRunner Runner { get; }
         NetworkObject Object { get; }
-        int HealthPoints { get; }
+        int NetHealthPoints { get; }
 
         string GetName();
     }
