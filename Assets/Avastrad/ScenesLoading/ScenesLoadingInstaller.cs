@@ -1,4 +1,5 @@
 using System;
+using App.ScenesLoading;
 using UnityEngine;
 using Zenject;
 
@@ -28,7 +29,7 @@ namespace Avastrad.ScenesLoading
         
         private void BindSceneLoader()
         {
-            Container.BindInterfacesTo<SceneLoader>().FromNew().AsSingle().WithArguments(loadingSceneIndex);
+            Container.BindInterfacesTo<NetScenesLoader>().FromNew().AsSingle().WithArguments(loadingSceneIndex);
         }
     }
 }

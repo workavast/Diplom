@@ -10,7 +10,7 @@ namespace App.Bootstraps
 
         private void Start()
         {
-            _sceneLoader.HideLoadScreen(false);
+            _sceneLoader.HideLoadScreen(true);
         }
     }
 }

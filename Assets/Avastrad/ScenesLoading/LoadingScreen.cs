@@ -12,6 +12,7 @@ namespace Avastrad.ScenesLoading
         
         public bool IsShow { get; private set; }
         
+        public event Action OnPreShow;
         public event Action OnHided;
 
         public void Initialize() 
@@ -19,6 +20,7 @@ namespace Avastrad.ScenesLoading
 
         public void Show(bool instantly, Action onShowedCallback)
         {
+            OnPreShow?.Invoke();
             if (instantly)
                 ShowInstantly(onShowedCallback);
             else
