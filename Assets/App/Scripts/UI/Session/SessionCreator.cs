@@ -1,7 +1,7 @@
 using System;
 using App.NetworkRunning;
-using App.ScenesLoading;
 using App.UI;
+using Avastrad.ScenesLoading;
 using Fusion;
 using Fusion.Photon.Realtime;
 using shortid;
@@ -90,7 +90,7 @@ namespace App.Session
                 {
                     if (sceneIndex != SceneManager.GetActiveScene().buildIndex)
                     {
-                        _sceneLoader.LoadScene(sceneIndex);
+                        _sceneLoader.LoadScene(sceneIndex, true);
                         // var sceneName = ScenesData.NameByIndex(sceneIndex);
                         // await NetworkRunner.LoadScene(sceneName);
                     }

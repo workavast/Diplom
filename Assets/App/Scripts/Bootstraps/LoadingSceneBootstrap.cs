@@ -1,4 +1,4 @@
-using App.ScenesLoading;
+using Avastrad.ScenesLoading;
 using UnityEngine;
 using Zenject;
 
@@ -10,7 +10,7 @@ namespace App.Bootstraps
         
         private void Start()
         {
-            _sceneLoader.Initialize(false);
+            _sceneLoader.LoadTargetScene();
         }
     }
 }
