@@ -54,8 +54,8 @@ namespace App.Enemy
                 EventBus.Invoke(new OnKill(Identifier.Id, shooter.Identifier.Id));
                 OnDeath?.Invoke();
                 OnDeath = null;
-                Runner.Despawn(Object);
                 Debug.Log($"{GetName()} is dead");
+                Runner.Despawn(Object);
             }
         }
         

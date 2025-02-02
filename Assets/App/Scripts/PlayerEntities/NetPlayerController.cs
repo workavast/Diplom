@@ -1,6 +1,7 @@
 using App.Enemy;
 using App.Entities;
 using App.PlayerInput;
+using App.Players.Nicknames;
 using App.Weapons;
 using Avastrad.EventBusFramework;
 using Fusion;
@@ -13,15 +14,18 @@ namespace App.PlayerEntities
     public class NetPlayerController : NetEntityBase
     {
         private PlayersRepository _playersRepository;
+        private NicknamesProvider _nicknamesProvider;
+        
         public PlayerView PlayerView { get; private set; }
         public PlayerRef PlayerRef => Object.InputAuthority;
 
         public override EntityType EntityType => EntityType.Player;
 
         [Inject]
-        public void Construct(PlayersRepository playersRepository, IEventBus eventBus)
+        public void Construct(PlayersRepository playersRepository, NicknamesProvider nicknamesProvider, IEventBus eventBus)
         {
             _playersRepository = playersRepository;
+            _nicknamesProvider = nicknamesProvider;
             base.Construct(eventBus);
         }
 
@@ -60,8 +64,12 @@ namespace App.PlayerEntities
             }
         }
 
-        public override string GetName() 
-            => "PLAYER";
+        public override string GetName()
+        {
+            Debug.Log($"{HasStateAuthority} {HasInputAuthority} {Object == null}");
+            
+            return _nicknamesProvider.GetNickName(PlayerRef);
+        }
     }
 }
 
