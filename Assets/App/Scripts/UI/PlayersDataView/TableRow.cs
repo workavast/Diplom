@@ -1,6 +1,7 @@
 using System;
 using App.Players.SessionDatas;
 using Avastrad.PoolSystem;
+using Fusion;
 using TMPro;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ namespace App.UI.PlayersDataView
         [SerializeField] private TMP_Text kills;
         [SerializeField] private TMP_Text deaths;
         [SerializeField] private TMP_Text points;
+
+        public PlayerRef PlayerRef => _sessionData.PlayerRef;
 
         private bool _isInitialized;
         private NetPlayerSessionData _sessionData;
@@ -102,7 +105,7 @@ namespace App.UI.PlayersDataView
             _sessionData.OnDeathsChanged -= UpdateRow;
         }
 
-        private void OnDestroy()
+        public void OnDestroy()
         {
             DestroyElementEvent?.Invoke(this);
         }

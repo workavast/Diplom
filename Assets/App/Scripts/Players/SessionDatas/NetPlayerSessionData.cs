@@ -27,6 +27,8 @@ namespace App.Players.SessionDatas
 
         private IPlayerSessionDatasRepository _playerSessionDatasRepository;
         
+        public PlayerRef PlayerRef => Object.InputAuthority;
+        
         public event Action OnDespawned;
         public event Action OnNickNameChanged;
         public event Action OnPointsChanged;
