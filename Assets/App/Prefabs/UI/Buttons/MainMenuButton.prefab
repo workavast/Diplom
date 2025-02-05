@@ -88,6 +88,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8182642465047333698, guid: 0f2ea0c864b7c33439b83f6432a04df0, type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8418906480906510443, guid: 0f2ea0c864b7c33439b83f6432a04df0, type: 3}
       propertyPath: m_Name
       value: MainMenuButton
