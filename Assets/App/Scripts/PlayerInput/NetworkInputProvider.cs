@@ -12,6 +12,7 @@ namespace App.PlayerInput
         private const string AXIS_HORIZONTAL = "Horizontal";
         private const string AXIS_VERTICAL = "Vertical";
         private const string BUTTON_FIRE1 = "Fire1";
+        private const KeyCode BUTTON_SPRINT = KeyCode.LeftShift;
         
         public void OnInput(NetworkRunner runner, NetworkInput input)
         {
@@ -23,6 +24,7 @@ namespace App.PlayerInput
             };
 
             playerInputData.Buttons.Set(PlayerButtons.Fire, Input.GetButton(BUTTON_FIRE1));
+            playerInputData.Buttons.Set(PlayerButtons.Sprint, Input.GetKey(BUTTON_SPRINT));
 
             input.Set(playerInputData);
         }

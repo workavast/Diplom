@@ -53,7 +53,9 @@ namespace App.PlayerEntities
             {
                 var moveDirection = Vector3.right * input.HorizontalInput + Vector3.forward * input.VerticalInput;
                 var lookPoint = new Vector3(input.LookPoint.x, PlayerView.transform.position.y, input.LookPoint.y);
-                PlayerView.Move(moveDirection, config.MoveSpeed, config.Gravity, Runner.DeltaTime);
+
+                var moveSpeed = input.Buttons.IsSet(PlayerButtons.Sprint) ? config.SprintSpeed : config.WalkSpeed;
+                PlayerView.Move(moveDirection, moveSpeed, config.Gravity, Runner.DeltaTime);
                 PlayerView.SetLookPoint(lookPoint);
 
                 if ((HasStateAuthority || HasInputAuthority) && input.Buttons.IsSet(PlayerButtons.Fire))
