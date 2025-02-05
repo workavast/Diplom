@@ -41,7 +41,7 @@ namespace App.ScenesLoading
                 () =>
                 {
                     var netRunner = _networkRunnerProvider.GetNetworkRunner();
-                    if (netRunner.IsRunning) 
+                    if (netRunner.IsRunning && !netRunner.IsShutdown) 
                         netRunner.LoadScene(SceneRef.FromIndex(_loadingSceneIndex));
                     else
                         SceneManager.LoadSceneAsync(_loadingSceneIndex);

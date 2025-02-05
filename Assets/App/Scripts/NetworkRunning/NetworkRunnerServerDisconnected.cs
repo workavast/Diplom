@@ -1,24 +1,29 @@
 using System;
 using System.Collections.Generic;
+using App.ScenesLoading;
+using Avastrad.ScenesLoading;
 using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
-namespace App
+namespace App.NetworkRunning
 {
     [DisallowMultipleComponent]
-    public class OnServerDisconnected : MonoBehaviour, INetworkRunnerCallbacks
+    public class NetworkRunnerServerDisconnected : MonoBehaviour, INetworkRunnerCallbacks
     {
-        [SerializeField] private int menuSceneName;
-
+        [Inject] private readonly ISceneLoader _sceneLoader;
+        
         public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
         {
-            if (SceneManager.GetActiveScene().buildIndex == menuSceneName)
+            if (SceneManager.GetActiveScene().buildIndex == ScenesConfig.MainMenuSceneIndex)
+            {
+                Debug.LogWarning("You are trying return in the menu when you already in the menu");
                 return;
+            }
 
-            // When the local NetworkRunner has shut down, the menu scene is loaded.
-            SceneManager.LoadScene(menuSceneName);
+            _sceneLoader.LoadScene(ScenesConfig.MainMenuSceneIndex, true);
         }
 
         public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
