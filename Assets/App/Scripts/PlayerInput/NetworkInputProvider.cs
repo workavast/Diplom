@@ -1,30 +1,29 @@
 using System;
 using System.Collections.Generic;
+using App.PlayerInput.InputProviding;
 using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
+using Zenject;
 
 namespace App.PlayerInput
 {
     [DisallowMultipleComponent]
     public class NetworkInputProvider : MonoBehaviour, INetworkRunnerCallbacks
     {
-        private const string AXIS_HORIZONTAL = "Horizontal";
-        private const string AXIS_VERTICAL = "Vertical";
-        private const string BUTTON_FIRE1 = "Fire1";
-        private const KeyCode BUTTON_SPRINT = KeyCode.LeftShift;
-        
+        [Inject] private readonly IInputProvider _inputProvider;
+
         public void OnInput(NetworkRunner runner, NetworkInput input)
         {
-            var lookPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             var playerInputData = new PlayerInputData {
-                HorizontalInput = Input.GetAxis(AXIS_HORIZONTAL),
-                VerticalInput = Input.GetAxis(AXIS_VERTICAL),
-                LookPoint = new Vector2(lookPoint.x, lookPoint.z) 
+                HorizontalInput = _inputProvider.MoveDirection.x,
+                VerticalInput = _inputProvider.MoveDirection.y,
+                LookDirection = _inputProvider.GetLookDirection(runner.LocalPlayer)
             };
 
-            playerInputData.Buttons.Set(PlayerButtons.Fire, Input.GetButton(BUTTON_FIRE1));
-            playerInputData.Buttons.Set(PlayerButtons.Sprint, Input.GetKey(BUTTON_SPRINT));
+            
+            playerInputData.Buttons.Set(PlayerButtons.Fire, _inputProvider.Fire);
+            playerInputData.Buttons.Set(PlayerButtons.Sprint, _inputProvider.Sprint);
 
             input.Set(playerInputData);
         }

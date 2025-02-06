@@ -47,5 +47,17 @@ namespace App.PlayerEntities
             player = null;
             return false;
         }
+        
+        public bool TryGet(PlayerRef playerRef, out NetPlayerController player)
+        {
+            if (_players.TryGetValue(playerRef, out var value))
+            {
+                player = value;
+                return true;
+            }
+
+            player = null;
+            return false;
+        }
     }
 }

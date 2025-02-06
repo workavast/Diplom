@@ -27,5 +27,5 @@ EditorBuildSettings:
     path: Assets/Photon/FusionDemos/IntroSample/Sample/Scenes/FusionDemoGameplayShared.unity
     guid: 10a09311c051d1a47bcfacdc204a352a
   m_configObjects:
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 1e93f733b8b4f824a871677773494fc8, type: 3}
   m_UseUCBPForAssetBundles: 0

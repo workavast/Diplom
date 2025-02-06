@@ -50,7 +50,6 @@ namespace App.Players.SessionDatas
         {
             base.Spawned();
 
-            var bink = NickName.ToString();
             if (HasInputAuthority)
             {
                 if (HasStateAuthority)
@@ -58,7 +57,7 @@ namespace App.Players.SessionDatas
                 else
                     Rpc_SetNickName(PlayerData.NickName);
 
-                if (Object.HasStateAuthority)
+                if (HasStateAuthority)
                     Points = 0;
             }
 

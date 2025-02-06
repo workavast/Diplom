@@ -7,7 +7,7 @@ namespace App.PlayerInput
     {
         public float HorizontalInput;
         public float VerticalInput;
-        public Vector2 LookPoint;
+        public Vector2 LookDirection;
         public NetworkButtons Buttons;
     }
 }

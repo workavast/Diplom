@@ -4,6 +4,7 @@ using App.PlayerInput;
 using App.Players.Nicknames;
 using App.Weapons;
 using Avastrad.EventBusFramework;
+using Avastrad.Vector2Extension;
 using Fusion;
 using UnityEngine;
 using Zenject;
@@ -52,7 +53,13 @@ namespace App.PlayerEntities
             if (GetInput(out PlayerInputData input))
             {
                 var moveDirection = Vector3.right * input.HorizontalInput + Vector3.forward * input.VerticalInput;
-                var lookPoint = new Vector3(input.LookPoint.x, PlayerView.transform.position.y, input.LookPoint.y);
+
+                Vector3 lookPoint;
+                var lookDirection = input.LookDirection;
+                if (lookDirection == default || lookDirection == Vector2.zero)
+                    lookPoint = PlayerView.transform.position + PlayerView.transform.forward;
+                else
+                    lookPoint = PlayerView.transform.position + lookDirection.X0Y();
 
                 var moveSpeed = input.Buttons.IsSet(PlayerButtons.Sprint) ? config.SprintSpeed : config.WalkSpeed;
                 PlayerView.Move(moveDirection, moveSpeed, config.Gravity, Runner.DeltaTime);
