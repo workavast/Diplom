@@ -79,7 +79,7 @@ namespace App.Weapons
         }
         
         public void OnDrawGizmos() 
-            => _shooter.OnDrawGizmos();
+            => _shooter?.OnDrawGizmos();
 
         private void OnNetEquippedWeaponChanged() 
             => SetWeapon(NetEquippedWeapon);

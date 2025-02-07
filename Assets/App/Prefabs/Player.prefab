@@ -173,7 +173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34975efcb9ab4295a9a2034e610d410b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootPoint: {fileID: 8074423664287962504}
   config: {fileID: 11400000, guid: 2e235d0bd95dfe34f95a57e634acc985, type: 2}
   _NetHealthPoints: 0
 --- !u!114 &3872098561446610495
@@ -230,8 +229,8 @@ CharacterController:
   serializedVersion: 3
   m_Height: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_SlopeLimit: 20
+  m_StepOffset: 0.1
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
@@ -356,6 +355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 8074423664287962504}
   _NetEquippedWeapon: 0
+  _NetFireCount: 0
 --- !u!1 &5814060831797141807
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,7 +31,7 @@ namespace App.PlayerEntities.Shooting
         public bool Shoot(bool hasStateAuthority, out ProjectileData projectileData)
         {
             var isHit = Runner.LagCompensation.Raycast(_shootPoint.position, _shootPoint.forward, 
-                100f, InputAuthority, out var hit);
+                100f, InputAuthority, out var hit, -1, HitOptions.IncludePhysX);
             
             if (isHit)
             {
