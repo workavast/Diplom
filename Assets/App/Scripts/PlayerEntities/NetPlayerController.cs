@@ -62,7 +62,7 @@ namespace App.PlayerEntities
                     lookPoint = PlayerView.transform.position + lookDirection.X0Y();
 
                 var moveSpeed = input.Buttons.IsSet(PlayerButtons.Sprint) ? config.SprintSpeed : config.WalkSpeed;
-                PlayerView.Move(moveDirection, moveSpeed, config.Gravity, Runner.DeltaTime);
+                PlayerView.Move(moveDirection, moveSpeed, config.Gravity, Runner.DeltaTime, config.SprintSpeed);
                 PlayerView.SetLookPoint(lookPoint);
 
                 if ((HasStateAuthority || HasInputAuthority) && input.Buttons.IsSet(PlayerButtons.Fire))

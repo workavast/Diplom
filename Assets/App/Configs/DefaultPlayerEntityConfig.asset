@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <InitialHealthPoints>k__BackingField: 100
   <AttackDaley>k__BackingField: 0.2
-  <MoveSpeed>k__BackingField: 5
+  <WalkSpeed>k__BackingField: 4
+  <SprintSpeed>k__BackingField: 6
   <Gravity>k__BackingField: -9.8
