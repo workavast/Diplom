@@ -19,6 +19,9 @@ namespace App.PlayerInput.InputProviding
         public Vector2 GetLookDirection(PlayerRef playerRef) 
             => _inputProviderBase.GetLookDirection(playerRef);
 
+        public bool MouseOverUI() 
+            => _inputProviderBase.MouseOverUI();
+
         public void SetInputProvider(InputProviderBase inputProviderBase) 
             => _inputProviderBase = inputProviderBase;
     }

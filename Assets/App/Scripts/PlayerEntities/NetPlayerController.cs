@@ -71,6 +71,11 @@ namespace App.PlayerEntities
                     NetWeapon.TryShoot();
                 }
             }
+
+#if UNITY_EDITOR
+            if (HasStateAuthority && Input.GetKeyDown(KeyCode.Q)) 
+                TakeDamage(999, this);
+#endif
         }
 
         public override string GetName()

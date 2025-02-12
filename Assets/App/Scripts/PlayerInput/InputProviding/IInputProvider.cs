@@ -12,5 +12,6 @@ namespace App.PlayerInput.InputProviding
         public bool IsGamepad { get; }
 
         Vector2 GetLookDirection(PlayerRef playerRef);
+        bool MouseOverUI();
     }
 }

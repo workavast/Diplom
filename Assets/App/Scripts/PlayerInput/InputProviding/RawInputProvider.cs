@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace App.PlayerInput.InputProviding
@@ -63,5 +64,8 @@ namespace App.PlayerInput.InputProviding
                     break;
             }
         }
+
+        public bool MouseOverUI() 
+            => EventSystem.current.IsPointerOverGameObject();
     }
 }

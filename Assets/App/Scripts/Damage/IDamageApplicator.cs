@@ -1,6 +1,4 @@
 using App.Entities;
-using App.PlayerEntities;
-using Fusion;
 using UnityEngine;
 
 namespace App.Damage

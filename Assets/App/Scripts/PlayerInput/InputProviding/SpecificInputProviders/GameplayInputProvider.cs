@@ -26,7 +26,9 @@ namespace App.PlayerInput.InputProviding
             {
                 if (_playersRepository.TryGet(playerRef, out var player))
                 {
-                    var lookPoint = Camera.main.ScreenToWorldPoint(_rawInputProvider.MousePosition.XY0());
+                    var depthOffset = Camera.main.transform.position.y - player.transform.position.y;
+                    var screenPoint = _rawInputProvider.MousePosition.XY0(depthOffset);
+                    var lookPoint = Camera.main.ScreenToWorldPoint(screenPoint);
                     lookPoint.y = player.transform.position.y;
 
                     var lookDirection = (lookPoint - player.transform.position).normalized;

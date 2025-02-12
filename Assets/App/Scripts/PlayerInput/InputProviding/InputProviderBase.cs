@@ -22,5 +22,8 @@ namespace App.PlayerInput.InputProviding
         }
 
         public abstract Vector2 GetLookDirection(PlayerRef playerRef);
+
+        public bool MouseOverUI() 
+            => _rawInputProvider.MouseOverUI();
     }
 }
