@@ -390,6 +390,7 @@ GameObject:
   m_Component:
   - component: {fileID: 122570919304282623}
   - component: {fileID: 5874498233389761677}
+  - component: {fileID: 6940533122040448919}
   m_Layer: 0
   m_Name: TargetGroup
   m_TagString: Untagged
@@ -429,12 +430,26 @@ MonoBehaviour:
   UpdateMethod: 2
   Targets:
   - Object: {fileID: 4971891197955571597}
-    Weight: 0.5
+    Weight: 0.4
     Radius: 0.5
   - Object: {fileID: 3435573979687538354}
     Weight: 1
     Radius: 0.5
   m_LegacyTargets: []
+--- !u!114 &6940533122040448919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6548368531796588864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3b487578c3d4d389538bcbbf5727a53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetGroup: {fileID: 5874498233389761677}
+  config: {fileID: 11400000, guid: 00d3283b9c6e583439086b5def5750dd, type: 2}
 --- !u!1 &7979818841622375886
 GameObject:
   m_ObjectHideFlags: 0

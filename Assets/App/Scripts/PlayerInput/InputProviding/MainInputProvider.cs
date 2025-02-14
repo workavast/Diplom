@@ -7,6 +7,7 @@ namespace App.PlayerInput.InputProviding
     {
         public Vector2 MoveDirection => _inputProviderBase.MoveDirection;
         public bool Fire => _inputProviderBase.Fire;
+        public bool Aim => _inputProviderBase.Aim;
         public bool Sprint => _inputProviderBase.Sprint;
         public bool Esc => _inputProviderBase.Esc;
         public bool IsGamepad => _inputProviderBase.IsGamepad;
