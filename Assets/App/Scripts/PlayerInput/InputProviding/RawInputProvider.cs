@@ -12,9 +12,14 @@ namespace App.PlayerInput.InputProviding
         public bool Fire { get; private set; }
         public bool Aim { get; private set; }
         public bool Sprint { get; private set; }
-        public bool Esc { get; private set; }
+        public bool Menu { get; private set; }
 
         public bool IsGamepad { get; private set; }
+
+        private void LateUpdate()
+        {
+            Menu = false;
+        }
 
         public void OnMove(InputAction.CallbackContext context)
         {
@@ -74,6 +79,15 @@ namespace App.PlayerInput.InputProviding
                     };
                     break;
             }
+        }
+
+        public void OnMenu(InputAction.CallbackContext context)
+        {
+            Menu = context.phase switch
+            {
+                InputActionPhase.Started => true,
+                _ => Menu
+            };
         }
 
         public bool MouseOverUI() 

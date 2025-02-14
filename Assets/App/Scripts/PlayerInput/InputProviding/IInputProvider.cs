@@ -9,7 +9,7 @@ namespace App.PlayerInput.InputProviding
         public bool Fire { get; }
         public bool Aim { get; }
         public bool Sprint { get; }
-        public bool Esc { get; }
+        public bool Menu { get; }
         public bool IsGamepad { get; }
 
         Vector2 GetLookDirection(PlayerRef playerRef);

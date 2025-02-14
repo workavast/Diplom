@@ -9,7 +9,7 @@ namespace App.PlayerInput.InputProviding
         public bool Fire => _inputProviderBase.Fire;
         public bool Aim => _inputProviderBase.Aim;
         public bool Sprint => _inputProviderBase.Sprint;
-        public bool Esc => _inputProviderBase.Esc;
+        public bool Menu => _inputProviderBase.Menu;
         public bool IsGamepad => _inputProviderBase.IsGamepad;
 
         private InputProviderBase _inputProviderBase;
