@@ -139,6 +139,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 2e235d0bd95dfe34f95a57e634acc985, type: 2}
   _NetHealthPoints: 0
+  playerView: {fileID: 3872098561446610495}
+  characterController: {fileID: -658295760547561401}
 --- !u!114 &3872098561446610495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 1039544458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Config: 3
+  Config: -1
   BroadRadius: 0.85
   Offset: {x: 0, y: 0, z: 0}
   GizmosColor: {r: 1, g: 0, b: 0.005943775, a: 1}

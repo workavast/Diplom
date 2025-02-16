@@ -11,13 +11,14 @@ using Zenject;
 
 namespace App.PlayerEntities
 {
-    [RequireComponent(typeof(PlayerView))]
     public class NetPlayerController : NetEntityBase
     {
+        [SerializeField, Tooltip("Can be null")] private PlayerView playerView;
+        [SerializeField, Tooltip("Can be null")] private CharacterController characterController;
+        
         private PlayersRepository _playersRepository;
         private NicknamesProvider _nicknamesProvider;
-        
-        public PlayerView PlayerView { get; private set; }
+
         public PlayerRef PlayerRef => Object.InputAuthority;
 
         public override EntityType EntityType => EntityType.Player;
@@ -33,7 +34,12 @@ namespace App.PlayerEntities
         protected override void Awake()
         {
             base.Awake();
-            PlayerView = GetComponent<PlayerView>();
+
+            if (playerView == null)
+                playerView = ComponentExt.GetComponent<PlayerView>(this);
+
+            if (characterController == null)
+                characterController = ComponentExt.GetComponent<CharacterController>(this);
         }
 
         public override void Spawned()
@@ -50,39 +56,59 @@ namespace App.PlayerEntities
 
         public override void FixedUpdateNetwork()
         {
-            if (GetInput(out PlayerInputData input))
+            var hasInput = GetInput(out PlayerInputData input);
+            if (hasInput)
             {
-                var moveDirection = Vector3.right * input.HorizontalInput + Vector3.forward * input.VerticalInput;
-
-                Vector3 lookPoint;
-                var lookDirection = input.LookDirection;
-                if (lookDirection == default || lookDirection == Vector2.zero)
-                    lookPoint = PlayerView.transform.position + PlayerView.transform.forward;
-                else
-                    lookPoint = PlayerView.transform.position + lookDirection.X0Y();
-
-                var moveSpeed = input.Buttons.IsSet(PlayerButtons.Sprint) ? config.SprintSpeed : config.WalkSpeed;
-                PlayerView.Move(moveDirection, moveSpeed, config.Gravity, Runner.DeltaTime, config.SprintSpeed);
-                PlayerView.SetLookPoint(lookPoint);
-
+                RotateByLookDirection(input.LookDirection);
+                NetUnscaledVelocity = GetUnscaledVelocity(input);
+                characterController.Move(NetUnscaledVelocity * Runner.DeltaTime);
+            }
+            
+            if (hasInput)
+            {
                 if ((HasStateAuthority || HasInputAuthority) && input.Buttons.IsSet(PlayerButtons.Fire))
                 {
                     NetWeapon = GetComponent<NetWeapon>();
                     NetWeapon.TryShoot();
                 }
             }
-
+            
 #if UNITY_EDITOR
             if (HasStateAuthority && Input.GetKeyDown(KeyCode.Q)) 
                 TakeDamage(999, this);
 #endif
         }
 
+        public override void Render()
+        {
+            playerView.MoveView(NetUnscaledVelocity, config.SprintSpeed);
+        }
+
         public override string GetName()
         {
-            Debug.Log($"{HasStateAuthority} {HasInputAuthority} {Object == null}");
-            
             return _nicknamesProvider.GetNickName(PlayerRef);
+        }
+
+        private void RotateByLookDirection(Vector2 lookDirection)
+        {
+            Vector3 lookPoint;
+            if (lookDirection == default || lookDirection == Vector2.zero)
+                lookPoint = playerView.transform.position + playerView.transform.forward;
+            else
+                lookPoint = playerView.transform.position + lookDirection.X0Y();
+                
+            playerView.SetLookPoint(lookPoint);
+        }
+
+        private Vector3 GetUnscaledVelocity(PlayerInputData input)
+        {
+            var moveDirection = Vector3.right * input.HorizontalInput + Vector3.forward * input.VerticalInput;
+            var moveSpeed = input.Buttons.IsSet(PlayerButtons.Sprint) ? config.SprintSpeed : config.WalkSpeed;
+           
+            var unscaledGravityVelocity = config.Gravity * Vector3.up;
+            var unscaledVelocity = moveSpeed * moveDirection;
+            
+            return  unscaledGravityVelocity + unscaledVelocity;
         }
     }
 }

@@ -25,8 +25,8 @@ namespace App.Entities
             }
             else
             {
-                animator.SetFloat(VelocityX, playerView.Velocity.x);
-                animator.SetFloat(VelocityY, playerView.Velocity.y);
+                animator.SetFloat(VelocityX, playerView.AnimationVelocity.x);
+                animator.SetFloat(VelocityY, playerView.AnimationVelocity.y);
             }
         }
     }

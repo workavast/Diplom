@@ -15,7 +15,8 @@ namespace App.Enemy
     {
         [SerializeField] protected PlayerEntityConfig config;
 
-        [Networked] public int NetHealthPoints { get; protected set; }
+        [Networked] [field: ReadOnly] public int NetHealthPoints { get; protected set; }
+        [Networked] [field: ReadOnly, SerializeField] protected Vector3 NetUnscaledVelocity { get; set; }
 
         public GameObject GameObject => gameObject;
         public EntityIdentifier Identifier { get; } = new();
@@ -40,7 +41,6 @@ namespace App.Enemy
 
         public override void Spawned()
         {
-            Debug.Log("Spawned");
             NetHealthPoints = config != null ? config.InitialHealthPoints : 100;
             Debug.Log($"Spawned: {Object.InputAuthority}: {NetWeapon.NetEquippedWeapon}");
         }
