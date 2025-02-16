@@ -4,6 +4,7 @@ using App.Particles;
 using App.Weapons;
 using Fusion;
 using UnityEngine;
+using Random = Unity.Mathematics.Random;
 
 namespace App.PlayerEntities.Shooting
 {
@@ -30,7 +31,9 @@ namespace App.PlayerEntities.Shooting
         
         public bool Shoot(bool hasStateAuthority, out ProjectileData projectileData)
         {
-            var isHit = Runner.LagCompensation.Raycast(_shootPoint.position, _shootPoint.forward, 
+            var spreadDirection = GetSpreadDirection(_shootPoint.forward, _config.SpreadAngle, Runner.Tick);
+
+            var isHit = Runner.LagCompensation.Raycast(_shootPoint.position, spreadDirection, 
                 100f, InputAuthority, out var hit, -1, HitOptions.IncludePhysX);
             
             if (isHit)
@@ -54,12 +57,29 @@ namespace App.PlayerEntities.Shooting
             SpawnHitEffect(projectileData.HitPosition, projectileData.HitNormal);
         }
         
-        private void SpawnHitEffect(Vector3 hitPoint, Vector3 normal) 
-            => _netParticlesFactory.SpawnParticleEffect(ParticleType.BulletCollision, hitPoint, normal);
-
         public void OnDrawGizmos()
         {
             Gizmos.DrawLine(_shootPoint.position, _shootPoint.position + _shootPoint.forward * 100f);
+        }
+        
+        private void SpawnHitEffect(Vector3 hitPoint, Vector3 normal) 
+            => _netParticlesFactory.SpawnParticleEffect(ParticleType.BulletCollision, hitPoint, normal);
+
+        private static Vector3 GetSpreadDirection(Vector3 forward, float maxSpreadAngle, int tick)
+        {
+            var random = new Random((uint)tick);
+            
+            // for some reason first value from random isnt random
+            // (with maxSpreadAngle = 10, spreadX slow decrease from 10, for each shoot (9.9 -> 9.8 -> 9.7 -> etc.))
+            // so we call Next to avoid this un random random
+            random.NextFloat(-maxSpreadAngle, maxSpreadAngle);
+
+            var spreadX = random.NextFloat(-maxSpreadAngle, maxSpreadAngle);
+            var spreadY = random.NextFloat(-maxSpreadAngle, maxSpreadAngle);
+        
+            var spreadRotation = Quaternion.Euler(spreadX, spreadY, 0);
+            Debug.Log($"spread: {tick} | {spreadX} | {spreadY}");
+            return spreadRotation * forward;
         }
     }
 }

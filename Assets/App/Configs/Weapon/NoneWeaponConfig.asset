@@ -17,4 +17,5 @@ MonoBehaviour:
   <DamagePerBullet>k__BackingField: 1
   <FireRate>k__BackingField: 0.2
   <AimOffset>k__BackingField: 0
+  <SpreadAngle>k__BackingField: 0
   <MagazineSize>k__BackingField: 1
