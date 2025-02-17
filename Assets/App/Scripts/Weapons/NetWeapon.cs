@@ -8,8 +8,7 @@ namespace App.Weapons
 {
     public class NetWeapon : NetworkBehaviour
     {
-        private WeaponConfig _weaponConfig;
-        
+        [SerializeField] private WeaponView weaponView;
         [SerializeField] protected Transform shootPoint;
 
         [OnChangedRender(nameof(OnNetEquippedWeaponChanged))]
@@ -20,6 +19,7 @@ namespace App.Weapons
 
         [Inject] private readonly WeaponFactory _weaponFactory;
 
+        private WeaponConfig _weaponConfig;
         private Shooter _shooter;
         private int _visibleFireCount;
 
@@ -40,6 +40,8 @@ namespace App.Weapons
         {
             if (_visibleFireCount < NetFireCount)
             {
+                weaponView.ShotVfx();
+                weaponView.ShotSfx();
                 for (int i = _visibleFireCount; i < NetFireCount; i++)
                 {
                     var data = NetProjectileData[i % NetProjectileData.Length];

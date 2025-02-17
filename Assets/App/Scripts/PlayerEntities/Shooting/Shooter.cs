@@ -78,7 +78,6 @@ namespace App.PlayerEntities.Shooting
             var spreadY = random.NextFloat(-maxSpreadAngle, maxSpreadAngle);
         
             var spreadRotation = Quaternion.Euler(spreadX, spreadY, 0);
-            Debug.Log($"spread: {tick} | {spreadX} | {spreadY}");
             return spreadRotation * forward;
         }
     }

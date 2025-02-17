@@ -21,7 +21,6 @@ namespace Avastrad.PoolSystem
         public Pool(Func<TElement> instantiateDelegate, bool expandable = true, bool reExtracted = false,
             int initialElementCount = 0, int capacity = 0)
         {
-            if (instantiateDelegate == null) throw new Exception("instantiateDelegate is null");
             if (initialElementCount < 0) throw new Exception("initialElementCount can't be less then 0");
             if (!expandable && capacity <= 0) throw new Exception("In not expandable pool capacity can't be less or equal to 0");
             if (!expandable && initialElementCount > capacity) throw new Exception("In not expandable pool initialElementCount can't be bigger then capacity");
@@ -33,10 +32,11 @@ namespace Avastrad.PoolSystem
             _reExtracted = reExtracted;
             _capacity = capacity;
 
-            for (int i = 0; i < initialElementCount; i++) InstantiateElement();
+            for (int i = 0; i < initialElementCount; i++) 
+                InstantiateElement();
         }
 
-        public bool ExtractElement(out TElement extractedElement)
+        public bool ExtractElement(out TElement extractedElement, Func<TElement> instantiateDelegate = null)
         {
             extractedElement = default;
 
@@ -44,7 +44,10 @@ namespace Avastrad.PoolSystem
             {
                 if (_expandable || _busyElements.Count < _capacity)
                 {
-                    InstantiateElement();
+                    if (instantiateDelegate == null)
+                        InstantiateElement();
+                    else
+                        _freeElements.Enqueue(instantiateDelegate());
                 }
                 else
                 {

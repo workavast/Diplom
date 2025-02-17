@@ -269,7 +269,6 @@ GameObject:
   - component: {fileID: 4645375280533522}
   - component: {fileID: 33429541364700436}
   - component: {fileID: 23775215876747556}
-  - component: {fileID: 64680976172880162}
   m_Layer: 0
   m_Name: SM_Wep_Rifle_Assault_01
   m_TagString: Untagged
@@ -352,28 +351,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64680976172880162
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1296539039355890}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 43423280058218976, guid: 27d4bc80aff09d74c9e3e67b94c45e36, type: 2}
 --- !u!1 &1764537760694094
 GameObject:
   m_ObjectHideFlags: 0

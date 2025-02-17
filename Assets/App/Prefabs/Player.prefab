@@ -139,6 +139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 2e235d0bd95dfe34f95a57e634acc985, type: 2}
   _NetHealthPoints: 0
+  _NetUnscaledVelocity: {x: 0, y: 0, z: 0}
   playerView: {fileID: 3872098561446610495}
   characterController: {fileID: -658295760547561401}
 --- !u!114 &3872098561446610495
@@ -187,6 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d49ad24abe45699d19540d4aadce87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponView: {fileID: 5035740562426120222}
   shootPoint: {fileID: 8074423664287962504}
   _NetEquippedWeapon: 0
   _NetFireCount: 0
@@ -584,3 +586,14 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 4110625864154057207, guid: 9bea2735c3bbc9e499cf6dc0eec727cc, type: 3}
   m_PrefabInstance: {fileID: 2461267205640546209}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5035740562426120222 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7478972821359210431, guid: 9bea2735c3bbc9e499cf6dc0eec727cc, type: 3}
+  m_PrefabInstance: {fileID: 2461267205640546209}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b1d36c1fb1f4f32ad8c8cfa2808ebc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
