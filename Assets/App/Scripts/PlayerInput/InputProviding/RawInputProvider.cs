@@ -90,7 +90,12 @@ namespace App.PlayerInput.InputProviding
             };
         }
 
-        public bool MouseOverUI() 
-            => EventSystem.current.IsPointerOverGameObject();
+        public bool MouseOverUI()
+        {
+            if (EventSystem.current == null)
+                return true;
+
+            return EventSystem.current.IsPointerOverGameObject();
+        }
     }
 }

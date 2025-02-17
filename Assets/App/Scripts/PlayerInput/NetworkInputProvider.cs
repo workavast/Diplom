@@ -13,16 +13,26 @@ namespace App.PlayerInput
     {
         [Inject] private readonly IInputProvider _inputProvider;
 
+        private Vector2 _lastLookDirection;
+        
         public void OnInput(NetworkRunner runner, NetworkInput input)
         {
-            var playerInputData = new PlayerInputData {
-                HorizontalInput = _inputProvider.MoveDirection.x,
-                VerticalInput = _inputProvider.MoveDirection.y,
-                LookDirection = _inputProvider.GetLookDirection(runner.LocalPlayer)
-            };
+            var movementInput = Vector2.zero;
 
+            if (!_inputProvider.MouseOverUI())
+            {
+                _lastLookDirection = _inputProvider.GetLookDirection(runner.LocalPlayer);
+                movementInput.x = _inputProvider.MoveDirection.x;
+                movementInput.y = _inputProvider.MoveDirection.y;
+            }
             
-            playerInputData.Buttons.Set(PlayerButtons.Fire, _inputProvider.Fire);
+            var playerInputData = new PlayerInputData {
+                HorizontalInput = movementInput.x,
+                VerticalInput = movementInput.y,
+                LookDirection = _lastLookDirection
+            };
+            
+            playerInputData.Buttons.Set(PlayerButtons.Fire, _inputProvider.Fire && !_inputProvider.MouseOverUI());
             playerInputData.Buttons.Set(PlayerButtons.Sprint, _inputProvider.Sprint);
 
             input.Set(playerInputData);
