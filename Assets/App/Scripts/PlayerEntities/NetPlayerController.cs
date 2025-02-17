@@ -1,3 +1,4 @@
+using System;
 using App.Enemy;
 using App.Entities;
 using App.PlayerInput;
@@ -23,6 +24,8 @@ namespace App.PlayerEntities
 
         public override EntityType EntityType => EntityType.Player;
 
+        public event Action OnWeaponShot; 
+        
         [Inject]
         public void Construct(PlayersRepository playersRepository, NicknamesProvider nicknamesProvider, IEventBus eventBus)
         {
@@ -70,6 +73,8 @@ namespace App.PlayerEntities
                 {
                     NetWeapon = GetComponent<NetWeapon>();
                     NetWeapon.TryShoot();
+                    
+                    OnWeaponShot?.Invoke();
                 }
             }
             

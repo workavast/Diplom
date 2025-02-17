@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4060534239856140319}
+  - component: {fileID: 6943380030771540767}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -36,6 +37,20 @@ Transform:
   - {fileID: 3435573979687538354}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6943380030771540767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21552626932409052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172588ceee3d45f28a5b2c4069ba0c5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  perlin: {fileID: 7214943081538560944}
+  shotConfig: {fileID: 11400000, guid: f0963fbf349a133438bf32a8160d51b2, type: 2}
 --- !u!1 &3809439187763563565
 GameObject:
   m_ObjectHideFlags: 0
@@ -48,6 +63,7 @@ GameObject:
   - component: {fileID: 4953669402857204813}
   - component: {fileID: 5892741329835332194}
   - component: {fileID: 419990157484587553}
+  - component: {fileID: 7214943081538560944}
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -165,6 +181,23 @@ MonoBehaviour:
   FovRange: {x: 20, y: 20}
   DollyRange: {x: -30, y: 5}
   OrthoSizeRange: {x: 1, y: 1000}
+--- !u!114 &7214943081538560944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3809439187763563565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NoiseProfile: {fileID: 11400000, guid: 425e7e7a011cf1d46b0f86dab76b6711, type: 2}
+  PivotOffset: {x: 0, y: 0, z: 0}
+  AmplitudeGain: 1
+  FrequencyGain: 1
+  m_NoiseOffsets: {x: -36.68152, y: -630.48035, z: -239.74338}
 --- !u!1 &4636449290230316612
 GameObject:
   m_ObjectHideFlags: 0
