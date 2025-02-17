@@ -186,4 +186,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: cacb7f893f14714498727a1454624098, type: 2}
   barrelPoint: {fileID: 3318807449900238124}
-  prefab: {fileID: 4236612034539855752, guid: 829fef1f09eba144fa4d40dd9e5f684e, type: 3}
+  shotSfxPrefab: {fileID: 4236612034539855752, guid: 829fef1f09eba144fa4d40dd9e5f684e, type: 3}

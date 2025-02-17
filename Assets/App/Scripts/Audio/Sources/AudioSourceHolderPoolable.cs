@@ -8,15 +8,14 @@ namespace App.Audio.Sources
     [RequireComponent(typeof(AudioSource))]
     public class AudioSourceHolderPoolable : AudioSourceHolder, IPoolable<AudioSourceHolderPoolable>
     {
-        private AudioSource _audioSource;
         private Timer _existTimer;
         
         public event Action<AudioSourceHolderPoolable> ReturnElementEvent;
         public event Action<AudioSourceHolderPoolable> DestroyElementEvent;
 
-        private void Awake()
+        protected override void Awake()
         {
-            _audioSource = GetComponent<AudioSource>();
+            base.Awake();
 
             var length = 1f;
             if (_audioSource.clip != null )

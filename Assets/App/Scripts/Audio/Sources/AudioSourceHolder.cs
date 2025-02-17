@@ -5,9 +5,9 @@ namespace App.Audio.Sources
     [RequireComponent(typeof(AudioSource))]
     public class AudioSourceHolder : MonoBehaviour
     {
-        private AudioSource _audioSource;
+        protected AudioSource _audioSource;
         
-        private void Awake()
+        protected virtual void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
         }
