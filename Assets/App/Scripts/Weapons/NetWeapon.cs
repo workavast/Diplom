@@ -9,7 +9,8 @@ namespace App.Weapons
     public class NetWeapon : NetworkBehaviour
     {
         [SerializeField] private WeaponView weaponView;
-        [SerializeField] protected Transform shootPoint;
+        [SerializeField] private Transform shootPoint;
+        [SerializeField] private LayerMask hitLayers;
 
         [OnChangedRender(nameof(OnNetEquippedWeaponChanged))]
         [Networked] public WeaponId NetEquippedWeapon { get; private set; }
@@ -68,7 +69,7 @@ namespace App.Weapons
         {
             if (NetFireRatePause.Expired(Runner))
             {
-                var isHit = _shooter.Shoot(HasStateAuthority, out var data);
+                var isHit = _shooter.Shoot(HasStateAuthority, out var data, hitLayers);
                 var fireRatePause = 60 / _weaponConfig.FireRate;
                 NetFireRatePause = TickTimer.CreateFromSeconds(Runner, fireRatePause);
 

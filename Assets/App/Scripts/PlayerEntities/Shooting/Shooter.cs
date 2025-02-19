@@ -29,12 +29,13 @@ namespace App.PlayerEntities.Shooting
             _netParticlesFactory = netParticlesFactory;
         }
         
-        public bool Shoot(bool hasStateAuthority, out ProjectileData projectileData)
+        public bool Shoot(bool hasStateAuthority, out ProjectileData projectileData, int hitLayers = -1)
         {
             var spreadDirection = GetSpreadDirection(_shootPoint.forward, _config.SpreadAngle, Runner.Tick);
-
-            var isHit = Runner.LagCompensation.Raycast(_shootPoint.position, spreadDirection, 
-                100f, InputAuthority, out var hit, -1, HitOptions.IncludePhysX);
+            var hitOptions = HitOptions.IncludePhysX | HitOptions.IgnoreInputAuthority;
+            
+            var isHit = Runner.LagCompensation.Raycast(_shootPoint.position, spreadDirection, 100f, 
+                InputAuthority, out var hit, hitLayers, hitOptions);
             
             if (isHit)
             {
