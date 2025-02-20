@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: 1
   <BulletsPerShoot>k__BackingField: 1
-  <DamagePerBullet>k__BackingField: 10
+  <DamagePerBullet>k__BackingField: 20
   <FireRate>k__BackingField: 300
-  <AimOffset>k__BackingField: 0
   <SpreadAngle>k__BackingField: 5
-  <MagazineSize>k__BackingField: 1
+  <MagazineSize>k__BackingField: 10
+  <ReloadTime>k__BackingField: 3

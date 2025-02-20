@@ -11,6 +11,7 @@ namespace App.PlayerInput.InputProviding
         public Vector2 LookDirection => _rawInputProvider.LookDirection;
         public Vector2 MousePosition => _rawInputProvider.MousePosition;
         public bool Fire => _rawInputProvider.Fire;
+        public bool Reload => _rawInputProvider.Reload;
         public bool Aim => _rawInputProvider.Aim;
         public bool Sprint => _rawInputProvider.Sprint;
         public bool Menu => _rawInputProvider.Menu;

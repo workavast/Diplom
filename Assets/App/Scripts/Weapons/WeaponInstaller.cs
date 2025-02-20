@@ -11,7 +11,6 @@ namespace App.Weapons
         {
             weaponsConfigs.Initialize(true);
             Container.BindInstance(weaponsConfigs).AsSingle();
-            Container.BindInterfacesAndSelfTo<WeaponFactory>().FromNew().AsSingle();
         }
     }
 }

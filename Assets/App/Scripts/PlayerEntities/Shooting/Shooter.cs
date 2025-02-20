@@ -10,8 +10,8 @@ namespace App.PlayerEntities.Shooting
 {
     public class Shooter
     {
-        private readonly Transform _shootPoint;
-        private readonly WeaponConfig _config;
+        private Transform _shootPoint;
+        private WeaponConfig _config;
         private readonly NetParticlesFactory _netParticlesFactory;
         private readonly IDamageApplicator _damageApplicator;
         private readonly IEntity _entity;
@@ -19,14 +19,18 @@ namespace App.PlayerEntities.Shooting
         private NetworkRunner Runner => _entity.Runner;
         private PlayerRef InputAuthority => _entity.Object.InputAuthority;
 
-        public Shooter(IEntity entity, Transform shootPoint, WeaponConfig config, IDamageApplicator damageApplicator, 
+        public Shooter(IEntity entity, IDamageApplicator damageApplicator, 
             NetParticlesFactory netParticlesFactory)
         {
             _entity = entity;
-            _shootPoint = shootPoint;
-            _config = config;
             _damageApplicator = damageApplicator;
             _netParticlesFactory = netParticlesFactory;
+        }
+
+        public void SetData(Transform shootPoint, WeaponConfig config)
+        {
+            _shootPoint = shootPoint;
+            _config = config;
         }
         
         public bool Shoot(bool hasStateAuthority, out ProjectileData projectileData, int hitLayers = -1)
@@ -44,7 +48,7 @@ namespace App.PlayerEntities.Shooting
 
                 if (hasStateAuthority)
                     _damageApplicator.TryApplyDamage(_config.DamagePerBullet, hit.GameObject, _entity);
-
+                
                 projectileData = new ProjectileData(hit.Point, hit.Normal);
                 return true;
             }

@@ -17,10 +17,10 @@ namespace App.PlayerEntities.Shooting
             _netParticlesFactory = netParticlesFactory;
         }
         
-        public Shooter CreateShoot(IEntity entity, Transform shootPoint, WeaponConfig config)
+        public Shooter CreateShoot(IEntity entity)
         {
             var damageApplicator = _damageApplicatorFactory.CreateDamageApplicator(entity.EntityType);
-            return new Shooter(entity, shootPoint, config, damageApplicator, _netParticlesFactory);
+            return new Shooter(entity, damageApplicator, _netParticlesFactory);
         }
     }
 }

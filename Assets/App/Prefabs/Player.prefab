@@ -100,6 +100,8 @@ GameObject:
   - component: {fileID: 7942052991263362750}
   - component: {fileID: -658295760547561401}
   - component: {fileID: 1625900555111658174}
+  - component: {fileID: 1058040539379439012}
+  - component: {fileID: 7569205443486142500}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -175,6 +177,8 @@ MonoBehaviour:
   - {fileID: 5750785084461400786}
   - {fileID: 8581854729729584098}
   - {fileID: 7942052991263362750}
+  - {fileID: 1058040539379439012}
+  - {fileID: 7569205443486142500}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &5750785084461400786
 MonoBehaviour:
@@ -188,13 +192,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d49ad24abe45699d19540d4aadce87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  netWeaponModel: {fileID: 1058040539379439012}
   weaponView: {fileID: 5035740562426120222}
   shootPoint: {fileID: 8074423664287962504}
-  hitLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  _NetEquippedWeapon: 0
-  _NetFireCount: 0
 --- !u!114 &8581854729729584098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,6 +284,40 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &1058040539379439012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072648177644592389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1543a9c84104ef88813b853815af12c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <HitLayers>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _NetEquippedWeapon: 0
+  _NetWeaponStateId: 0
+  _NetMagazine: 0
+  _NetFireCount: 0
+  <WeaponConfig>k__BackingField: {fileID: 0}
+  <VisibleFireCount>k__BackingField: 0
+--- !u!114 &7569205443486142500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072648177644592389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2615d364a70f4817830b874e07a6cc81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enableLogging: 0
 --- !u!1 &5362835087198041564
 GameObject:
   m_ObjectHideFlags: 0

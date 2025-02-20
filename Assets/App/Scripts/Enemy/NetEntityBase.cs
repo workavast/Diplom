@@ -35,7 +35,6 @@ namespace App.Enemy
 
         protected virtual void Awake()
         {
-            Debug.Log("Awake");
             NetWeapon = GetComponent<NetWeapon>();
         }
 

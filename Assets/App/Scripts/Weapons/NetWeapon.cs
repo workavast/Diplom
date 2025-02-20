@@ -1,90 +1,106 @@
+using System.Collections.Generic;
 using App.Entities;
 using App.PlayerEntities.Shooting;
+using App.Weapons.FSM;
 using Fusion;
+using Fusion.Addons.FSM;
 using UnityEngine;
 using Zenject;
 
 namespace App.Weapons
 {
-    public class NetWeapon : NetworkBehaviour
+    [RequireComponent(typeof(StateMachineController))]
+    public class NetWeapon : NetworkBehaviour, IStateMachineOwner
     {
+        [SerializeField] private NetWeaponModel netWeaponModel;
         [SerializeField] private WeaponView weaponView;
         [SerializeField] private Transform shootPoint;
-        [SerializeField] private LayerMask hitLayers;
+        
+        [Inject] private readonly WeaponsConfigs _weaponsConfigs;
+        [Inject] private readonly ShooterFactory _shooterFactory;
+        
+        public bool CanShot => netWeaponModel.NetMagazine > 0;
+        public bool CanReload => netWeaponModel.NetMagazine < WeaponConfig.MagazineSize && netWeaponModel.NetReloadTimer.ExpiredOrNotRunning(Runner);
+        public bool RequiredReload => netWeaponModel.NetMagazine <= 0 && CanReload;
+        public WeaponId NetEquippedWeapon => netWeaponModel.NetEquippedWeapon;
 
-        [OnChangedRender(nameof(OnNetEquippedWeaponChanged))]
-        [Networked] public WeaponId NetEquippedWeapon { get; private set; }
-        [Networked] public TickTimer NetFireRatePause { get; private set; }
-        [Networked] public int NetFireCount { get; set; }
-        [Networked, Capacity(32)] public NetworkArray<ProjectileData> NetProjectileData { get; }
+        private WeaponConfig WeaponConfig => netWeaponModel.WeaponConfig;
+        private Shooter Shooter => netWeaponModel.Shooter;
+        
+        [SerializeField, ReadOnly] private int _visibleFireCount;
+        
+        private WeaponStateMachine _fsm;
+        private ReloadingState _reloadingState;
+        private ShotReadyState _shotReadyState;
 
-        [Inject] private readonly WeaponFactory _weaponFactory;
+        void IStateMachineOwner.CollectStateMachines(List<IStateMachine> stateMachines)
+        {
+            _reloadingState = new ReloadingState(netWeaponModel);
+            _shotReadyState = new ShotReadyState(netWeaponModel);
+            
+            _fsm = new WeaponStateMachine("Weapon", _shotReadyState, _reloadingState);
 
-        private WeaponConfig _weaponConfig;
-        private Shooter _shooter;
-        private int _visibleFireCount;
-
+            stateMachines.Add(_fsm);            
+        }
+        
         public override void Spawned()
         {
-            SetWeapon(NetEquippedWeapon);
+            netWeaponModel.Shooter = _shooterFactory.CreateShoot(GetComponent<IEntity>());
+                
+            SetWeapon(netWeaponModel.NetEquippedWeapon, true);
+            netWeaponModel.OnEquippedWeaponChanged += SetWeapon;
 
-            if (HasStateAuthority)
-            {
-                var fireRatePause = 60 / _weaponConfig.FireRate;
-                NetFireRatePause = TickTimer.CreateFromSeconds(Runner, fireRatePause);
-            }
+            _visibleFireCount = netWeaponModel.NetFireCount;
+        }
 
-            _visibleFireCount = NetFireCount;
+        public override void FixedUpdateNetwork()
+        {
+            if (_fsm.ActiveStateId == _reloadingState.StateId) 
+                _fsm.TryActivateState(_shotReadyState);
         }
 
         public override void Render()
         {
-            if (_visibleFireCount < NetFireCount)
+            if (_visibleFireCount < netWeaponModel.NetFireCount)
             {
                 weaponView.ShotVfx();
                 weaponView.ShotSfx();
-                for (int i = _visibleFireCount; i < NetFireCount; i++)
+                for (int i = _visibleFireCount; i < netWeaponModel.NetFireCount; i++)
                 {
-                    var data = NetProjectileData[i % NetProjectileData.Length];
-                    _shooter.ShootView(ref data);
+                    var data = netWeaponModel.NetProjectileData[i % netWeaponModel.NetProjectileData.Length];
+                    Shooter.ShootView(ref data);
                 }
 
-                _visibleFireCount = NetFireCount;
+                _visibleFireCount = netWeaponModel.NetFireCount;
             }
         }
 
-        public void SetWeapon(WeaponId weaponId)
+        public void SetWeapon(WeaponId weaponId) 
+            => SetWeapon(weaponId, false);
+
+        private void SetWeapon(WeaponId weaponId, bool force)
         {
-            (_weaponConfig, _shooter) = _weaponFactory.Create(weaponId, GetComponent<IEntity>(), shootPoint);
+            if (!force && netWeaponModel.NetEquippedWeapon == weaponId)
+                return;
+                
+            netWeaponModel.NetEquippedWeapon = weaponId;
+         
+            netWeaponModel.WeaponConfig = _weaponsConfigs.WeaponConfigs[weaponId];
+            Shooter.SetData(shootPoint, netWeaponModel.WeaponConfig);
             
-            NetEquippedWeapon = weaponId;
-            
-            var fireRatePause = 60 / _weaponConfig.FireRate;
-            NetFireRatePause = TickTimer.CreateFromSeconds(Runner, fireRatePause);
-            
-            Debug.Log($"{Object.InputAuthority} | {weaponId} | {NetEquippedWeapon}");
+            netWeaponModel.NetFireRatePause = TickTimer.CreateFromSeconds(Runner, 0);
+            netWeaponModel.NetReloadTimer = TickTimer.CreateFromSeconds(Runner, 0);
+            netWeaponModel.NetMagazine = WeaponConfig.MagazineSize;
+            Debug.Log($"SetWeapon: {Object.InputAuthority} | {weaponId} | {netWeaponModel.NetEquippedWeapon}");
         }
 
-        public void TryShoot()
-        {
-            if (NetFireRatePause.Expired(Runner))
-            {
-                var isHit = _shooter.Shoot(HasStateAuthority, out var data, hitLayers);
-                var fireRatePause = 60 / _weaponConfig.FireRate;
-                NetFireRatePause = TickTimer.CreateFromSeconds(Runner, fireRatePause);
+        public bool TryShoot() 
+            => _fsm.ActiveState.TryShot();
 
-                if (isHit)
-                {
-                    NetProjectileData.Set(NetFireCount % NetProjectileData.Length, data);
-                    NetFireCount++;
-                }
-            }
-        }
-        
+        public void TryReload() 
+            => _fsm.TryActivateState(_reloadingState);
+
         public void OnDrawGizmos() 
-            => _shooter?.OnDrawGizmos();
-
-        private void OnNetEquippedWeaponChanged() 
-            => SetWeapon(NetEquippedWeapon);
+            => Shooter?.OnDrawGizmos();
     }
 }

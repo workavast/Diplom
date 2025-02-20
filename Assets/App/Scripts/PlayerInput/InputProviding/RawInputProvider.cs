@@ -10,6 +10,7 @@ namespace App.PlayerInput.InputProviding
         public Vector2 LookDirection { get; private set; }
         public Vector2 MousePosition { get; private set; }
         public bool Fire { get; private set; }
+        public bool Reload { get; private set; }
         public bool Aim { get; private set; }
         public bool Sprint { get; private set; }
         public bool Menu { get; private set; }
@@ -50,6 +51,16 @@ namespace App.PlayerInput.InputProviding
                 InputActionPhase.Started => true,
                 InputActionPhase.Canceled => false,
                 _ => Fire
+            };
+        }
+        
+        public void OnReload(InputAction.CallbackContext context)
+        {
+            Reload = context.phase switch
+            {
+                InputActionPhase.Started => true,
+                InputActionPhase.Canceled => false,
+                _ => Reload
             };
         }
         

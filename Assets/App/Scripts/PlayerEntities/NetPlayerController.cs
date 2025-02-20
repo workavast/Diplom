@@ -69,12 +69,17 @@ namespace App.PlayerEntities
             
             if (hasInput)
             {
-                if ((HasStateAuthority || HasInputAuthority) && input.Buttons.IsSet(PlayerButtons.Fire))
+                if ((HasStateAuthority || HasInputAuthority) && input.Buttons.IsSet(PlayerButtons.Fire) && NetWeapon.CanShot)
                 {
-                    NetWeapon = GetComponent<NetWeapon>();
-                    NetWeapon.TryShoot();
-                    
-                    OnWeaponShot?.Invoke();
+                    if (NetWeapon.TryShoot())
+                        OnWeaponShot?.Invoke();
+                }
+
+                var reloadRequest = input.Buttons.IsSet(PlayerButtons.Reload) || NetWeapon.RequiredReload;
+                if ((HasStateAuthority || HasInputAuthority) && reloadRequest)
+                {
+                    if (NetWeapon.CanReload) 
+                        NetWeapon.TryReload();
                 }
             }
             

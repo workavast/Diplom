@@ -169,6 +169,23 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 5e77a7a1-6bc2-466c-9b07-c6e66c259216
     m_ActionName: 'GameplayMap/Menu[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4637433144532937981}
+        m_TargetAssemblyTypeName: App.PlayerInput.InputProviding.RawInputProvider,
+          Assembly-CSharp
+        m_MethodName: OnReload
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 407952b8-65d8-45d1-8a52-70f71dedbdff
+    m_ActionName: 'GameplayMap/Reload[/Keyboard/r]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: GameplayMap
