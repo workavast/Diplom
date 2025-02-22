@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace App.Weapons
+namespace App.Weapons.View
 {
     [CreateAssetMenu(fileName = nameof(WeaponViewConfig), menuName = Consts.AppName + "/Configs/Weapon/" + nameof(WeaponViewConfig))]
     public class WeaponViewConfig : ScriptableObject

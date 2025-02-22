@@ -1,3 +1,4 @@
+using App.Weapons.View;
 using Fusion;
 
 namespace App.Weapons.FSM

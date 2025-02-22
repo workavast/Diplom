@@ -3,7 +3,7 @@ using Avastrad.Vector2Extension;
 using UnityEngine;
 using Zenject;
 
-namespace App.PlayerEntities
+namespace App.Entities.Player
 {
     public class PlayerFollower : MonoBehaviour
     {

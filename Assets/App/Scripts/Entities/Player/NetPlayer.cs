@@ -1,16 +1,13 @@
 using System;
-using App.Enemy;
-using App.Entities;
 using App.PlayerInput;
 using App.Players.Nicknames;
-using App.Weapons;
 using Avastrad.EventBusFramework;
 using Avastrad.Vector2Extension;
 using Fusion;
 using UnityEngine;
 using Zenject;
 
-namespace App.PlayerEntities
+namespace App.Entities.Player
 {
     public class NetPlayerController : NetEntityBase
     {

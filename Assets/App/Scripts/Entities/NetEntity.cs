@@ -1,15 +1,14 @@
 using System;
 using App.Damage;
-using App.Entities;
+using App.Entities.Player;
 using App.EventBus;
-using App.PlayerEntities;
 using App.Weapons;
 using Avastrad.EventBusFramework;
 using Fusion;
 using UnityEngine;
 using Zenject;
 
-namespace App.Enemy
+namespace App.Entities
 {
     public abstract class NetEntityBase : NetworkBehaviour, IEntity, IDamageable
     {

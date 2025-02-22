@@ -3,7 +3,7 @@ using App.Audio.Sources;
 using UnityEngine;
 using Zenject;
 
-namespace App.Weapons
+namespace App.Weapons.View
 {
     public class WeaponViewHolder : MonoBehaviour
     {

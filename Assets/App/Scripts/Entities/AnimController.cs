@@ -1,4 +1,4 @@
-using App.PlayerEntities;
+using App.Entities.Player;
 using UnityEngine;
 
 namespace App.Entities

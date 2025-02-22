@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
-namespace App.PlayerEntities
+namespace App.Entities.Player
 {
     public class PlayersRepository
     {

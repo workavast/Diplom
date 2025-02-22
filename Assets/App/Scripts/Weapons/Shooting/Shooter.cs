@@ -1,12 +1,11 @@
 using App.Damage;
 using App.Entities;
 using App.Particles;
-using App.Weapons;
 using Fusion;
 using UnityEngine;
 using Random = Unity.Mathematics.Random;
 
-namespace App.PlayerEntities.Shooting
+namespace App.Weapons.Shooting
 {
     public class Shooter
     {

@@ -1,9 +1,8 @@
-using App.Enemy;
-using App.Entities;
+using App.Entities.Enemy;
 using App.Players;
 using Zenject;
 
-namespace App.PlayerEntities
+namespace App.Entities.Player
 {
     public class PlayersInstaller : MonoInstaller
     {

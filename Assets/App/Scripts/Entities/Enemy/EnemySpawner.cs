@@ -3,7 +3,7 @@ using App.Weapons;
 using Fusion;
 using UnityEngine;
 
-namespace App.Enemy
+namespace App.Entities.Enemy
 {
     public class EnemySpawner : NetworkBehaviour
     {

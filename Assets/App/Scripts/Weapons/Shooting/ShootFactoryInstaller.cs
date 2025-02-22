@@ -1,6 +1,6 @@
 using Zenject;
 
-namespace App.PlayerEntities.Shooting
+namespace App.Weapons.Shooting
 {
     public class ShootFactoryInstaller : MonoInstaller
     {

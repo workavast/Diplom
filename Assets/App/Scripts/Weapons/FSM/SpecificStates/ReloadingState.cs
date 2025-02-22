@@ -1,3 +1,4 @@
+using App.Weapons.View;
 using Fusion;
 using Fusion.Addons.FSM;
 using UnityEngine;

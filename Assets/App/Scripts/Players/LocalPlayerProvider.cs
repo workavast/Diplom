@@ -1,6 +1,6 @@
 using System;
+using App.Entities.Player;
 using App.NetworkRunning;
-using App.PlayerEntities;
 using Fusion;
 
 namespace App.Players

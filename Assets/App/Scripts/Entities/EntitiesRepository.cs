@@ -1,5 +1,5 @@
-using App.Enemy;
-using App.PlayerEntities;
+using App.Entities.Enemy;
+using App.Entities.Player;
 using Zenject;
 
 namespace App.Entities

@@ -1,10 +1,8 @@
 using App.Damage;
 using App.Entities;
 using App.Particles;
-using App.Weapons;
-using UnityEngine;
 
-namespace App.PlayerEntities.Shooting
+namespace App.Weapons.Shooting
 {
     public class ShooterFactory
     {

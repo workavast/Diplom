@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using App.Entities;
-using App.PlayerEntities.Shooting;
 using App.Weapons.FSM;
+using App.Weapons.Shooting;
+using App.Weapons.View;
 using Fusion;
 using Fusion.Addons.FSM;
 using UnityEngine;

@@ -1,4 +1,4 @@
-using App.PlayerEntities;
+using App.Entities.Player;
 using App.Weapons;
 using Fusion;
 using UnityEngine;

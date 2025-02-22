@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace App.Enemy
+namespace App.Entities.Enemy
 {
     public class EnemiesRepository
     {

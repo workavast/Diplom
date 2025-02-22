@@ -1,10 +1,9 @@
-using App.Entities;
 using Avastrad.EventBusFramework;
 using Fusion;
 using UnityEngine;
 using Zenject;
 
-namespace App.Enemy
+namespace App.Entities.Enemy
 {
     [RequireComponent(typeof(EnemyView))]
     public class NetEnemy : NetEntityBase

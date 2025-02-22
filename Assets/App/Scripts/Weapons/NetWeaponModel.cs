@@ -1,5 +1,5 @@
 using System;
-using App.PlayerEntities.Shooting;
+using App.Weapons.Shooting;
 using Fusion;
 using UnityEngine;
 

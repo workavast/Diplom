@@ -1,4 +1,4 @@
-using App.PlayerEntities;
+using App.Entities.Player;
 using Avastrad.Vector2Extension;
 using Fusion;
 using UnityEngine;
