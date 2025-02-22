@@ -5,8 +5,13 @@ namespace App.Weapons.FSM
 {
     public class ShotReadyState : WeaponState
     {
-        public ShotReadyState(NetWeaponModel netWeapon) 
-            : base(netWeapon) { }
+        private readonly WeaponRig _weaponRig;
+
+        public ShotReadyState(NetWeaponModel netWeapon, WeaponRig weaponRig) 
+            : base(netWeapon)
+        {
+            _weaponRig = weaponRig;
+        }
 
         protected override void OnEnterState()
         {
@@ -34,5 +39,8 @@ namespace App.Weapons.FSM
 
             return true;
         }
+        
+        protected override void OnEnterStateRender() 
+            => _weaponRig.Default();
     }
 }

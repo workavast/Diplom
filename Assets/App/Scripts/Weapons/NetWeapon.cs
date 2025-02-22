@@ -15,6 +15,7 @@ namespace App.Weapons
         [SerializeField] private NetWeaponModel netWeaponModel;
         [SerializeField] private WeaponView weaponView;
         [SerializeField] private Transform shootPoint;
+        [SerializeField] private WeaponRig weaponRig;
         
         [Inject] private readonly WeaponsConfigs _weaponsConfigs;
         [Inject] private readonly ShooterFactory _shooterFactory;
@@ -35,8 +36,8 @@ namespace App.Weapons
 
         void IStateMachineOwner.CollectStateMachines(List<IStateMachine> stateMachines)
         {
-            _reloadingState = new ReloadingState(netWeaponModel);
-            _shotReadyState = new ShotReadyState(netWeaponModel);
+            _reloadingState = new ReloadingState(netWeaponModel, weaponRig);
+            _shotReadyState = new ShotReadyState(netWeaponModel, weaponRig);
             
             _fsm = new WeaponStateMachine("Weapon", _shotReadyState, _reloadingState);
 
