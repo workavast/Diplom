@@ -24,7 +24,6 @@ namespace App.Weapons.FSM
 
         protected override void OnEnterState()
         {
-            Debug.Log($"ReloadingState: {Runner.Tick} | {Runner.IsSimulationUpdating} | {Runner.IsFirstTick}");
             NetWeaponModel.NetMagazine = 0;
             NetWeaponModel.NetReloadTimer = TickTimer.CreateFromSeconds(Runner, WeaponConfig.ReloadTime);
         }
