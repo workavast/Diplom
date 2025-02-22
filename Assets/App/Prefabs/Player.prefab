@@ -193,9 +193,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   netWeaponModel: {fileID: 1058040539379439012}
-  weaponView: {fileID: 5035740562426120222}
   shootPoint: {fileID: 8074423664287962504}
-  weaponRig: {fileID: 7914040448562380562}
+  weaponViewHolder: {fileID: 7914040448562380562}
   _visibleFireCount: 0
 --- !u!114 &8581854729729584098
 MonoBehaviour:
@@ -623,17 +622,6 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 4110625864154057207, guid: 9bea2735c3bbc9e499cf6dc0eec727cc, type: 3}
   m_PrefabInstance: {fileID: 2461267205640546209}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5035740562426120222 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7478972821359210431, guid: 9bea2735c3bbc9e499cf6dc0eec727cc, type: 3}
-  m_PrefabInstance: {fileID: 2461267205640546209}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b1d36c1fb1f4f32ad8c8cfa2808ebc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7914040448562380562 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5763618650756470963, guid: 9bea2735c3bbc9e499cf6dc0eec727cc, type: 3}

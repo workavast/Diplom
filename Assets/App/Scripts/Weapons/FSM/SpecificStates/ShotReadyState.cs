@@ -1,21 +1,15 @@
 using Fusion;
-using UnityEngine;
 
 namespace App.Weapons.FSM
 {
     public class ShotReadyState : WeaponState
     {
-        private readonly WeaponRig _weaponRig;
+        private readonly WeaponViewHolder _weaponViewHolder;
 
-        public ShotReadyState(NetWeaponModel netWeapon, WeaponRig weaponRig) 
+        public ShotReadyState(NetWeaponModel netWeapon, WeaponViewHolder weaponViewHolder) 
             : base(netWeapon)
         {
-            _weaponRig = weaponRig;
-        }
-
-        protected override void OnEnterState()
-        {
-            Debug.Log($"ShotReadyState: {Runner.Tick} | {Runner.IsSimulationUpdating} | {Runner.IsFirstTick}");
+            _weaponViewHolder = weaponViewHolder;
         }
 
         public override bool TryShot()
@@ -41,6 +35,6 @@ namespace App.Weapons.FSM
         }
         
         protected override void OnEnterStateRender() 
-            => _weaponRig.Default();
+            => _weaponViewHolder.Default();
     }
 }

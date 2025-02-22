@@ -13,9 +13,8 @@ namespace App.Weapons
     public class NetWeapon : NetworkBehaviour, IStateMachineOwner
     {
         [SerializeField] private NetWeaponModel netWeaponModel;
-        [SerializeField] private WeaponView weaponView;
         [SerializeField] private Transform shootPoint;
-        [SerializeField] private WeaponRig weaponRig;
+        [SerializeField] private WeaponViewHolder weaponViewHolder;
         
         [Inject] private readonly WeaponsConfigs _weaponsConfigs;
         [Inject] private readonly ShooterFactory _shooterFactory;
@@ -36,8 +35,8 @@ namespace App.Weapons
 
         void IStateMachineOwner.CollectStateMachines(List<IStateMachine> stateMachines)
         {
-            _reloadingState = new ReloadingState(netWeaponModel, weaponRig);
-            _shotReadyState = new ShotReadyState(netWeaponModel, weaponRig);
+            _reloadingState = new ReloadingState(netWeaponModel, weaponViewHolder);
+            _shotReadyState = new ShotReadyState(netWeaponModel, weaponViewHolder);
             
             _fsm = new WeaponStateMachine("Weapon", _shotReadyState, _reloadingState);
 
@@ -64,8 +63,8 @@ namespace App.Weapons
         {
             if (_visibleFireCount < netWeaponModel.NetFireCount)
             {
-                weaponView.ShotVfx();
-                weaponView.ShotSfx();
+                weaponViewHolder.ShotVfx();
+                weaponViewHolder.ShotSfx();
                 for (int i = _visibleFireCount; i < netWeaponModel.NetFireCount; i++)
                 {
                     var data = netWeaponModel.NetProjectileData[i % netWeaponModel.NetProjectileData.Length];

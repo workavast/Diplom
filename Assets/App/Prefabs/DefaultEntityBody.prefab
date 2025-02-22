@@ -158,7 +158,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8118b76afd0c4b98b434359f3b69942d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponView: {fileID: 7478972821359210431}
   animator: {fileID: 5081156725876159652}
+  reloadStartSfxPrefab: {fileID: 4236612034539855752, guid: 3ba6df61b0113cc4d80288965ce6947a, type: 3}
+  reloadEndSfxPrefab: {fileID: 4236612034539855752, guid: 006a020e231da9246b22f48ef5a67c3b, type: 3}
 --- !u!1 &5428083900073230947
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,6 +711,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7141905974862935075, guid: b5d31861be34fa840954c6f990b488b3, type: 3}
   m_PrefabInstance: {fileID: 4009604398693980240}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7478972821359210431 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5795675131054733295, guid: b5d31861be34fa840954c6f990b488b3, type: 3}
+  m_PrefabInstance: {fileID: 4009604398693980240}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b1d36c1fb1f4f32ad8c8cfa2808ebc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4060313389738027781
 PrefabInstance:
   m_ObjectHideFlags: 0

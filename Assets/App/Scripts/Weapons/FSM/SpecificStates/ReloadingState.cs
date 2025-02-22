@@ -8,12 +8,12 @@ namespace App.Weapons.FSM
     {
         public bool CanReload => NetWeaponModel.NetMagazine < WeaponConfig.MagazineSize && NetWeaponModel.NetReloadTimer.ExpiredOrNotRunning(Runner);
         
-        private readonly WeaponRig _weaponRig;
+        private readonly WeaponViewHolder _weaponViewHolder;
 
-        public ReloadingState(NetWeaponModel netWeaponModel, WeaponRig weaponRig) 
+        public ReloadingState(NetWeaponModel netWeaponModel, WeaponViewHolder weaponViewHolder) 
             : base(netWeaponModel)
         {
-            _weaponRig = weaponRig;
+            _weaponViewHolder = weaponViewHolder;
         }
         
         protected override bool CanEnterState() 
@@ -45,7 +45,7 @@ namespace App.Weapons.FSM
             var duration = NetWeaponModel.WeaponConfig.ReloadTime;
             var remainingTime = NetWeaponModel.NetReloadTimer.RemainingTime(Runner).Value;
             var initTime = 1 - remainingTime / duration;
-            _weaponRig.Reloading(duration, initTime);
+            _weaponViewHolder.Reloading(duration, initTime);
         }
     }
 }
