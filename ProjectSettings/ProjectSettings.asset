@@ -819,23 +819,23 @@ PlayerSettings:
   webGLCloseOnQuit: 0
   webWasm2023: 0
   scriptingDefineSymbols:
-    Android: DOTWEEN
-    EmbeddedLinux: DOTWEEN
-    GameCoreScarlett: DOTWEEN
-    GameCoreXboxOne: DOTWEEN
-    LinuxHeadlessSimulation: DOTWEEN
-    Nintendo Switch: DOTWEEN
-    PS4: DOTWEEN
-    PS5: DOTWEEN
-    QNX: DOTWEEN
-    ReservedCFE: DOTWEEN
-    Standalone: FUSION_LOGLEVEL_INFO;FUSION_WEAVER;FUSION2;DOTWEEN
-    VisionOS: DOTWEEN
-    WebGL: DOTWEEN
-    Windows Store Apps: DOTWEEN
-    XboxOne: DOTWEEN
-    iPhone: DOTWEEN
-    tvOS: DOTWEEN
+    Android: DOTWEEN;FUSION_LOGLEVEL_INFO
+    EmbeddedLinux: DOTWEEN;FUSION_LOGLEVEL_INFO
+    GameCoreScarlett: DOTWEEN;FUSION_LOGLEVEL_INFO
+    GameCoreXboxOne: DOTWEEN;FUSION_LOGLEVEL_INFO
+    LinuxHeadlessSimulation: DOTWEEN;FUSION_LOGLEVEL_INFO
+    Nintendo Switch: DOTWEEN;FUSION_LOGLEVEL_INFO
+    PS4: DOTWEEN;FUSION_LOGLEVEL_INFO
+    PS5: DOTWEEN;FUSION_LOGLEVEL_INFO
+    QNX: DOTWEEN;FUSION_LOGLEVEL_INFO
+    ReservedCFE: DOTWEEN;FUSION_LOGLEVEL_INFO
+    Standalone: FUSION_WEAVER;FUSION2;DOTWEEN;FUSION_LOGLEVEL_INFO
+    VisionOS: DOTWEEN;FUSION_LOGLEVEL_INFO
+    WebGL: DOTWEEN;FUSION_LOGLEVEL_INFO
+    Windows Store Apps: DOTWEEN;FUSION_LOGLEVEL_INFO
+    XboxOne: DOTWEEN;FUSION_LOGLEVEL_INFO
+    iPhone: DOTWEEN;FUSION_LOGLEVEL_INFO
+    tvOS: DOTWEEN;FUSION_LOGLEVEL_INFO
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

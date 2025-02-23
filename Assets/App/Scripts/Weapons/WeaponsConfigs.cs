@@ -23,6 +23,7 @@ namespace App.Weapons
                 return;
             }
             
+            _weaponConfigs.Clear();
             _weaponConfigs.EnsureCapacity(configs.Count);
             foreach (var weaponConfig in configs)
             {

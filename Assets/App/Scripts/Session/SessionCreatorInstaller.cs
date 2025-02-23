@@ -10,7 +10,7 @@ namespace App.Session
         
         public override void InstallBindings()
         {
-            waitScreen = waitScreen.IsNullFindOfType();
+            // waitScreen = waitScreen.IsNullFindOfType();
             
             Container.BindInterfacesAndSelfTo<SessionCreator>().FromNew().AsSingle().WithArguments(waitScreen);
         }

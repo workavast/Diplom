@@ -26,13 +26,16 @@ namespace Avastrad.ScenesLoading
             EndLoading(hideLoadScreenInstantly);
         }
         
-        public void LoadScene(int index, bool showLoadScreenInstantly = false)
+        public void LoadScene(int index, bool showLoadScreenInstantly = false, bool forceLoading = false)
         {
             _targetSceneIndex = index;
             
             OnLoadingStarted?.Invoke();
-            
-            _loadingScreen.Show(showLoadScreenInstantly, () => SceneManager.LoadSceneAsync(_loadingSceneIndex));
+
+            if (forceLoading)
+                SceneManager.LoadScene(_loadingSceneIndex);
+            else
+                _loadingScreen.Show(showLoadScreenInstantly, () => SceneManager.LoadSceneAsync(_loadingSceneIndex));
         }
 
         private void EndLoading(bool endInstantly) 

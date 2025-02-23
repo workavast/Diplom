@@ -26,9 +26,12 @@ namespace App.Players
         public override void Spawned()
         {
             _disconnectProvider.OnDisconnectRequest += DisconnectPlayer;
-            
-            foreach (var activePlayer in Runner.ActivePlayers) 
-                PlayerJoined(activePlayer);
+
+            foreach (var activePlayer in Runner.ActivePlayers)
+            {
+                if (!_playerSessionDatas.ContainsKey(activePlayer))
+                    PlayerJoined(activePlayer);
+            }
         }
         
         public override void Despawned(NetworkRunner runner, bool hasState)
@@ -36,14 +39,20 @@ namespace App.Players
             _disconnectProvider.OnDisconnectRequest -= DisconnectPlayer;
         }
 
-        public void PlayerJoined(PlayerRef player)
+        public void PlayerJoined(PlayerRef playerRef)
         {
             if (!HasStateAuthority)
                 return;
 
-            var netPlayerSessionData = Runner.Spawn(playerSessionDataPrefab, Vector3.zero, Quaternion.identity, player);
+            if (_playerSessionDatas.ContainsKey(playerRef))
+            {
+                Debug.LogWarning("player already joined");
+                return;
+            }
+
+            var netPlayerSessionData = Runner.Spawn(playerSessionDataPrefab, Vector3.zero, Quaternion.identity, playerRef);
             netPlayerSessionData.Initialize(playerSpawnPointsProvider, playerSpawner);
-            _playerSessionDatas.Add(player, netPlayerSessionData);
+            _playerSessionDatas.Add(playerRef, netPlayerSessionData);
             
             OnPlayerJoined?.Invoke();
         }

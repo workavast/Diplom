@@ -31,21 +31,33 @@ namespace App.ScenesLoading
         public void HideLoadScreen(bool hideLoadScreenInstantly) 
             => _loadingScreen.Hide(hideLoadScreenInstantly);
 
-        public void LoadScene(int index, bool showLoadScreenInstantly = false)
+        /// <param name="forceLoading"> skip loading scene </param>
+        public void LoadScene(int index, bool showLoadScreenInstantly = false, bool forceLoading = false)
         {
             _targetSceneIndex = index;
             
             OnLoadingStarted?.Invoke();
-            
-            _loadingScreen.Show(showLoadScreenInstantly, 
-                () =>
-                {
-                    var netRunner = _networkRunnerProvider.GetNetworkRunner();
-                    if (netRunner.IsRunning && !netRunner.IsShutdown) 
-                        netRunner.LoadScene(SceneRef.FromIndex(_loadingSceneIndex));
-                    else
-                        SceneManager.LoadSceneAsync(_loadingSceneIndex);
-                });
+
+            if (forceLoading)
+            {
+                var netRunner = _networkRunnerProvider.GetNetworkRunner();
+                if (netRunner.IsRunning && !netRunner.IsShutdown)
+                    netRunner.LoadScene(SceneRef.FromIndex(_targetSceneIndex));
+                else
+                    SceneManager.LoadSceneAsync(_loadingSceneIndex);
+            }
+            else
+            {
+                _loadingScreen.Show(showLoadScreenInstantly, 
+                    () =>
+                    {
+                        var netRunner = _networkRunnerProvider.GetNetworkRunner();
+                        if (netRunner.IsRunning && !netRunner.IsShutdown)
+                            netRunner.LoadScene(SceneRef.FromIndex(_loadingSceneIndex));
+                        else
+                            SceneManager.LoadSceneAsync(_loadingSceneIndex);
+                    });  
+            }
         }
 
         public void LoadTargetScene()
