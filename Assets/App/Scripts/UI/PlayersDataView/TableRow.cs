@@ -1,5 +1,6 @@
 using System;
-using App.Players.SessionDatas;
+using App.Players.SessionData.Gameplay;
+using App.Players.SessionData.Global;
 using Avastrad.PoolSystem;
 using Fusion;
 using TMPro;
@@ -14,35 +15,46 @@ namespace App.UI.PlayersDataView
         [SerializeField] private TMP_Text deaths;
         [SerializeField] private TMP_Text points;
 
-        public PlayerRef PlayerRef => _sessionData.PlayerRef;
+        public PlayerRef PlayerRef { get; private set; }
 
         private bool _isInitialized;
-        private NetPlayerSessionData _sessionData;
+        private NetGameplaySessionData _gameplaySessionData;
+        private NetGlobalSessionData _globalSessionData;
         
         public event Action<TableRow> ReturnElementEvent;
         public event Action<TableRow> DestroyElementEvent;
         
-        public void Initialize(NetPlayerSessionData sessionData)
+        public void Initialize(PlayerRef playerRef, NetGlobalSessionData globalSessionData, 
+            NetGameplaySessionData gameplaySessionData)
         {
             if (_isInitialized)
             {
-                _sessionData.OnDespawned -= ReturnElementInPool;
-                _sessionData.OnNickNameChanged -= UpdateRow;
-                _sessionData.OnPointsChanged -= UpdateRow;
-                _sessionData.OnKillsChanged -= UpdateRow;
-                _sessionData.OnDeathsChanged -= UpdateRow;
+                _globalSessionData.OnDespawned -= ReturnElementInPool;
+                _gameplaySessionData.OnDespawned -= ReturnElementInPool;
+                
+                _globalSessionData.OnNickNameChanged -= UpdateRow;
+                
+                _gameplaySessionData.OnPointsChanged -= UpdateRow;
+                _gameplaySessionData.OnKillsChanged -= UpdateRow;
+                _gameplaySessionData.OnDeathsChanged -= UpdateRow;
             }
             
             _isInitialized = true;
-            _sessionData = sessionData;
-            _sessionData.OnDespawned += ReturnElementInPool;
+            _gameplaySessionData = gameplaySessionData;
+            _globalSessionData = globalSessionData;
+
+            PlayerRef = playerRef;
+            
+            _globalSessionData.OnDespawned += ReturnElementInPool;
+            _gameplaySessionData.OnDespawned += ReturnElementInPool;
             
             if (gameObject.activeInHierarchy)
             {
-                _sessionData.OnNickNameChanged += UpdateRow;
-                _sessionData.OnPointsChanged += UpdateRow;
-                _sessionData.OnKillsChanged += UpdateRow;
-                _sessionData.OnDeathsChanged += UpdateRow;
+                _globalSessionData.OnNickNameChanged += UpdateRow;
+                
+                _gameplaySessionData.OnPointsChanged += UpdateRow;
+                _gameplaySessionData.OnKillsChanged += UpdateRow;
+                _gameplaySessionData.OnDeathsChanged += UpdateRow;
             
                 UpdateRow();    
             }
@@ -50,10 +62,11 @@ namespace App.UI.PlayersDataView
 
         private void UpdateRow()
         {
-            nickName.text = _sessionData.NickName.Value;
-            points.text = _sessionData.Points.ToString();
-            kills.text = _sessionData.Kills.ToString();
-            deaths.text = _sessionData.Deaths.ToString();
+            nickName.text = _globalSessionData.NickName.ToString();
+            
+            points.text = _gameplaySessionData.Points.ToString();
+            kills.text = _gameplaySessionData.Kills.ToString();
+            deaths.text = _gameplaySessionData.Deaths.ToString();
         }
 
         private void ReturnElementInPool() 
@@ -68,14 +81,16 @@ namespace App.UI.PlayersDataView
         {
             _isInitialized = false;
             
-            _sessionData.OnDespawned -= ReturnElementInPool;
-          
-            _sessionData.OnNickNameChanged -= UpdateRow;
-            _sessionData.OnPointsChanged -= UpdateRow;
-            _sessionData.OnKillsChanged -= UpdateRow;
-            _sessionData.OnDeathsChanged -= UpdateRow;
+            _gameplaySessionData.OnDespawned -= ReturnElementInPool;
+            _globalSessionData.OnDespawned -= ReturnElementInPool;
             
-            _sessionData = null;
+            _globalSessionData.OnNickNameChanged -= UpdateRow;
+          
+            _gameplaySessionData.OnPointsChanged -= UpdateRow;
+            _gameplaySessionData.OnKillsChanged -= UpdateRow;
+            _gameplaySessionData.OnDeathsChanged -= UpdateRow;
+            
+            _gameplaySessionData = null;
 
             if (gameObject != null)
                 gameObject.SetActive(false);
@@ -86,10 +101,11 @@ namespace App.UI.PlayersDataView
             if (!_isInitialized)
                 return;
             
-            _sessionData.OnNickNameChanged += UpdateRow;
-            _sessionData.OnPointsChanged += UpdateRow;
-            _sessionData.OnKillsChanged += UpdateRow;
-            _sessionData.OnDeathsChanged += UpdateRow;
+            _globalSessionData.OnNickNameChanged += UpdateRow;
+
+            _gameplaySessionData.OnPointsChanged += UpdateRow;
+            _gameplaySessionData.OnKillsChanged += UpdateRow;
+            _gameplaySessionData.OnDeathsChanged += UpdateRow;
             
             UpdateRow();
         }
@@ -99,10 +115,11 @@ namespace App.UI.PlayersDataView
             if (!_isInitialized)
                 return;
             
-            _sessionData.OnNickNameChanged -= UpdateRow;
-            _sessionData.OnPointsChanged -= UpdateRow;
-            _sessionData.OnKillsChanged -= UpdateRow;
-            _sessionData.OnDeathsChanged -= UpdateRow;
+            _globalSessionData.OnNickNameChanged -= UpdateRow;
+            
+            _gameplaySessionData.OnPointsChanged -= UpdateRow;
+            _gameplaySessionData.OnKillsChanged -= UpdateRow;
+            _gameplaySessionData.OnDeathsChanged -= UpdateRow;
         }
 
         public void OnDestroy()

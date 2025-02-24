@@ -1,74 +1,71 @@
-using System;
 using System.Collections.Generic;
 using App.DisconnectProviding;
-using App.NetworkRunning;
-using App.Players.SessionDatas;
+using App.Players.Repository;
 using Fusion;
 using UnityEngine;
 using Zenject;
 
 namespace App.Players
 {
-    public class NetPlayersManager : NetworkBehaviour, IPlayerJoined, IPlayerLeft
+    public class NetPlayersManager : NetworkBehaviour
     {
         [SerializeField] private NetPlayerSpawner playerSpawner;
-        [SerializeField] private NetPlayerSessionData playerSessionDataPrefab;
+        [SerializeField] private NetPlayerReSpawner playerReSpawnerPrefab;
         [SerializeField] private PlayerSpawnPointsProvider playerSpawnPointsProvider;
         
-        [Inject] private IDisconnectProvider _disconnectProvider;
-        [Inject] private NetworkRunnerProvider _networkRunnerProvider;
+        [Inject] private readonly IDisconnectProvider _disconnectProvider;
+        [Inject] private readonly IReadOnlyPlayersRepository _playersRepository;
         
-        private readonly Dictionary<PlayerRef, NetPlayerSessionData> _playerSessionDatas = new(2);
-
-        public event Action OnPlayerJoined;
-        public event Action OnPlayerLeft;
+        private readonly Dictionary<PlayerRef, NetPlayerReSpawner> _playerReSpawners = new(Consts.MaxPlayersCount);
 
         public override void Spawned()
         {
             _disconnectProvider.OnDisconnectRequest += DisconnectPlayer;
 
-            foreach (var activePlayer in Runner.ActivePlayers)
+            foreach (var activePlayer in _playersRepository.Players)
             {
-                if (!_playerSessionDatas.ContainsKey(activePlayer))
-                    PlayerJoined(activePlayer);
+                if (!_playerReSpawners.ContainsKey(activePlayer))
+                    CreateNetPlayerReSpawner(activePlayer);
             }
+
+            _playersRepository.OnPlayerJoined += CreateNetPlayerReSpawner;
+            _playersRepository.OnPlayerLeft += DeleteSessionData;
         }
         
         public override void Despawned(NetworkRunner runner, bool hasState)
         {
+            _playersRepository.OnPlayerJoined -= CreateNetPlayerReSpawner;
+            _playersRepository.OnPlayerLeft -= DeleteSessionData;
             _disconnectProvider.OnDisconnectRequest -= DisconnectPlayer;
         }
 
-        public void PlayerJoined(PlayerRef playerRef)
+        private void CreateNetPlayerReSpawner(PlayerRef playerRef)
         {
             if (!HasStateAuthority)
                 return;
 
-            if (_playerSessionDatas.ContainsKey(playerRef))
+            Debug.Log($"Create NetPlayerReSpawner {playerRef.PlayerId} | {playerRef}");
+            if (_playerReSpawners.ContainsKey(playerRef))
             {
                 Debug.LogWarning("player already joined");
                 return;
             }
 
-            var netPlayerSessionData = Runner.Spawn(playerSessionDataPrefab, Vector3.zero, Quaternion.identity, playerRef);
+            var netPlayerSessionData = Runner.Spawn(playerReSpawnerPrefab, Vector3.zero, Quaternion.identity, playerRef);
             netPlayerSessionData.Initialize(playerSpawnPointsProvider, playerSpawner);
-            _playerSessionDatas.Add(playerRef, netPlayerSessionData);
-            
-            OnPlayerJoined?.Invoke();
+            _playerReSpawners.Add(playerRef, netPlayerSessionData);
         }
 
-        public void PlayerLeft(PlayerRef player)
+        private void DeleteSessionData(PlayerRef player)
         {
             if (!HasStateAuthority)
                 return;
             
-            if (_playerSessionDatas.TryGetValue(player, out var data))
+            if (_playerReSpawners.TryGetValue(player, out var data))
             {
                 Runner.Despawn(data.GetComponent<NetworkObject>());
-                _playerSessionDatas.Remove(player);
+                _playerReSpawners.Remove(player);
             }
-            
-            OnPlayerLeft?.Invoke();
         }
 
         private void DisconnectPlayer() 
@@ -82,7 +79,7 @@ namespace App.Players
             
             if (Runner.LocalPlayer == playerRef)
             {
-                foreach (var player in _playerSessionDatas.Keys)
+                foreach (var player in _playerReSpawners.Keys)
                     if (Object.StateAuthority != player)
                         Runner.Disconnect(player);
 

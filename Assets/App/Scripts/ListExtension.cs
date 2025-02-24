@@ -6,6 +6,16 @@ namespace App
 {
     public static class ListExtension
     {
+        /// <returns>return true if new value added, else false</returns>
+        public static bool TryAdd<T>(this List<T> list, T newValue)
+        {
+            if (list.Contains(newValue))
+                return false;
+            
+            list.Add(newValue);
+            return true;
+        }
+        
         public static int RandomIndex<T>(this List<T> list)
         {
             if (list == null)

@@ -8,7 +8,7 @@ namespace App.PlayerInput.InputProviding
 {
     public class GameplayInputProvider : InputProviderBase
     {
-        [Inject] private readonly PlayersRepository _playersRepository;
+        [Inject] private readonly PlayersEntitiesRepository _playersEntitiesRepository;
 
         public GameplayInputProvider(RawInputProvider rawInputProvider, MainInputProvider mainInputProvider)
             : base(rawInputProvider)
@@ -24,7 +24,7 @@ namespace App.PlayerInput.InputProviding
             }
             else
             {
-                if (_playersRepository.TryGet(playerRef, out var player))
+                if (_playersEntitiesRepository.TryGet(playerRef, out var player))
                 {
                     var depthOffset = Camera.main.transform.position.y - player.transform.position.y;
                     var screenPoint = _rawInputProvider.MousePosition.XY0(depthOffset);

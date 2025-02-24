@@ -7,34 +7,34 @@ namespace App.Players
 {
     public class LocalPlayerProvider
     {
-        private readonly PlayersRepository _playersRepository;
+        private readonly PlayersEntitiesRepository _playersEntitiesRepository;
         private readonly NetworkRunnerProvider _networkRunnerProvider;
 
         private NetPlayerController _netPlayerController;
 
         public event Action OnWeaponShot; 
         
-        public LocalPlayerProvider(PlayersRepository playersRepository, NetworkRunnerProvider networkRunnerProvider)
+        public LocalPlayerProvider(PlayersEntitiesRepository playersEntitiesRepository, NetworkRunnerProvider networkRunnerProvider)
         {
-            _playersRepository = playersRepository;
+            _playersEntitiesRepository = playersEntitiesRepository;
             _networkRunnerProvider = networkRunnerProvider;
 
-            _playersRepository.OnPlayerAdd += PlayerAdded;
-            _playersRepository.OnPlayerRemove += PlayerRemove;
+            _playersEntitiesRepository.OnPlayerAdd += PlayerEntityAdded;
+            _playersEntitiesRepository.OnPlayerRemove += PlayerEntityRemove;
         }
 
-        private void PlayerAdded(PlayerRef playerRef, NetPlayerController netPlayerController)
+        private void PlayerEntityAdded(PlayerRef playerRef, NetPlayerController netPlayerController)
         {
             if (_networkRunnerProvider.GetNetworkRunner().LocalPlayer != playerRef)
                 return;
 
-            PlayerRemove(playerRef);
+            PlayerEntityRemove(playerRef);
             
             _netPlayerController = netPlayerController;
             _netPlayerController.OnWeaponShot += WeaponShot;
         }
         
-        private void PlayerRemove(PlayerRef playerRef)
+        private void PlayerEntityRemove(PlayerRef playerRef)
         {
             if (_networkRunnerProvider.GetNetworkRunner().LocalPlayer != playerRef)
                 return;

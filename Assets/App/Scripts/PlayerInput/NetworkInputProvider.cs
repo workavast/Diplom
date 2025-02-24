@@ -49,6 +49,7 @@ namespace App.PlayerInput
 
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
+            Debug.LogError("OnPlayerJoined");
         }
 
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -65,6 +66,7 @@ namespace App.PlayerInput
 
         public void OnConnectedToServer(NetworkRunner runner)
         {
+            Debug.LogError("Connected");
         }
 
         public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)

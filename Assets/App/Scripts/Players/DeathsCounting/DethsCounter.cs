@@ -1,7 +1,8 @@
 using System;
 using App.Entities;
 using App.EventBus;
-using App.Players.SessionDatas;
+using App.Players.SessionData;
+using App.Players.SessionData.Gameplay;
 using Avastrad.EventBusFramework;
 using Fusion;
 
@@ -10,25 +11,25 @@ namespace App.Players.DeathsCounting
     public class DeathsCounter : IEventReceiver<OnKill>, IDisposable
     {
         private readonly IEventBus _eventBus;
-        private readonly PlayerSessionDatasRepository _playerSessionDatasRepository;
         private readonly EntitiesRepository _entitiesRepository;
+        private readonly IPlayersSessionDataRepository<NetGameplaySessionData> _gameplaySessionDataRepository;
 
         public EventBusReceiverIdentifier EventBusReceiverIdentifier { get; } = new();
 
-        public DeathsCounter(IEventBus eventBus, PlayerSessionDatasRepository playerSessionDatasRepository, 
-            EntitiesRepository entitiesRepository)
+        public DeathsCounter(IEventBus eventBus, EntitiesRepository entitiesRepository, 
+            IPlayersSessionDataRepository<NetGameplaySessionData> gameplaySessionDataRepository)
         {
             _eventBus = eventBus;
-            _playerSessionDatasRepository = playerSessionDatasRepository;
             _entitiesRepository = entitiesRepository;
-            
+            _gameplaySessionDataRepository = gameplaySessionDataRepository;
+
             _eventBus.Subscribe(this);
         }
         
         private void AddDeaths(PlayerRef playerRef)
         {
-            if (_playerSessionDatasRepository.Datas.TryGetValue(playerRef, out var sessionData))
-                sessionData.ChangeDeaths(1);
+            if (_gameplaySessionDataRepository.ContainsKey(playerRef))
+                _gameplaySessionDataRepository.GetData(playerRef).ChangeDeaths(1);
         }
 
         public void OnEvent(OnKill t)

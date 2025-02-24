@@ -14,7 +14,7 @@ namespace App.Entities.Player
         [SerializeField, Tooltip("Can be null")] private PlayerView playerView;
         [SerializeField, Tooltip("Can be null")] private CharacterController characterController;
         
-        private PlayersRepository _playersRepository;
+        private PlayersEntitiesRepository _playersEntitiesRepository;
         private NicknamesProvider _nicknamesProvider;
 
         public PlayerRef PlayerRef => Object.InputAuthority;
@@ -24,9 +24,9 @@ namespace App.Entities.Player
         public event Action OnWeaponShot; 
         
         [Inject]
-        public void Construct(PlayersRepository playersRepository, NicknamesProvider nicknamesProvider, IEventBus eventBus)
+        public void Construct(PlayersEntitiesRepository playersEntitiesRepository, NicknamesProvider nicknamesProvider, IEventBus eventBus)
         {
-            _playersRepository = playersRepository;
+            _playersEntitiesRepository = playersEntitiesRepository;
             _nicknamesProvider = nicknamesProvider;
             base.Construct(eventBus);
         }
@@ -45,13 +45,13 @@ namespace App.Entities.Player
         public override void Spawned()
         {
             base.Spawned();
-            _playersRepository.Add(Object.InputAuthority, this);
+            _playersEntitiesRepository.Add(Object.InputAuthority, this);
         }
 
         public override void Despawned(NetworkRunner runner, bool hasState)
         {
             base.Despawned(runner, hasState);
-            _playersRepository.Remove(this);
+            _playersEntitiesRepository.Remove(this);
         }
 
         public override void FixedUpdateNetwork()

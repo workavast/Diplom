@@ -1,18 +1,19 @@
-using App.Players.SessionDatas;
+using App.Players.SessionData;
+using App.Players.SessionData.Global;
 using Fusion;
 
 namespace App.Players.Nicknames
 {
     public class NicknamesProvider
     {
-        private readonly IPlayerSessionDatasRepository _playerSessionDatasRepository;
+        private readonly IPlayersSessionDataRepository<NetGlobalSessionData> _playerSessionDatasRepository;
 
-        public NicknamesProvider(IPlayerSessionDatasRepository playerSessionDatasRepository)
+        public NicknamesProvider(IPlayersSessionDataRepository<NetGlobalSessionData> playerSessionDatasRepository)
         {
             _playerSessionDatasRepository = playerSessionDatasRepository;
         }
-
+        
         public string GetNickName(PlayerRef playerRef) 
-            => _playerSessionDatasRepository.Datas[playerRef].NickName.Value;
+            => _playerSessionDatasRepository.GetData(playerRef).NickName.Value;
     }
 }

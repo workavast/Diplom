@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace App.Entities.Player
 {
-    public class PlayersRepository
+    public class PlayersEntitiesRepository
     {
         private readonly Dictionary<PlayerRef, NetPlayerController> _players = new();
         private readonly Dictionary<int, NetPlayerController> _playersById = new();

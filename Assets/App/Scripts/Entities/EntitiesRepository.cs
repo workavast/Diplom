@@ -6,14 +6,14 @@ namespace App.Entities
 {
     public class EntitiesRepository
     {
-        [Inject] private PlayersRepository _playersRepository;
+        [Inject] private PlayersEntitiesRepository _playersEntitiesRepository;
         [Inject] private EnemiesRepository _enemiesRepository;
 
         public bool TryGetPlayer(EntityIdentifier identifier, out NetPlayerController player) 
-            => _playersRepository.TryGet(identifier.Id, out player);
+            => _playersEntitiesRepository.TryGet(identifier.Id, out player);
         
         public bool TryGetPlayer(int identifier, out NetPlayerController player) 
-            => _playersRepository.TryGet(identifier, out player);
+            => _playersEntitiesRepository.TryGet(identifier, out player);
         
         public bool TryGetEnemy(EntityIdentifier identifier, out NetEnemy enemy) 
             => _enemiesRepository.TryGet(identifier.Id, out enemy);
