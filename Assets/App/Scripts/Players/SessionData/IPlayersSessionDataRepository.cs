@@ -10,7 +10,7 @@ namespace App.Players.SessionData
         public IReadOnlyDictionary<PlayerRef, T> PlayersSessionData { get; }
 
         public event Action<PlayerRef, T> OnAdd;
-        public event Action<PlayerRef> OnRemove;
+        public event Action<PlayerRef, T> OnRemove;
         
         public bool ContainsKey(PlayerRef playerRef);
         public T GetData(PlayerRef playerRef);

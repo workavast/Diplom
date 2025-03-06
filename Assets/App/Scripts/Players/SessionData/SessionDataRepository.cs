@@ -13,7 +13,7 @@ namespace App.Players.SessionData
         private readonly Dictionary<PlayerRef, T> _playerSessionDatas = new(2);
         
         public event Action<PlayerRef, T> OnAdd;
-        public event Action<PlayerRef> OnRemove;
+        public event Action<PlayerRef, T> OnRemove;
         
         public bool ContainsKey(PlayerRef playerRef) 
             => _playerSessionDatas.ContainsKey(playerRef);
@@ -38,8 +38,9 @@ namespace App.Players.SessionData
         {
             if (_playerSessionDatas.ContainsKey(playerRef))
             {
+                var sessionData = _playerSessionDatas[playerRef];
                 _playerSessionDatas.Remove(playerRef);
-                OnRemove?.Invoke(playerRef);
+                OnRemove?.Invoke(playerRef, sessionData);
                 return true;
             }
 
