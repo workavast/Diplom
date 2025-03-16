@@ -9,10 +9,9 @@ namespace App.Bootstraps
 {
     public class GameplayBootstrap : MonoBehaviour
     {
-        [Inject] private ISceneLoader _sceneLoader;
-
-        [Inject] private NetworkRunnerProvider _runnerProvider;
-        [Inject] private SessionCreator _sessionCreator;
+        [Inject] private readonly ISceneLoader _sceneLoader;
+        [Inject] private readonly NetworkRunnerProvider _runnerProvider;
+        [Inject] private readonly SessionCreator _sessionCreator;
         
         private async void Start()
         {
