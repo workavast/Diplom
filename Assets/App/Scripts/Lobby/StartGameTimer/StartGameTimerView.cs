@@ -1,16 +1,19 @@
 using TMPro;
 using UnityEngine;
+using Zenject;
 
-namespace App.Lobby
+namespace App.Lobby.StartGameTimer
 {
     public class StartGameTimerView : MonoBehaviour
     {
-        [SerializeField] private NetStartGameTimer netStartGameTimer;
         [SerializeField] private TMP_Text textField;
+        
+        [Inject] private IReadOnlyGameStartTimer _netStartGameTimer;
 
         private void Awake()
         {
-            netStartGameTimer.OnActivityChanged += ChangeState;
+            _netStartGameTimer.OnActivityChanged += ChangeState;
+            ChangeState(_netStartGameTimer.IsActive);
         }
 
         private void LateUpdate()
@@ -25,7 +28,7 @@ namespace App.Lobby
         
         private string GetTimeString()
         {
-            var time = netStartGameTimer.GetTime();
+            var time = _netStartGameTimer.GetTimeSpan();
             return $"{time.Minutes:00}:{time.Seconds:00}";
         }
     }

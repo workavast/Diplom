@@ -47,7 +47,7 @@ namespace App.Session
                 ObjectProvider = NetworkRunner.GetComponent<NetworkObjectPoolDefault>(),
             };
 
-            StartGame(startGameArgs, ScenesConfig.GameplaySceneIndex, successCallback, failCallback);
+            StartGame(startGameArgs, ScenesConfig.LobbySceneIndex, successCallback, failCallback);
         }
         
         public void ConnectToSession(string sessionName, int sceneIndex, Action successCallback = null, Action<ShutdownReason> failCallback = null) 

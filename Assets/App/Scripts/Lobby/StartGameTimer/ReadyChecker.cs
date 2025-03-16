@@ -3,7 +3,7 @@ using App.Lobby.SessionData;
 using Avastrad.Storages;
 using Fusion;
 
-namespace App.Lobby
+namespace App.Lobby.StartGameTimer
 {
     public class ReadyChecker : IDisposable
     {

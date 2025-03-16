@@ -1,4 +1,7 @@
 using App.Lobby.SessionData;
+using App.Players.Nicknames;
+using App.Players.SessionData.Global;
+using App.UI;
 using Fusion;
 using UnityEngine;
 using Zenject;
@@ -11,6 +14,8 @@ namespace App.Lobby
         [SerializeField] private Transform holder;
         
         [Inject] private LobbySessionDataRepository _lobbySessionDataRepository;
+        [Inject] private GlobalSessionDataRepository _globalSessionDataRepository;
+        [Inject] private NicknamesProvider _nicknamesProvider;
         
         private void Awake()
         {
@@ -21,6 +26,8 @@ namespace App.Lobby
         {
             var playerReadyView = Instantiate(playerReadyViewPrefab, holder);
             playerReadyView.SetSessionData(netLobbySessionData);
+            
+            playerReadyView.GetComponent<NickNameView>().SetSessionData(_nicknamesProvider, _globalSessionDataRepository.GetData(playerRef));
         }
     }
 }

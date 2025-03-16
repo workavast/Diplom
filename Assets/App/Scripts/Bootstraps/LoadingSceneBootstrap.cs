@@ -6,7 +6,7 @@ namespace App.Bootstraps
 {
     public class LoadingSceneBootstrap : MonoBehaviour
     {
-        [Inject] private ISceneLoader _sceneLoader;
+        [Inject] private readonly ISceneLoader _sceneLoader;
         
         private void Start()
         {

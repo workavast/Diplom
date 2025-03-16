@@ -63,6 +63,10 @@ namespace App.ScenesLoading
         public void LoadTargetScene()
         {
             var netRunner = _networkRunnerProvider.GetNetworkRunner();
+
+            if (netRunner.IsRunning && !netRunner.IsServer)
+                return;
+
             if (netRunner.IsRunning) 
                 netRunner.LoadScene(SceneRef.FromIndex(_targetSceneIndex));
             else

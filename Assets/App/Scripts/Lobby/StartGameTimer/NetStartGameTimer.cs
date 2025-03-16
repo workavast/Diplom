@@ -1,98 +1,48 @@
 using System;
 using App.Lobby.SessionData;
-using Fusion;
+using App.Lobby.StartGameTimer.FSM;
+using App.Lobby.StartGameTimer.FSM.SpecificStates;
 using UnityEngine;
 using Zenject;
 
-namespace App.Lobby
+namespace App.Lobby.StartGameTimer
 {
-    public class NetStartGameTimer : NetworkBehaviour
+    public class NetStartGameTimer : MonoBehaviour
     {
         [SerializeField, Min(0)] private float nonFullTeamStartTime = 90;
         [SerializeField, Min(0)] private float fullTeamStartTime = 10;
-        
-        [Networked, OnChangedRender(nameof(ActivityChanged))] private NetworkBool IsActive { get; set; }
-        [Networked] private TickTimer NetReloadTimer { get; set; }
+        [SerializeField] private NetStartGameTimerModel netStartGameTimerModel;
 
         [Inject] private readonly LobbySessionDataRepository _lobbySessionDataRepository;
 
-        private bool _spawned;
-        private int _lastRemainingTime;
-        private TimeSpan _lastTimeSPan;
         private ReadyChecker _readyChecker;
-
-        public event Action<bool> OnActivityChanged;
-
-        [ContextMenu("StartsTimer")]
-        public void StartsTimer()
+        private TimerStateMachine _stateMachine;
+        
+        private void Awake()
         {
-            NetReloadTimer = TickTimer.CreateFromSeconds(Runner, nonFullTeamStartTime);
+            _readyChecker = new ReadyChecker(_lobbySessionDataRepository);
+            _stateMachine = new TimerStateMachine(
+                new TimerState[]
+                {
+                    new Idle(netStartGameTimerModel, _readyChecker, SetState), 
+                    new IsOver(netStartGameTimerModel, _readyChecker, SetState), 
+                    new LongTimer(netStartGameTimerModel, _readyChecker, SetState, nonFullTeamStartTime), 
+                    new ShortTimer(netStartGameTimerModel, _readyChecker, SetState, fullTeamStartTime)
+                },
+                typeof(Idle)
+            );
         }
 
-        public override void Spawned()
+        private void OnDestroy()
         {
-            _spawned = true;
-
-            if (HasStateAuthority)
-            {
-                _readyChecker = new ReadyChecker(_lobbySessionDataRepository);
-                _readyChecker.OnDataChanged += UpdateTimerState;
-
-                UpdateTimerState();
-            }
-            
-            OnActivityChanged?.Invoke(IsActive);
-        }
-
-        public override void Despawned(NetworkRunner runner, bool hasState)
-        {
+            _stateMachine?.Dispose();
             _readyChecker?.Dispose();
         }
 
-        public TimeSpan GetTime()
-        {
-            if (!_spawned || NetReloadTimer.ExpiredOrNotRunning(Runner))
-                return TimeSpan.Zero;
+        private void Update() 
+            => _stateMachine.OnUpdate();
 
-            var remainingTime = (int)Math.Floor(NetReloadTimer.RemainingTime(Runner).Value);
-            if (_lastRemainingTime == remainingTime)
-                return _lastTimeSPan;
-            
-            _lastRemainingTime = remainingTime;
-            
-            var minutes = (int)Math.Floor((float)_lastRemainingTime / 60);
-            var seconds = (_lastRemainingTime % 60);
-            _lastTimeSPan = new TimeSpan(0,0, minutes, seconds);
-            
-            return _lastTimeSPan;
-        }
-        
-        private void UpdateTimerState()
-        {
-            if (!_readyChecker.PlayerIsReady(Runner.LocalPlayer))
-            {
-                IsActive = false;
-                return;
-            }
-
-            if (_readyChecker.ReadyCounter.IsFull)
-            {
-                IsActive = true;
-                NetReloadTimer = TickTimer.CreateFromSeconds(Runner, fullTeamStartTime);
-                return;
-            }
-
-            if (_readyChecker.ReadyCounter.FillingPercentage >= 0.5f)
-            {
-                IsActive = true;
-                NetReloadTimer = TickTimer.CreateFromSeconds(Runner, nonFullTeamStartTime);
-                return;
-            }
-        }
-
-        private void ActivityChanged()
-        {
-            OnActivityChanged?.Invoke(IsActive);
-        }
+        private void SetState(Type state) 
+            => _stateMachine.SetState(state);
     }
 }

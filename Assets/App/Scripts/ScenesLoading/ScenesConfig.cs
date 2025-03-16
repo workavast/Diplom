@@ -6,13 +6,15 @@ namespace App.ScenesLoading
     {
         public const int MainMenuSceneIndex = 2;
         public const int GameplaySceneIndex = 3;
+        public const int LobbySceneIndex = 4;
         
         public static readonly Dictionary<int, string> SceneNamesByIndexes = new()
         {
             { 0, "BootstrapScene" },
             { 1, "ScenesLoadingScene" },
             { MainMenuSceneIndex, "MainMenuScene" },
-            { GameplaySceneIndex, "GameplayScene" }
+            { GameplaySceneIndex, "GameplayScene" },
+            { LobbySceneIndex, "Lobby" }
         };
         
         public static string NameByIndex(int sceneIndex)

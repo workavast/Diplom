@@ -30,7 +30,11 @@ namespace App.Lobby.SessionData
         private void ReadyStateChanged() 
             => OnReadyStateChanged?.Invoke();
 
-        public void ChangeReadyState(bool isReady)
+        public void ChangeReadyState(bool isReady) 
+            => RPC_ChangeReadyState(isReady);
+
+        [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+        private void RPC_ChangeReadyState(bool isReady)
         {
             IsReady = isReady;
         }

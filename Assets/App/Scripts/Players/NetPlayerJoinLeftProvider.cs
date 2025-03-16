@@ -6,13 +6,10 @@ namespace App.Players
 {
     public class NetPlayersJoinLeftProvider : NetworkBehaviour, IPlayerJoined, IPlayerLeft
     {
-        [Inject] private PlayersRepository _playersRepository;
+        [Inject] private readonly PlayersRepository _playersRepository;
 
         public override void Spawned()
         {
-            if (HasStateAuthority) 
-                return;
-            
             foreach (var activePlayer in Runner.ActivePlayers) 
                 PlayerJoined(activePlayer);
         }
