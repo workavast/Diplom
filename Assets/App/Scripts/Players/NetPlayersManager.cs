@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using App.DisconnectProviding;
 using App.Players.Repository;
 using Fusion;
 using UnityEngine;
@@ -9,19 +8,16 @@ namespace App.Players
 {
     public class NetPlayersManager : NetworkBehaviour
     {
-        [SerializeField] private NetPlayerSpawner playerSpawner;
+        [SerializeField] private PlayerSpawner playerSpawner;
         [SerializeField] private NetPlayerReSpawner playerReSpawnerPrefab;
         [SerializeField] private PlayerSpawnPointsProvider playerSpawnPointsProvider;
         
-        [Inject] private readonly IDisconnectProvider _disconnectProvider;
         [Inject] private readonly IReadOnlyPlayersRepository _playersRepository;
         
         private readonly Dictionary<PlayerRef, NetPlayerReSpawner> _playerReSpawners = new(Consts.MaxPlayersCount);
 
         public override void Spawned()
         {
-            _disconnectProvider.OnDisconnectRequest += DisconnectPlayer;
-
             foreach (var activePlayer in _playersRepository.Players)
             {
                 if (!_playerReSpawners.ContainsKey(activePlayer))
@@ -29,14 +25,13 @@ namespace App.Players
             }
 
             _playersRepository.OnPlayerJoined += CreateNetPlayerReSpawner;
-            _playersRepository.OnPlayerLeft += DeleteSessionData;
+            _playersRepository.OnPlayerLeft += DeleteReSpawners;
         }
         
         public override void Despawned(NetworkRunner runner, bool hasState)
         {
             _playersRepository.OnPlayerJoined -= CreateNetPlayerReSpawner;
-            _playersRepository.OnPlayerLeft -= DeleteSessionData;
-            _disconnectProvider.OnDisconnectRequest -= DisconnectPlayer;
+            _playersRepository.OnPlayerLeft -= DeleteReSpawners;
         }
 
         private void CreateNetPlayerReSpawner(PlayerRef playerRef)
@@ -56,7 +51,7 @@ namespace App.Players
             _playerReSpawners.Add(playerRef, netPlayerSessionData);
         }
 
-        private void DeleteSessionData(PlayerRef player)
+        private void DeleteReSpawners(PlayerRef player)
         {
             if (!HasStateAuthority)
                 return;
@@ -66,27 +61,6 @@ namespace App.Players
                 Runner.Despawn(data.GetComponent<NetworkObject>());
                 _playerReSpawners.Remove(player);
             }
-        }
-
-        private void DisconnectPlayer() 
-            => Rpc_DisconnectPlayer(Runner.LocalPlayer);
-
-        [Rpc(RpcSources.All, RpcTargets.StateAuthority, InvokeLocal = true)]
-        private void Rpc_DisconnectPlayer(PlayerRef playerRef)
-        {
-            if (!HasStateAuthority) 
-                return;
-            
-            if (Runner.LocalPlayer == playerRef)
-            {
-                foreach (var player in _playerReSpawners.Keys)
-                    if (Object.StateAuthority != player)
-                        Runner.Disconnect(player);
-
-                Runner.Shutdown();
-            }
-            else
-                Runner.Disconnect(playerRef);
         }
     }
 }

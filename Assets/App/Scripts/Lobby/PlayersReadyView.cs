@@ -13,9 +13,9 @@ namespace App.Lobby
         [SerializeField] private PlayerReadyView playerReadyViewPrefab;
         [SerializeField] private Transform holder;
         
-        [Inject] private LobbySessionDataRepository _lobbySessionDataRepository;
-        [Inject] private GlobalSessionDataRepository _globalSessionDataRepository;
-        [Inject] private NicknamesProvider _nicknamesProvider;
+        [Inject] private readonly LobbySessionDataRepository _lobbySessionDataRepository;
+        [Inject] private readonly GlobalSessionDataRepository _globalSessionDataRepository;
+        [Inject] private readonly NicknamesProvider _nicknamesProvider;
         
         private void Awake()
         {

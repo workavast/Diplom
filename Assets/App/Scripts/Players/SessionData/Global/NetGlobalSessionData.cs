@@ -6,8 +6,7 @@ namespace App.Players.SessionData.Global
 {
     public class NetGlobalSessionData : NetworkBehaviour
     {
-        [Networked] [field: ReadOnly] 
-        [OnChangedRender(nameof(NickNameChanged))] 
+        [Networked] [field: ReadOnly] [OnChangedRender(nameof(NickNameChanged))] 
         public NetworkString<_16> NickName { get; private set; }
 
         [Inject] private readonly GlobalSessionDataRepository _globalSessionDataRepository;

@@ -9,6 +9,7 @@ namespace App.Weapons
         PP = 100,
         
         Avtomat = 200,
+        Scar = 210,
         
         MachineGun = 300,
         

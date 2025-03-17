@@ -12,7 +12,8 @@ namespace App.Entities.Player
 
         private void Update()
         {
-            if (_playersEntitiesRepository.TryGet(_networkRunnerProvider.GetNetworkRunner().LocalPlayer, out var player))
+            if (_playersEntitiesRepository.TryGet(_networkRunnerProvider.GetNetworkRunner().LocalPlayer,
+                    out var player))
                 transform.position = player.transform.position.X0Z(transform.position.y);
         }
     }

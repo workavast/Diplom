@@ -1,8 +1,10 @@
 using System;
 using App.Entities.Player;
+using App.Players.SessionData.Gameplay;
 using App.Weapons;
 using Fusion;
 using UnityEngine;
+using Zenject;
 
 namespace App.Players
 {
@@ -12,15 +14,19 @@ namespace App.Players
         
         [Networked] private TickTimer SpawnDelay { get; set; }
         [Networked] private bool PlayerIsAlive { get; set; }
+
+        [Inject] private readonly GameplaySessionDataRepository _gameplaySessionDataRepository;
+
+        private PlayerRef PlayerRef => Object.InputAuthority;
         
         private PlayerSpawnPointsProvider _playerSpawnPointsProvider;
         private NetPlayerController _netPlayerController;
-        private NetPlayerSpawner _playerSpawner;
+        private PlayerSpawner _playerSpawner;
         private bool _isInitialized;
         
         public event Action<NetPlayerController> OnPlayerSpawned;
         
-        public void Initialize(PlayerSpawnPointsProvider playerSpawnPointsProvider, NetPlayerSpawner playerSpawner)
+        public void Initialize(PlayerSpawnPointsProvider playerSpawnPointsProvider, PlayerSpawner playerSpawner)
         {
             if (_isInitialized)
                 return;
@@ -35,16 +41,12 @@ namespace App.Players
         
         public override void Spawned()
         {
-            base.Spawned();
-
             if (HasStateAuthority && _isInitialized) 
                 SpawnPlayer();
         }
         
         public override void Despawned(NetworkRunner runner, bool hasState)
         {
-            base.Despawned(runner, hasState);
-
             if (_netPlayerController != null) 
                 runner.Despawn(_netPlayerController.Object);
         }
@@ -73,7 +75,11 @@ namespace App.Players
         
         private void SpawnPlayer()
         {
-            _netPlayerController = _playerSpawner.Spawn(Object.InputAuthority, _playerSpawnPointsProvider.GetRandomFreeSpawnPoint(), WeaponId.Pistol);
+            // var weaponId = _gameplaySessionDataRepository.GetData(PlayerRef).SelectedWeapon;
+            var weaponId = WeaponId.Pistol;
+            
+            _netPlayerController = _playerSpawner.Spawn(Object.InputAuthority, 
+                _playerSpawnPointsProvider.GetRandomFreeSpawnPoint(), weaponId);
             _netPlayerController.OnDeath += OnPlayerDeath;
             PlayerIsAlive = true;
             OnPlayerSpawned?.Invoke(_netPlayerController);
