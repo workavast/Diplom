@@ -3849,7 +3849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df8be31efae147aeb9734cb42661ca9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitScreen: {fileID: 0}
+  waitScreen: {fileID: 1408460640}
 --- !u!1001 &2042553792
 PrefabInstance:
   m_ObjectHideFlags: 0
