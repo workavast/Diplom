@@ -1,4 +1,5 @@
 using App.Lobby;
+using App.Lobby.SelectedMission;
 using App.Lobby.StartGameTimer;
 using App.NetworkRunning;
 using App.Session;
@@ -15,6 +16,7 @@ namespace App.Bootstraps
         [Inject] private readonly NetworkRunnerProvider _runnerProvider;
         [Inject] private readonly SessionCreator _sessionCreator;
         [Inject] private readonly IReadOnlyGameStartTimer _gameStartTimer;
+        [Inject] private readonly ISelectedMissionProvider _selectedMissionProvider;
         
         private GameStarter _gameStarter;
         
@@ -26,7 +28,7 @@ namespace App.Bootstraps
             _sceneLoader.HideLoadScreen(true);
 
             if (_runnerProvider.TryGetNetworkRunner(out var runner) && runner.IsServer)
-                _gameStarter = new GameStarter(_gameStartTimer, _sceneLoader);
+                _gameStarter = new GameStarter(_gameStartTimer, _sceneLoader, _selectedMissionProvider);
         }
     }
 }
