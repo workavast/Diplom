@@ -19,10 +19,8 @@ namespace App.Weapons.View
 
         public void ShotSfx()
         {
-            var audioSourceHolder = _audioFactory.Create(shotSfxPrefab, barrelPoint.position);
-            
             var pitchOffset = Random.Range(-config.MaxPitchOffset, config.MaxPitchOffset);
-            audioSourceHolder.SetPitch(1 + pitchOffset);
+            _audioFactory.Create(shotSfxPrefab, barrelPoint.position, 1 + pitchOffset);
         }
     }
 }

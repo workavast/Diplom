@@ -2,7 +2,7 @@ using Zenject;
 
 namespace App.Audio.Sources
 {
-    public class AudioInstaller : MonoInstaller
+    public class AudioSceneInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {
