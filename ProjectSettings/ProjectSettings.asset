@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: DefaultCompany
   productName: Diplom
-  defaultCursor: {fileID: 2800000, guid: 8f706a3abb80dcb4682d0efd3829e69b, type: 3}
+  defaultCursor: {fileID: 2800000, guid: e1a3180df033d6c4a908a19252a1a07a, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_ShowUnitySplashScreen: 1
