@@ -36,6 +36,12 @@ namespace Avastrad.UI.UiSystem
                     return GetScreen<GameplayScreen>();
                 case ScreenType.GameplayMenu:
                     return GetScreen<GameplayMenuScreen>();
+                case ScreenType.MainMenu:
+                    return GetScreen<MainMenuScreen>();
+                case ScreenType.Lobby:
+                    return GetScreen<LobbyScreen>();
+                case ScreenType.Settings:
+                    return GetScreen<SettingsScreen>();
                 default:
                     throw new ArgumentOutOfRangeException($"invalid parameter: {screenType}");
             }

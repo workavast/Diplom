@@ -6,27 +6,21 @@ using Zenject;
 namespace App.UI.Screens
 {
     [RequireComponent(typeof(Button))]
-    public class ToggleScreenButton : MonoBehaviour
+    public class SetScreenBtn : MonoBehaviour
     {
         [SerializeField] private ScreenType screenType;
 
         [Inject] private readonly ScreensController _screensController;
         
         private Button _button;
-        
+
         private void Awake()
         {
             _button = GetComponent<Button>();
-            _button.onClick.AddListener(ToggleScreen);
+            _button.onClick.AddListener(SetScreen);
         }
 
-        private void OnDestroy()
-        {
-            if (_button != null)
-                _button.onClick.RemoveListener(ToggleScreen);
-        }
-
-        private void ToggleScreen() 
-            => _screensController.ToggleScreen(screenType, true);
+        private void SetScreen() 
+            => _screensController.SetScreen(screenType);
     }
 }

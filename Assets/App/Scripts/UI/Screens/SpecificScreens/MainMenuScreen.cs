@@ -4,7 +4,7 @@ using Zenject;
 
 namespace App.UI.Screens
 {
-    public class MainMenu : ScreenBase
+    public class MainMenuScreen : ScreenBase
     {
         [Inject] private readonly CursorVisibilityBehaviour _cursorVisibilityBehaviour;
         

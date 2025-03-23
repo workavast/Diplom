@@ -11,7 +11,9 @@ namespace App.Missions
     public class MissionConfig : ScriptableObject
     {
         [field: SerializeField] public string MissionName { get; private set; } = "None";
+#if UNITY_EDITOR
         [field: SerializeField] public SceneAsset Scene { get; private set; }
+#endif  
         [field: SerializeField, ReadOnly] public string SceneName { get; private set; }
         
         public int SceneIndex => SceneManagerExt.GetSceneIndexByName(SceneName);

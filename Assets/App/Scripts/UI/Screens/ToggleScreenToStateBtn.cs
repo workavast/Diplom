@@ -6,7 +6,7 @@ using Zenject;
 namespace App.UI.Screens
 {
     [RequireComponent(typeof(Button))]
-    public class SetToggleScreenButton : MonoBehaviour
+    public class ToggleScreenToStateBtn : MonoBehaviour
     {
         [SerializeField] private ScreenType screenType;
         [SerializeField] private bool isActive;
@@ -19,12 +19,6 @@ namespace App.UI.Screens
         {
             _button = GetComponent<Button>();
             _button.onClick.AddListener(ToggleScreen);
-        }
-
-        private void OnDestroy()
-        {
-            if (_button != null)
-                _button.onClick.RemoveListener(ToggleScreen);
         }
 
         private void ToggleScreen() 

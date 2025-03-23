@@ -13,11 +13,15 @@ namespace App.Audio
         private float _prevMusicVolume;
         private float _prevEffectsVolume;
         
+        private const float DefaultMasterVolume = 1f;
+        private const float DefaultMusicVolume = 1f;
+        private const float DefaultEffectsVolume = 1f;
+        
         public VolumeSettings()
         {
-            Master = 1;
-            MusicVolume = 1f;
-            EffectsVolume = 1f;
+            Master = DefaultMasterVolume;
+            MusicVolume = DefaultMusicVolume;
+            EffectsVolume = DefaultEffectsVolume;
         }
     
         public void ChangeMasterVolume(float newVolume) 
@@ -50,6 +54,14 @@ namespace App.Audio
             Master = _prevMasterVolume;
             MusicVolume = _prevMusicVolume;
             EffectsVolume = _prevEffectsVolume;
+        }
+        
+        public void ResetToDefault()
+        {
+            IsChanged = true;
+            Master = DefaultMasterVolume;
+            MusicVolume = DefaultMusicVolume;
+            EffectsVolume = DefaultEffectsVolume;
         }
         
         public void ResetChangedMarker() 

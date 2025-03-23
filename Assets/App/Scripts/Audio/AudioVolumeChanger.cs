@@ -17,6 +17,8 @@ namespace App.Audio
         public float EffectsVolume => _volumeSettings.EffectsVolume;
         public float MusicVolume => _volumeSettings.MusicVolume;
         
+        public Action OnResetToDefault;
+
         public AudioVolumeChanger(AudioMixer mixer, VolumeSettings volumeSettings)
         {
             _mixer = mixer;
@@ -95,6 +97,17 @@ namespace App.Audio
         public void Apply() 
             => _volumeSettings.Apply();
 
+        public void ResetToDefault()
+        {
+            _volumeSettings.ResetToDefault();
+            
+            SetVolume(MasterParam, MasterVolume);
+            SetVolume(EffectsParam, EffectsVolume);
+            SetVolume(MusicParam, MusicVolume);
+            
+            OnResetToDefault?.Invoke();
+        }
+        
         public void Revert()
         {
             _volumeSettings.Revert();
