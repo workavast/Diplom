@@ -5,29 +5,35 @@ using UnityEngine;
 
 namespace App.Coop
 {
-    public class NetPlayerReady : NetworkBehaviour
+    public class NetPlayersReady : NetworkBehaviour
     {
         public bool AllPlayersIsReady { get; private set; }
-        private int _readyCounter;
-
-        private bool _isReadySend;
         
+        private int _readyCounter;
+        private bool _isReadySend;
+
+        public event Action<PlayerRef> OnPlayerIsReady;
         public event Action OnAllPlayersIsReady;
+
+        public override void Spawned()
+        {
+            Runner.SetIsSimulated(Object, true);
+        }
 
         public override void FixedUpdateNetwork()
         {
             if (_isReadySend)
                 return;
 
-            if (HasStateAuthority || HasInputAuthority)
+            if (!Runner.IsResimulation)
             {
                 _isReadySend = true;
-                RPC_PlayerIsReady();
+                RPC_PlayerIsReady(Runner.LocalPlayer);
             }
         }
 
-        [Rpc(RpcSources.All, RpcTargets.StateAuthority, InvokeLocal = true)]
-        private void RPC_PlayerIsReady()
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        private void RPC_PlayerIsReady(PlayerRef playerRef)
         {
             if (!HasStateAuthority)
             {
@@ -35,12 +41,11 @@ namespace App.Coop
                 return;
             }
 
-            if (AllPlayersIsReady)
-            {
-                Debug.LogError("All players already ready");
-                return;
-            }
+            OnPlayerIsReady?.Invoke(playerRef);
             
+            if (AllPlayersIsReady)
+                return;
+
             _readyCounter++;
             if (_readyCounter >= Runner.ActivePlayers.Count())
             {

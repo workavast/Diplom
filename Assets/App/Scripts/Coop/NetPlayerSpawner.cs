@@ -12,7 +12,7 @@ namespace App.Coop
     {
         [SerializeField] private PlayerSpawnPointsProvider playerSpawnPointsProvider;
         [SerializeField] private PlayerSpawner playerSpawner;
-        [SerializeField] private NetPlayerReady playerReady;
+        [SerializeField] private NetPlayersReady playersReady;
 
         [Inject] private readonly IReadOnlyPlayersRepository _playersRepository;
         [Inject] private readonly CoopSessionDataRepository _coopSessionDataRepository;
@@ -25,10 +25,10 @@ namespace App.Coop
             if (!HasStateAuthority)
                 return;
             
-            if (playerReady.AllPlayersIsReady) 
+            if (playersReady.AllPlayersIsReady) 
                 SpawnPlayers();
             else
-                playerReady.OnAllPlayersIsReady += SpawnPlayers;
+                playersReady.OnAllPlayersIsReady += SpawnPlayers;
         }
 
         public override void Despawned(NetworkRunner runner, bool hasState)

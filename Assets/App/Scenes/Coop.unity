@@ -1845,7 +1845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpawnPointsProvider: {fileID: 536566524}
   playerSpawner: {fileID: 47313656}
-  playerReady: {fileID: 47313661}
+  playersReady: {fileID: 47313661}
 --- !u!1001 &48265077
 PrefabInstance:
   m_ObjectHideFlags: 0

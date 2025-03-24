@@ -1793,7 +1793,7 @@ GameObject:
   - component: {fileID: 47313656}
   - component: {fileID: 47313658}
   m_Layer: 0
-  m_Name: Spawners
+  m_Name: NetSpawners
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10877,7 +10877,7 @@ MonoBehaviour:
   playerSpawner: {fileID: 47313656}
   playerReSpawnerPrefab: {fileID: 9088138905731836833, guid: 10d4705b1b92c694a8523408181015e3, type: 3}
   playerSpawnPointsProvider: {fileID: 536566524}
-  playerReady: {fileID: 338389317}
+  playersReady: {fileID: 338389317}
 --- !u!114 &396591823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57232,12 +57232,12 @@ SceneRoots:
   - {fileID: 700353384}
   - {fileID: 202733854}
   - {fileID: 527154705}
-  - {fileID: 47313660}
   - {fileID: 901342595}
   - {fileID: 1185629414}
   - {fileID: 1301617276}
   - {fileID: 830009533}
   - {fileID: 2114773792}
+  - {fileID: 47313660}
   - {fileID: 396591824}
   - {fileID: 313321671}
   - {fileID: 1024533217}

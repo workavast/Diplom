@@ -12,7 +12,7 @@ namespace App.Players
         [SerializeField] private PlayerSpawner playerSpawner;
         [SerializeField] private NetPlayerReSpawner playerReSpawnerPrefab;
         [SerializeField] private PlayerSpawnPointsProvider playerSpawnPointsProvider;
-        [SerializeField] private NetPlayerReady playerReady;
+        [SerializeField] private NetPlayersReady playersReady;
 
         [Inject] private readonly IReadOnlyPlayersRepository _playersRepository;
         
@@ -20,13 +20,13 @@ namespace App.Players
 
         public override void Spawned()
         {
-            _playersRepository.OnPlayerJoined += TryCreateNetPlayerReSpawner;
+            playersReady.OnPlayerIsReady += TryCreateNetPlayerReSpawner;
             _playersRepository.OnPlayerLeft += DeleteReSpawners;
             
-            if (playerReady.AllPlayersIsReady) 
+            if (playersReady.AllPlayersIsReady) 
                 InitializeSpawning();
             else
-                playerReady.OnAllPlayersIsReady += InitializeSpawning;
+                playersReady.OnAllPlayersIsReady += InitializeSpawning;
         }
         
         public override void Despawned(NetworkRunner runner, bool hasState)
@@ -37,7 +37,7 @@ namespace App.Players
 
         private void TryCreateNetPlayerReSpawner(PlayerRef playerRef)
         {
-            if (playerReady.AllPlayersIsReady) 
+            if (playersReady.AllPlayersIsReady) 
                 CreateNetPlayerReSpawner(playerRef);
         }
         
