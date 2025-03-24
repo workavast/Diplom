@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using App.Coop;
 using App.Players.Repository;
 using Fusion;
 using UnityEngine;
@@ -11,27 +12,42 @@ namespace App.Players
         [SerializeField] private PlayerSpawner playerSpawner;
         [SerializeField] private NetPlayerReSpawner playerReSpawnerPrefab;
         [SerializeField] private PlayerSpawnPointsProvider playerSpawnPointsProvider;
-        
+        [SerializeField] private NetPlayerReady playerReady;
+
         [Inject] private readonly IReadOnlyPlayersRepository _playersRepository;
         
         private readonly Dictionary<PlayerRef, NetPlayerReSpawner> _playerReSpawners = new(Consts.MaxPlayersCount);
 
         public override void Spawned()
         {
-            foreach (var activePlayer in _playersRepository.Players)
-            {
-                if (!_playerReSpawners.ContainsKey(activePlayer))
-                    CreateNetPlayerReSpawner(activePlayer);
-            }
-
-            _playersRepository.OnPlayerJoined += CreateNetPlayerReSpawner;
+            _playersRepository.OnPlayerJoined += TryCreateNetPlayerReSpawner;
             _playersRepository.OnPlayerLeft += DeleteReSpawners;
+            
+            if (playerReady.AllPlayersIsReady) 
+                InitializeSpawning();
+            else
+                playerReady.OnAllPlayersIsReady += InitializeSpawning;
         }
         
         public override void Despawned(NetworkRunner runner, bool hasState)
         {
             _playersRepository.OnPlayerJoined -= CreateNetPlayerReSpawner;
             _playersRepository.OnPlayerLeft -= DeleteReSpawners;
+        }
+
+        private void TryCreateNetPlayerReSpawner(PlayerRef playerRef)
+        {
+            if (playerReady.AllPlayersIsReady) 
+                CreateNetPlayerReSpawner(playerRef);
+        }
+        
+        private void InitializeSpawning()
+        {
+            foreach (var activePlayer in _playersRepository.Players)
+            {
+                if (!_playerReSpawners.ContainsKey(activePlayer))
+                    CreateNetPlayerReSpawner(activePlayer);
+            }
         }
 
         private void CreateNetPlayerReSpawner(PlayerRef playerRef)

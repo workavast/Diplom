@@ -13,13 +13,13 @@ namespace App.Players
 
         [Inject] private readonly NetworkRunnerProvider _runnerProvider;
 
-        public NetPlayerController Spawn(PlayerRef playerRef, Transform spawnPoint, WeaponId initialWeapon = WeaponId.None)
+        public NetPlayerController Spawn(PlayerRef playerRef, Transform spawnPoint, WeaponId initialWeapon = WeaponId.Pistol)
             => Spawn(playerRef, spawnPoint.position, spawnPoint.rotation, initialWeapon);
         
-        public NetPlayerController Spawn(PlayerRef playerRef, Vector3 position, WeaponId initialWeapon = WeaponId.None)
+        public NetPlayerController Spawn(PlayerRef playerRef, Vector3 position, WeaponId initialWeapon = WeaponId.Pistol)
             => Spawn(playerRef, position, Quaternion.identity, initialWeapon);
 
-        public NetPlayerController Spawn(PlayerRef playerRef, Vector3 position, Quaternion rotation, WeaponId initialWeapon = WeaponId.None)
+        public NetPlayerController Spawn(PlayerRef playerRef, Vector3 position, Quaternion rotation, WeaponId initialWeapon = WeaponId.Pistol)
         {
             var runner = _runnerProvider.GetNetworkRunner();
             var netPlayerController = runner.Spawn(netPlayerControllerPrefab, position, rotation, playerRef);

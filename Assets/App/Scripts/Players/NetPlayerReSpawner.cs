@@ -75,8 +75,7 @@ namespace App.Players
         
         private void SpawnPlayer()
         {
-            // var weaponId = _gameplaySessionDataRepository.GetData(PlayerRef).SelectedWeapon;
-            var weaponId = WeaponId.Pistol;
+            var weaponId = _gameplaySessionDataRepository.GetData(PlayerRef).SelectedWeapon;
             
             _netPlayerController = _playerSpawner.Spawn(Object.InputAuthority, 
                 _playerSpawnPointsProvider.GetRandomFreeSpawnPoint(), weaponId);

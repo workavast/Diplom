@@ -39,10 +39,8 @@ namespace App.Players.SessionData.Gameplay
         }
         
         [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-        private void RPC_SetWeapon(WeaponId selectedWeapon)
-        {
-            SelectedWeapon = selectedWeapon;
-        }
+        private void RPC_SetWeapon(WeaponId selectedWeapon) 
+            => SelectedWeapon = selectedWeapon;
 
         private void SelectedWeaponChanged() 
             => OnSelectedWeaponChanged?.Invoke();
