@@ -1,4 +1,5 @@
 using System;
+using App.Armor;
 using App.Damage;
 using App.Entities.Player;
 using App.EventBus;
@@ -6,7 +7,6 @@ using App.Weapons;
 using Avastrad.EventBusFramework;
 using Fusion;
 using UnityEngine;
-using Zenject;
 
 namespace App.Entities
 {
@@ -15,7 +15,7 @@ namespace App.Entities
         [SerializeField] protected PlayerEntityConfig config;
 
         [Networked] [field: ReadOnly] public int NetHealthPoints { get; protected set; }
-        [Networked] [field: ReadOnly] public int ArmorLevel { get; protected set; }
+        [Networked] [OnChangedRender(nameof(ChangeArmor))] [field: ReadOnly] public int ArmorLevel { get; protected set; }
         [Networked] [field: ReadOnly, SerializeField] protected Vector3 NetVelocity { get; set; }
 
         public GameObject GameObject => gameObject;
@@ -23,20 +23,17 @@ namespace App.Entities
         public abstract EntityType EntityType { get; }
 
         protected float Gravity => config.Gravity;
-        protected float WalkSpeed => config.WalkSpeed;
-        protected float SprintSpeed => config.SprintSpeed;
-        protected float MoveAcceleration => config.MoveAcceleration;
+        protected float WalkSpeed => config.WalkSpeed - _armor.WalkSpeedDecrease;
+        protected float SprintSpeed => config.SprintSpeed - _armor.SprintSpeedDecrease;
+        protected float MoveAcceleration => config.MoveAcceleration - _armor.MoveAccelerationDecrease;
         
-        protected IEventBus EventBus;
+        protected abstract IEventBus EventBus { get; set; }
+        protected abstract ArmorsConfig ArmorsConfig { get; set; }
         protected NetWeapon NetWeapon;
+
+        private ArmorConfig _armor;
         
         public event Action OnDeath;
-        
-        [Inject]
-        public virtual void Construct(IEventBus eventBus)
-        {
-            EventBus = eventBus;
-        }
 
         protected virtual void Awake()
         {
@@ -45,8 +42,9 @@ namespace App.Entities
 
         public override void Spawned()
         {
+            _armor = ArmorsConfig.GetArmor(0);
             NetHealthPoints = config != null ? config.InitialHealthPoints : 100;
-            Debug.Log($"Spawned: {Object.InputAuthority}: {NetWeapon.NetEquippedWeapon}");
+            Debug.Log($"Spawned: [{Object.InputAuthority}]: [{NetWeapon.NetEquippedWeapon}]");
         }
         
         public void TakeDamage(float damage, IEntity shooter)
@@ -68,7 +66,17 @@ namespace App.Entities
             NetWeapon = GetComponent<NetWeapon>();
             NetWeapon.SetWeapon(weaponId);
         }
+
+        public void SetArmor(int armorLevel)
+        {
+            ArmorLevel = armorLevel;
+        }
         
         public abstract string GetName();
+
+        private void ChangeArmor()
+        {
+            _armor = ArmorsConfig.GetArmor(ArmorLevel);
+        }
     }
 }

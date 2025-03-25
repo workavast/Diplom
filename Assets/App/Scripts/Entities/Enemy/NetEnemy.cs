@@ -1,3 +1,4 @@
+using App.Armor;
 using Avastrad.EventBusFramework;
 using Fusion;
 using UnityEngine;
@@ -8,17 +9,21 @@ namespace App.Entities.Enemy
     [RequireComponent(typeof(EnemyView))]
     public class NetEnemy : NetEntityBase
     {
+        public override EntityType EntityType => EntityType.Default;
+        
+        protected override IEventBus EventBus { get; set; }
+        protected override ArmorsConfig ArmorsConfig { get; set; }
+
         private EnemiesRepository _enemiesRepository;
 
-        public override EntityType EntityType => EntityType.Default;
-
         [Inject]
-        public void Construct(EnemiesRepository enemiesRepository, IEventBus eventBus)
+        public void Construct(EnemiesRepository enemiesRepository, IEventBus eventBus, ArmorsConfig armorsConfig)
         {
             _enemiesRepository = enemiesRepository;
-            base.Construct(eventBus);
+            EventBus = eventBus;
+            ArmorsConfig = armorsConfig;
         }
-
+        
         public override void Spawned()
         {
             base.Spawned();

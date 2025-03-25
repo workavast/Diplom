@@ -1,4 +1,5 @@
 using System;
+using App.Armor;
 using App.PlayerInput;
 using App.Players.Nicknames;
 using Avastrad.EventBusFramework;
@@ -13,24 +14,28 @@ namespace App.Entities.Player
     {
         [SerializeField, Tooltip("Can be null")] private PlayerView playerView;
         [SerializeField, Tooltip("Can be null")] private CharacterController characterController;
+        
+        public PlayerRef PlayerRef => Object.InputAuthority;
+        public override EntityType EntityType => EntityType.Player;
+        
+        protected override IEventBus EventBus { get; set; }
+        protected override ArmorsConfig ArmorsConfig { get; set; }
 
         private PlayersEntitiesRepository _playersEntitiesRepository;
         private NicknamesProvider _nicknamesProvider;
-
-        public PlayerRef PlayerRef => Object.InputAuthority;
-
-        public override EntityType EntityType => EntityType.Player;
-
+        
         public event Action OnWeaponShot; 
         
         [Inject]
-        public void Construct(PlayersEntitiesRepository playersEntitiesRepository, NicknamesProvider nicknamesProvider, IEventBus eventBus)
+        public void Construct(PlayersEntitiesRepository playersEntitiesRepository, NicknamesProvider nicknamesProvider, 
+            IEventBus eventBus, ArmorsConfig armorsConfig)
         {
             _playersEntitiesRepository = playersEntitiesRepository;
             _nicknamesProvider = nicknamesProvider;
-            base.Construct(eventBus);
+            EventBus = eventBus;
+            ArmorsConfig = armorsConfig;
         }
-
+        
         protected override void Awake()
         {
             base.Awake();
