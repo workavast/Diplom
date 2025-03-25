@@ -16,4 +16,5 @@ MonoBehaviour:
   <AttackDaley>k__BackingField: 0.2
   <WalkSpeed>k__BackingField: 4
   <SprintSpeed>k__BackingField: 6
+  <MoveAcceleration>k__BackingField: 10
   <Gravity>k__BackingField: -9.8

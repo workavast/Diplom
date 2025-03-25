@@ -13,7 +13,6 @@ namespace App.Entities.Player
     {
         [SerializeField, Tooltip("Can be null")] private PlayerView playerView;
         [SerializeField, Tooltip("Can be null")] private CharacterController characterController;
-        [SerializeField] private float acceleration = 10f;
 
         private PlayersEntitiesRepository _playersEntitiesRepository;
         private NicknamesProvider _nicknamesProvider;
@@ -85,7 +84,7 @@ namespace App.Entities.Player
 
         public override void Render()
         {
-            playerView.MoveView(NetVelocity, config.SprintSpeed);
+            playerView.MoveView(NetVelocity, SprintSpeed);
         }
 
         public override string GetName()
@@ -98,7 +97,7 @@ namespace App.Entities.Player
             var targetVelocity = GetUnscaledVelocity(input);
             
             var currentVelocity = new Vector3(NetVelocity.x, 0, NetVelocity.z);
-            currentVelocity = Vector3.Lerp(currentVelocity, targetVelocity, acceleration * Runner.DeltaTime);
+            currentVelocity = Vector3.Lerp(currentVelocity, targetVelocity, MoveAcceleration * Runner.DeltaTime);
             currentVelocity.y = 0;
             
             NetVelocity = new Vector3(currentVelocity.x, targetVelocity.y, currentVelocity.z);
@@ -119,9 +118,9 @@ namespace App.Entities.Player
         private Vector3 GetUnscaledVelocity(PlayerInputData input)
         {
             var moveDirection = Vector3.right * input.HorizontalInput + Vector3.forward * input.VerticalInput;
-            var moveSpeed = input.Buttons.IsSet(PlayerButtons.Sprint) ? config.SprintSpeed : config.WalkSpeed;
+            var moveSpeed = input.Buttons.IsSet(PlayerButtons.Sprint) ? SprintSpeed : WalkSpeed;
            
-            var unscaledGravityVelocity = config.Gravity * Vector3.up;
+            var unscaledGravityVelocity = Gravity * Vector3.up;
             var unscaledVelocity = moveSpeed * moveDirection;
             
             return  unscaledGravityVelocity + unscaledVelocity;

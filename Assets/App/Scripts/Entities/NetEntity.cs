@@ -15,12 +15,18 @@ namespace App.Entities
         [SerializeField] protected PlayerEntityConfig config;
 
         [Networked] [field: ReadOnly] public int NetHealthPoints { get; protected set; }
+        [Networked] [field: ReadOnly] public int ArmorLevel { get; protected set; }
         [Networked] [field: ReadOnly, SerializeField] protected Vector3 NetVelocity { get; set; }
 
         public GameObject GameObject => gameObject;
         public EntityIdentifier Identifier { get; } = new();
         public abstract EntityType EntityType { get; }
 
+        protected float Gravity => config.Gravity;
+        protected float WalkSpeed => config.WalkSpeed;
+        protected float SprintSpeed => config.SprintSpeed;
+        protected float MoveAcceleration => config.MoveAcceleration;
+        
         protected IEventBus EventBus;
         protected NetWeapon NetWeapon;
         
