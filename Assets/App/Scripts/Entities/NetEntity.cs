@@ -1,7 +1,5 @@
 using System;
 using App.Armor;
-using App.Damage;
-using App.Entities.Player;
 using App.EventBus;
 using App.Weapons;
 using Avastrad.EventBusFramework;
@@ -10,12 +8,12 @@ using UnityEngine;
 
 namespace App.Entities
 {
-    public abstract class NetEntityBase : NetworkBehaviour, IEntity, IDamageable
+    public abstract class NetEntityBase : NetworkBehaviour, IEntity
     {
-        [SerializeField] protected PlayerEntityConfig config;
+        [SerializeField] protected EntityConfig config;
 
         [Networked] [field: ReadOnly] public int NetHealthPoints { get; protected set; }
-        [Networked] [OnChangedRender(nameof(ChangeArmor))] [field: ReadOnly] public int ArmorLevel { get; protected set; }
+        [Networked] [OnChangedRender(nameof(ChangeArmor))] [field: ReadOnly] public int NetArmorLevel { get; protected set; }
         [Networked] [field: ReadOnly, SerializeField] protected Vector3 NetVelocity { get; set; }
 
         public GameObject GameObject => gameObject;
@@ -67,16 +65,15 @@ namespace App.Entities
             NetWeapon.SetWeapon(weaponId);
         }
 
-        public void SetArmor(int armorLevel)
-        {
-            ArmorLevel = armorLevel;
-        }
-        
+        public void SetArmor(int armorLevel) 
+            => NetArmorLevel = armorLevel;
+
+        public ArmorConfig GetArmor()
+            => _armor;
+
         public abstract string GetName();
 
-        private void ChangeArmor()
-        {
-            _armor = ArmorsConfig.GetArmor(ArmorLevel);
-        }
+        private void ChangeArmor() 
+            => _armor = ArmorsConfig.GetArmor(NetArmorLevel);
     }
 }

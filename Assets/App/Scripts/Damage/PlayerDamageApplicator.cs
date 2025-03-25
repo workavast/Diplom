@@ -5,7 +5,7 @@ namespace App.Damage
     public class PlayerDamageApplicator : DamageApplicator
     {
         public PlayerDamageApplicator(bool hasFriendlyFire) : base(hasFriendlyFire) { }
-
+        
         protected override void DamagePlayer(float damage, IDamageable receiver, IEntity shooter)
         {
             if (FriendlyFire)

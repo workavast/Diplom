@@ -1,7 +1,7 @@
 using App.Entities;
 using App.EventBus;
 using App.Players.SessionData;
-using App.Players.SessionData.Gameplay;
+using App.Pvp.Gameplay;
 using Avastrad.EventBusFramework;
 using Fusion;
 using Zenject;

@@ -16,14 +16,17 @@ namespace App.Coop
 
         [Inject] private readonly IReadOnlyPlayersRepository _playersRepository;
         [Inject] private readonly CoopSessionDataRepository _coopSessionDataRepository;
-        
+        [Inject] private readonly PlayersEntitiesRepository _playersEntitiesRepository;
+
         private bool _gameIsInitialized;
-        private NetPlayerController _netPlayerController;
 
         public override void Spawned()
         {
             if (!HasStateAuthority)
                 return;
+
+            playersReady.OnPlayerIsReady += TrySpawnPlayer;
+            _playersRepository.OnPlayerLeft += DespawnPlayerEntity;
             
             if (playersReady.AllPlayersIsReady) 
                 SpawnPlayers();
@@ -31,12 +34,18 @@ namespace App.Coop
                 playersReady.OnAllPlayersIsReady += SpawnPlayers;
         }
 
-        public override void Despawned(NetworkRunner runner, bool hasState)
+        private void TrySpawnPlayer(PlayerRef playerRef)
         {
-            if (_netPlayerController != null) 
-                runner.Despawn(_netPlayerController.Object);
+            if(playersReady.AllPlayersIsReady)
+                SpawnPlayer(playerRef);
         }
 
+        private void DespawnPlayerEntity(PlayerRef playerRef)
+        {
+            if (_playersEntitiesRepository.TryGet(playerRef, out var entity)) 
+                Runner.Despawn(entity.Object);
+        }
+        
         private void SpawnPlayers()
         {
             foreach (var player in _playersRepository.Players) 
@@ -46,8 +55,8 @@ namespace App.Coop
         private void SpawnPlayer(PlayerRef playerRef)
         {
             var weaponId = _coopSessionDataRepository.GetData(playerRef).SelectedWeapon;
-            _netPlayerController = playerSpawner.Spawn(playerRef, playerSpawnPointsProvider.GetRandomFreeSpawnPoint(),
-                weaponId);
+            var armorLevel = _coopSessionDataRepository.GetData(playerRef).EquippedArmorLevel;
+            playerSpawner.Spawn(playerRef, playerSpawnPointsProvider.GetRandomFreeSpawnPoint(), armorLevel, weaponId);
         }
     }
 }

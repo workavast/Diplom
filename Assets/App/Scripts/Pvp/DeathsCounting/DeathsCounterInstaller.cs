@@ -1,6 +1,6 @@
 using Zenject;
 
-namespace App.Players.DeathsCounting
+namespace App.Pvp.DeathsCounting
 {
     public class DeathsCounterInstaller : MonoInstaller
     {

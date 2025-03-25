@@ -2,11 +2,11 @@ using System;
 using App.Entities;
 using App.EventBus;
 using App.Players.SessionData;
-using App.Players.SessionData.Gameplay;
+using App.Pvp.Gameplay;
 using Avastrad.EventBusFramework;
 using Fusion;
 
-namespace App.Players.DeathsCounting
+namespace App.Pvp.DeathsCounting
 {
     public class DeathsCounter : IEventReceiver<OnKill>, IDisposable
     {

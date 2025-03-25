@@ -1,14 +1,16 @@
 using System;
+using App.Players;
 using App.Weapons;
 using Fusion;
 using Zenject;
 
-namespace App.Players.SessionData.Gameplay
+namespace App.Pvp.Gameplay
 {
     public class NetGameplaySessionData : NetworkBehaviour
     {
         [Networked] [field: ReadOnly] public bool Initialized { get; private set; }
-        [Networked] [field: ReadOnly] [OnChangedRender(nameof(SelectedWeaponChanged))] public WeaponId SelectedWeapon { get; private set; }
+        [Networked] [field: ReadOnly] public WeaponId SelectedWeapon { get; private set; }
+        [Networked] [field: ReadOnly] public int EquippedArmorLevel { get; private set; }
         [Networked] [field: ReadOnly] [OnChangedRender(nameof(PointsChanged))] public int Points { get; private set; }
         [Networked] [field: ReadOnly] [OnChangedRender(nameof(DeathsChanged))] public int Deaths { get; private set; }
         [Networked] [field: ReadOnly] [OnChangedRender(nameof(KillsChanged))] public int Kills { get; private set; }
@@ -18,7 +20,6 @@ namespace App.Players.SessionData.Gameplay
         public PlayerRef PlayerRef => Object.InputAuthority;
         
         public event Action OnDespawned;
-        public event Action OnSelectedWeaponChanged;
         public event Action OnPointsChanged;
         public event Action OnKillsChanged;
         public event Action OnDeathsChanged;
@@ -26,7 +27,7 @@ namespace App.Players.SessionData.Gameplay
         public override void Spawned()
         {
             if (HasInputAuthority)
-                RPC_SetWeapon(PlayerData.SelectedWeapon);
+                RPC_InitializeData(PlayerData.SelectedWeapon, PlayerData.EquippedArmorLevel);
             
             if (!_playersSessionDataRepository.TryRegister(PlayerRef, this))
                 Runner.Despawn(GetComponent<NetworkObject>());
@@ -39,12 +40,12 @@ namespace App.Players.SessionData.Gameplay
         }
         
         [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-        private void RPC_SetWeapon(WeaponId selectedWeapon) 
-            => SelectedWeapon = selectedWeapon;
+        private void RPC_InitializeData(WeaponId weapon, int armorLevel)
+        {
+            SelectedWeapon = weapon;
+            EquippedArmorLevel = armorLevel;
+        }
 
-        private void SelectedWeaponChanged() 
-            => OnSelectedWeaponChanged?.Invoke();
-        
         private void PointsChanged() 
             => OnPointsChanged?.Invoke();
         

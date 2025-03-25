@@ -1,4 +1,5 @@
 using System;
+using App.Armor;
 using App.Entities;
 using UnityEngine;
 
@@ -12,24 +13,25 @@ namespace App.Damage
         protected DamageApplicator(bool hasFriendlyFire)
         {
             FriendlyFire = hasFriendlyFire;
+            
             DamageScale = 1;
         }
 
         public void TryApplyDamage(float damage, GameObject receiver, IEntity shooter)
         {
             var receiverEntity = receiver.GetComponent<IEntity>();
-            var damageable = receiver.GetComponent<IDamageable>();
-            
-            if (receiverEntity == null || damageable == null)
+            if (receiverEntity == null)
                 return;
 
+            var armorScale = receiverEntity.GetArmor().DamageScale;
+            
             switch (receiverEntity.EntityType)
             {
                 case EntityType.Default:
-                    DamageDefault(damage, damageable, shooter);
+                    DamageDefault(damage * armorScale, receiverEntity, shooter);
                     break;
                 case EntityType.Player:
-                    DamagePlayer(damage, damageable, shooter);
+                    DamagePlayer(damage * armorScale, receiverEntity, shooter);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

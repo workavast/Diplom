@@ -1,12 +1,12 @@
 using System;
 using App.Entities.Player;
-using App.Players.SessionData.Gameplay;
-using App.Weapons;
+using App.Players;
+using App.Pvp.Gameplay;
 using Fusion;
 using UnityEngine;
 using Zenject;
 
-namespace App.Players
+namespace App.Pvp
 {
     public class NetPlayerReSpawner : NetworkBehaviour
     {
@@ -76,9 +76,10 @@ namespace App.Players
         private void SpawnPlayer()
         {
             var weaponId = _gameplaySessionDataRepository.GetData(PlayerRef).SelectedWeapon;
+            var armorLevel = _gameplaySessionDataRepository.GetData(PlayerRef).EquippedArmorLevel;
             
             _netPlayerController = _playerSpawner.Spawn(Object.InputAuthority, 
-                _playerSpawnPointsProvider.GetRandomFreeSpawnPoint(), weaponId);
+                _playerSpawnPointsProvider.GetRandomFreeSpawnPoint(), armorLevel, weaponId);
             _netPlayerController.OnDeath += OnPlayerDeath;
             PlayerIsAlive = true;
             OnPlayerSpawned?.Invoke(_netPlayerController);

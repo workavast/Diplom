@@ -1,9 +1,9 @@
 using UnityEngine;
 
-namespace App.Entities.Player
+namespace App.Entities
 {
-    [CreateAssetMenu(fileName = nameof(PlayerEntityConfig), menuName = Consts.AppName + "/Configs/" + nameof(PlayerEntityConfig))]
-    public class PlayerEntityConfig : ScriptableObject
+    [CreateAssetMenu(fileName = nameof(EntityConfig), menuName = Consts.AppName + "/Configs/" + nameof(EntityConfig))]
+    public class EntityConfig : ScriptableObject
     {
         [field: SerializeField, Min(0)] public int InitialHealthPoints { get; private set; } = 100;
         [field: SerializeField, Min(0)] public float AttackDaley { get; private set; } = 0.5f;

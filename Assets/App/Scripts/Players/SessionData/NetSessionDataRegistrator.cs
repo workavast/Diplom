@@ -57,7 +57,7 @@ namespace App.Players.SessionData
             if (_playersSessionDataRepository.ContainsKey(playerRef))
             {
                 Debug.Log($"Despawn session data [{GetType()}] for the player: {playerRef}");
-                Runner.Despawn(_playersSessionDataRepository.GetData(playerRef).GetComponent<NetworkObject>());
+                Runner.Despawn(_playersSessionDataRepository.GetData(playerRef).Object);
             }
             else
                 Debug.LogWarning($"Cant find session data for this player: {playerRef} | {playerRef.PlayerId}");

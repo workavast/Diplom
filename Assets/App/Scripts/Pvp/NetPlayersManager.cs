@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using App.Coop;
+using App.Players;
 using App.Players.Repository;
 using Fusion;
 using UnityEngine;
 using Zenject;
 
-namespace App.Players
+namespace App.Pvp
 {
     public class NetPlayersManager : NetworkBehaviour
     {

@@ -1,6 +1,6 @@
 using Zenject;
 
-namespace App.Players.SessionData.Gameplay
+namespace App.Pvp.Gameplay
 {
     public class GameplaySessionDataInstaller : MonoInstaller
     {

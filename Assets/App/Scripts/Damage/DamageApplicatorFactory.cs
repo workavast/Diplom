@@ -1,4 +1,5 @@
 using System;
+using App.Armor;
 using App.Entities;
 
 namespace App.Damage
