@@ -1,7 +1,7 @@
 using System;
 using App.Lobby.SelectedMission;
 using App.Missions;
-using App.Missions.UI;
+using App.UI.MissionSelection;
 using Fusion;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ namespace App.Lobby
 {
     public class NetLobbyData : NetworkBehaviour, ISelectedMissionProvider
     {
-        [SerializeField] private MissionSelector missionSelector;
+        [SerializeField] private MissionSelectorPresenter missionSelectorPresenter;
         [SerializeField] private SelectedMissionView selectedMissionView;
         [SerializeField] private MissionsConfig missionsConfig;
 
@@ -24,7 +24,7 @@ namespace App.Lobby
             if (!HasStateAuthority)
                 return;
 
-            missionSelector.OnMissionClicked += SetMissionIndex;
+            missionSelectorPresenter.OnMissionClicked += SetMissionIndex;
 
             if (ActiveMissionIndex >= 0) 
                 selectedMissionView.SetData(missionsConfig.Missions[ActiveMissionIndex]);
@@ -32,7 +32,7 @@ namespace App.Lobby
 
         public override void Despawned(NetworkRunner runner, bool hasState)
         {
-            missionSelector.OnMissionClicked -= SetMissionIndex;
+            missionSelectorPresenter.OnMissionClicked -= SetMissionIndex;
         }
         
         public MissionConfig GetMission(int activeMissionIndex) 

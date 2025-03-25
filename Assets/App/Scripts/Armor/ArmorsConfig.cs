@@ -8,6 +8,8 @@ namespace App.Armor
     {
         [SerializeField] private List<ArmorConfig> armorConfigs;
 
+        public int MaxArmorLevel => armorConfigs.Capacity;
+        
         public ArmorConfig GetArmor(int armorLevel)
         {
             if (armorLevel < 0)

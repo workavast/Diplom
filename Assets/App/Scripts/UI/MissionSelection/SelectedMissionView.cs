@@ -1,7 +1,8 @@
+using App.Missions;
 using TMPro;
 using UnityEngine;
 
-namespace App.Missions.UI
+namespace App.UI.MissionSelection
 {
     public class SelectedMissionView : MonoBehaviour
     {
