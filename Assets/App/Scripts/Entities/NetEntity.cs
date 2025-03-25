@@ -15,7 +15,7 @@ namespace App.Entities
         [SerializeField] protected PlayerEntityConfig config;
 
         [Networked] [field: ReadOnly] public int NetHealthPoints { get; protected set; }
-        [Networked] [field: ReadOnly, SerializeField] protected Vector3 NetUnscaledVelocity { get; set; }
+        [Networked] [field: ReadOnly, SerializeField] protected Vector3 NetVelocity { get; set; }
 
         public GameObject GameObject => gameObject;
         public EntityIdentifier Identifier { get; } = new();

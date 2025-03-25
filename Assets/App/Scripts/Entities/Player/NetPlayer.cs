@@ -13,7 +13,8 @@ namespace App.Entities.Player
     {
         [SerializeField, Tooltip("Can be null")] private PlayerView playerView;
         [SerializeField, Tooltip("Can be null")] private CharacterController characterController;
-        
+        [SerializeField] private float acceleration = 10f;
+
         private PlayersEntitiesRepository _playersEntitiesRepository;
         private NicknamesProvider _nicknamesProvider;
 
@@ -60,12 +61,8 @@ namespace App.Entities.Player
             if (hasInput)
             {
                 RotateByLookDirection(input.LookDirection);
-                NetUnscaledVelocity = GetUnscaledVelocity(input);
-                characterController.Move(NetUnscaledVelocity * Runner.DeltaTime);
-            }
-            
-            if (hasInput)
-            {
+                CalculateVelocity(input);
+                
                 if ((HasStateAuthority || HasInputAuthority) && input.Buttons.IsSet(PlayerButtons.Fire) && NetWeapon.CanShot)
                 {
                     if (NetWeapon.TryShoot())
@@ -88,12 +85,24 @@ namespace App.Entities.Player
 
         public override void Render()
         {
-            playerView.MoveView(NetUnscaledVelocity, config.SprintSpeed);
+            playerView.MoveView(NetVelocity, config.SprintSpeed);
         }
 
         public override string GetName()
         {
             return _nicknamesProvider.GetNickName(PlayerRef);
+        }
+
+        private void CalculateVelocity(PlayerInputData input)
+        {
+            var targetVelocity = GetUnscaledVelocity(input);
+            
+            var currentVelocity = new Vector3(NetVelocity.x, 0, NetVelocity.z);
+            currentVelocity = Vector3.Lerp(currentVelocity, targetVelocity, acceleration * Runner.DeltaTime);
+            currentVelocity.y = 0;
+            
+            NetVelocity = new Vector3(currentVelocity.x, targetVelocity.y, currentVelocity.z);
+            characterController.Move(NetVelocity * Runner.DeltaTime);
         }
 
         private void RotateByLookDirection(Vector2 lookDirection)
