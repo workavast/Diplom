@@ -6,9 +6,9 @@ namespace App.UI.Selection
 {
     public abstract class Selector<TId> : MonoBehaviour, IWindow
     {
+        [field: SerializeField] public string Id { get; private set; }
         [SerializeField] private SelectionBtn<TId> weaponSelectBtnPrefab;
         [SerializeField] private Transform holder;
-        [field: SerializeField] public string Id { get; private set; }
         
         private void Awake() 
             => Initialize();

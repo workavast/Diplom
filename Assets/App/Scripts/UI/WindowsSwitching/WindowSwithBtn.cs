@@ -6,10 +6,10 @@ namespace App.UI.WindowsSwitching
     [RequireComponent(typeof(Button))]
     public class WindowSwitchBtn : MonoBehaviour
     {
-        [SerializeField] private WindowsSwitcher windowsSwitcher;
         [SerializeField] private string key;
+        [SerializeField] private WindowsSwitcher windowsSwitcher;
         
-        protected virtual void Awake()
+        private void Awake()
         {
             var button = GetComponent<Button>();
             button.onClick.AddListener(() => windowsSwitcher.SwitchWindow(key));
