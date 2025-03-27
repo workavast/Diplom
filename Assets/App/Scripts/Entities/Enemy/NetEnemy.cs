@@ -1,12 +1,10 @@
 using App.Armor;
 using Avastrad.EventBusFramework;
 using Fusion;
-using UnityEngine;
 using Zenject;
 
 namespace App.Entities.Enemy
 {
-    [RequireComponent(typeof(EnemyView))]
     public class NetEnemy : NetEntity
     {
         public override EntityType EntityType => EntityType.Default;

@@ -28,6 +28,7 @@ namespace App.Entities.Enemy
         {
             var netEnemy = Runner.Spawn(netEnemyPrefab, position, rotation);
             netEnemy.SetWeapon(WeaponId.Pistol);
+            netEnemy.SetArmor(0);
 
             netEnemy.OnDeath += () => StartCoroutine(Spawn());
             
