@@ -1,16 +1,12 @@
-using System.Collections.Generic;
 using App.Entities;
 using Avastrad.Vector2Extension;
-using Fusion;
 using UnityEngine;
 
 namespace App.Ai.FSM
 {
-    public class Idle : AiState
+    public class Follow : AiState
     {
-        private readonly List<LagCompensatedHit> _colliders = new (8);
-        
-        public Idle(NetAi netAi, NetEntity netEntity) 
+        public Follow(NetAi netAi, NetEntity netEntity) 
             : base(netAi, netEntity) { }
 
         protected override void OnEnterState()
@@ -22,8 +18,6 @@ namespace App.Ai.FSM
         {
             NetEntity.RotateByLookDirection(NetEntity.transform.forward.XZ());
             NetEntity.CalculateVelocity(0, 0, false);
-
-            HasPlayerInZone(NetEntity.transform.position, AiConfig.ViewRadius, _colliders, AiConfig.PlayerLayers);
         }
     }
 }

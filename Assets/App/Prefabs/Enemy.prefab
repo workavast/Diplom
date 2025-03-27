@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4536221892425023065}
   - component: {fileID: 3043308566872210237}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8074423664287962504}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: -658295760547561401}
   - component: {fileID: 7699165246983407009}
   - component: {fileID: 7569205443486142500}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,6 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6bd78f778a84ac8af6c66824d91f530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <AiConfig>k__BackingField: {fileID: 11400000, guid: 7f4deb217ee8cfa44b51a1eb3112f01b, type: 2}
   netEnemy: {fileID: 4582882483414412412}
 --- !u!114 &4582882483414412412
 MonoBehaviour:
@@ -314,7 +315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <HitLayers>k__BackingField:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   _NetEquippedWeapon: 0
   _NetMagazine: 0
   _NetFireCount: 0
@@ -429,7 +430,7 @@ GameObject:
   - component: {fileID: 8190228879593550958}
   - component: {fileID: 8192084059082422202}
   - component: {fileID: 7666598989335036111}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: HitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -10,6 +10,7 @@ namespace App.Ai
     [RequireComponent(typeof(StateMachineController))]
     public class NetAi : NetworkBehaviour, IStateMachineOwner
     {
+        [field: SerializeField] public AiConfig AiConfig { get; private set; }
         [SerializeField] private NetEntity netEnemy;
         
         private AiStateMachine _fsm;

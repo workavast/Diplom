@@ -35,8 +35,8 @@ namespace App.Weapons.Shooting
         public bool Shoot(bool hasStateAuthority, out ProjectileData projectileData, int hitLayers = -1)
         {
             var spreadDirection = GetSpreadDirection(_shootPoint.forward, _config.SpreadAngle, Runner.Tick);
-            var hitOptions = HitOptions.IncludePhysX | HitOptions.IgnoreInputAuthority;
             
+            const HitOptions hitOptions = HitOptions.IncludePhysX | HitOptions.IgnoreInputAuthority;
             var isHit = Runner.LagCompensation.Raycast(_shootPoint.position, spreadDirection, 100f, 
                 InputAuthority, out var hit, hitLayers, hitOptions);
             

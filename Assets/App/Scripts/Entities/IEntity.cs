@@ -10,6 +10,7 @@ namespace App.Entities
         EntityIdentifier Identifier { get; }
         EntityType EntityType { get; }
         GameObject GameObject { get; }
+        Transform Transform => GameObject.transform;
         NetworkRunner Runner { get; }
         NetworkObject Object { get; }
         int NetHealthPoints { get; }
