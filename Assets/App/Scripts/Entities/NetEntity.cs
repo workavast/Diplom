@@ -35,6 +35,7 @@ namespace App.Entities
         private ArmorConfig _armor;
         
         public event Action OnDeath;
+        public event Action OnWeaponShot; 
 
         protected virtual void Awake()
         {
@@ -89,8 +90,20 @@ namespace App.Entities
 
         private void ChangeArmor() 
             => _armor = ArmorsConfig.GetArmor(NetArmorLevel);
+
+        public void TryShoot()
+        {
+            if (NetWeapon.CanShot && NetWeapon.TryShoot())
+                OnWeaponShot?.Invoke();
+        }
         
-        protected void RotateByLookDirection(Vector2 lookDirection)
+        public void TryReload()
+        {
+            if (NetWeapon.CanReload) 
+                NetWeapon.TryReload();
+        }
+        
+        public void RotateByLookDirection(Vector2 lookDirection)
         {
             Vector3 lookPoint;
             if (lookDirection == default || lookDirection == Vector2.zero)
@@ -112,7 +125,7 @@ namespace App.Entities
             return  unscaledGravityVelocity + unscaledVelocity;
         }
         
-        protected void CalculateVelocity(float horizontalInput, float verticalInput, bool isSprint)
+        public void CalculateVelocity(float horizontalInput, float verticalInput, bool isSprint)
         {
             var targetVelocity = GetUnscaledVelocity(horizontalInput, verticalInput, isSprint);
             

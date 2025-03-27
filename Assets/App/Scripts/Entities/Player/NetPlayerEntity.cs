@@ -1,10 +1,7 @@
-using System;
 using App.Armor;
-using App.PlayerInput;
 using App.Players.Nicknames;
 using Avastrad.EventBusFramework;
 using Fusion;
-using UnityEngine;
 using Zenject;
 
 namespace App.Entities.Player
@@ -19,8 +16,6 @@ namespace App.Entities.Player
 
         private PlayersEntitiesRepository _playersEntitiesRepository;
         private NicknamesProvider _nicknamesProvider;
-        
-        public event Action OnWeaponShot; 
         
         [Inject]
         public void Construct(PlayersEntitiesRepository playersEntitiesRepository, NicknamesProvider nicknamesProvider, 
@@ -42,36 +37,6 @@ namespace App.Entities.Player
         {
             base.Despawned(runner, hasState);
             _playersEntitiesRepository.Remove(this);
-        }
-
-        public override void FixedUpdateNetwork()
-        {
-            var hasInput = GetInput(out PlayerInputData input);
-            if (hasInput)
-            {
-                RotateByLookDirection(input.LookDirection);
-
-                var isSprint = input.Buttons.IsSet(PlayerButtons.Sprint);
-                CalculateVelocity(input.HorizontalInput, input.VerticalInput, isSprint);
-                
-                if ((HasStateAuthority || HasInputAuthority) && input.Buttons.IsSet(PlayerButtons.Fire) && NetWeapon.CanShot)
-                {
-                    if (NetWeapon.TryShoot())
-                        OnWeaponShot?.Invoke();
-                }
-
-                var reloadRequest = input.Buttons.IsSet(PlayerButtons.Reload) || NetWeapon.RequiredReload;
-                if ((HasStateAuthority || HasInputAuthority) && reloadRequest)
-                {
-                    if (NetWeapon.CanReload) 
-                        NetWeapon.TryReload();
-                }
-            }
-            
-#if UNITY_EDITOR
-            if (HasStateAuthority && Input.GetKeyDown(KeyCode.Q)) 
-                TakeDamage(999, this);
-#endif
         }
 
         public override string GetName() 
