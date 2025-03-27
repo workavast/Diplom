@@ -7,20 +7,20 @@ namespace App.Entities
 {
     public class EntityProvider : MonoBehaviour, IEntity, IDamageable
     {
-        [SerializeField] private NetEntityBase netEntityBase;
+        [SerializeField] private NetEntity netEntity;
         
-        public EntityIdentifier Identifier => netEntityBase.Identifier;
-        public EntityType EntityType => netEntityBase.EntityType;
-        public GameObject GameObject => netEntityBase.GameObject;
-        public NetworkRunner Runner => netEntityBase.Runner;
-        public NetworkObject Object => netEntityBase.Object;
-        public int NetHealthPoints => netEntityBase.NetHealthPoints;
-        public int NetArmorLevel => netEntityBase.NetArmorLevel;
+        public EntityIdentifier Identifier => netEntity.Identifier;
+        public EntityType EntityType => netEntity.EntityType;
+        public GameObject GameObject => netEntity.GameObject;
+        public NetworkRunner Runner => netEntity.Runner;
+        public NetworkObject Object => netEntity.Object;
+        public int NetHealthPoints => netEntity.NetHealthPoints;
+        public int NetArmorLevel => netEntity.NetArmorLevel;
 
-        public ArmorConfig GetArmor() => netEntityBase.GetArmor();
+        public ArmorConfig GetArmor() => netEntity.GetArmor();
         
-        public string GetName() => netEntityBase.GetName();
+        public string GetName() => netEntity.GetName();
 
-        public void TakeDamage(float damage, IEntity shooter) => netEntityBase.TakeDamage(damage, shooter);
+        public void TakeDamage(float damage, IEntity shooter) => netEntity.TakeDamage(damage, shooter);
     }
 }

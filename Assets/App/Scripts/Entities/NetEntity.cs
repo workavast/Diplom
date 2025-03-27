@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace App.Entities
 {
-    public abstract class NetEntityBase : NetworkBehaviour, IEntity
+    public abstract class NetEntity : NetworkBehaviour, IEntity
     {
         [SerializeField] protected EntityConfig config;
         [SerializeField, Tooltip("Can be null")] protected SolderView solderView;

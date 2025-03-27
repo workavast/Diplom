@@ -7,7 +7,7 @@ namespace App.Entities.Player
 {
     public class NetPlayerController : NetworkBehaviour
     {
-        [SerializeField] private NetEntityBase playerEntity;
+        [SerializeField] private NetEntity playerEntity;
         [SerializeField] private NetWeapon netWeapon;
         
         public override void FixedUpdateNetwork()

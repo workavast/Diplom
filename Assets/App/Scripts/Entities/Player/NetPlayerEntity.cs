@@ -6,7 +6,7 @@ using Zenject;
 
 namespace App.Entities.Player
 {
-    public class NetPlayerEntity : NetEntityBase
+    public class NetPlayerEntity : NetEntity
     {
         public PlayerRef PlayerRef => Object.InputAuthority;
         public override EntityType EntityType => EntityType.Player;

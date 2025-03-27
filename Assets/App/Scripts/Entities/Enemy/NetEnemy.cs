@@ -7,7 +7,7 @@ using Zenject;
 namespace App.Entities.Enemy
 {
     [RequireComponent(typeof(EnemyView))]
-    public class NetEnemy : NetEntityBase
+    public class NetEnemy : NetEntity
     {
         public override EntityType EntityType => EntityType.Default;
         
