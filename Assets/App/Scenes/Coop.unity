@@ -1769,7 +1769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8b16a1ce50342cc93575d873f6df919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  netPlayerControllerPrefab: {fileID: 5137442269118526432, guid: bb24a2ac9ff8225438f62b24c50a7e70, type: 3}
+  netPlayerEntityPrefab: {fileID: 5137442269118526432, guid: bb24a2ac9ff8225438f62b24c50a7e70, type: 3}
 --- !u!114 &47313658
 MonoBehaviour:
   m_ObjectHideFlags: 0

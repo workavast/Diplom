@@ -20,11 +20,11 @@ namespace App.Pvp
         private PlayerRef PlayerRef => Object.InputAuthority;
         
         private PlayerSpawnPointsProvider _playerSpawnPointsProvider;
-        private NetPlayerController _netPlayerController;
+        private NetPlayerEntity _netPlayerEntity;
         private PlayerSpawner _playerSpawner;
         private bool _isInitialized;
         
-        public event Action<NetPlayerController> OnPlayerSpawned;
+        public event Action<NetPlayerEntity> OnPlayerSpawned;
         
         public void Initialize(PlayerSpawnPointsProvider playerSpawnPointsProvider, PlayerSpawner playerSpawner)
         {
@@ -47,8 +47,8 @@ namespace App.Pvp
         
         public override void Despawned(NetworkRunner runner, bool hasState)
         {
-            if (_netPlayerController != null) 
-                runner.Despawn(_netPlayerController.Object);
+            if (_netPlayerEntity != null) 
+                runner.Despawn(_netPlayerEntity.Object);
         }
         
         public override void FixedUpdateNetwork()
@@ -66,7 +66,7 @@ namespace App.Pvp
                 return;
 
             PlayerIsAlive = false;
-            _netPlayerController.OnDeath -= OnPlayerDeath;
+            _netPlayerEntity.OnDeath -= OnPlayerDeath;
             PrepareSpawn();
         }
         
@@ -78,11 +78,11 @@ namespace App.Pvp
             var weaponId = _gameplaySessionDataRepository.GetData(PlayerRef).SelectedWeapon;
             var armorLevel = _gameplaySessionDataRepository.GetData(PlayerRef).EquippedArmorLevel;
             
-            _netPlayerController = _playerSpawner.Spawn(Object.InputAuthority, 
+            _netPlayerEntity = _playerSpawner.Spawn(Object.InputAuthority, 
                 _playerSpawnPointsProvider.GetRandomFreeSpawnPoint(), armorLevel, weaponId);
-            _netPlayerController.OnDeath += OnPlayerDeath;
+            _netPlayerEntity.OnDeath += OnPlayerDeath;
             PlayerIsAlive = true;
-            OnPlayerSpawned?.Invoke(_netPlayerController);
+            OnPlayerSpawned?.Invoke(_netPlayerEntity);
         }
     }
 }

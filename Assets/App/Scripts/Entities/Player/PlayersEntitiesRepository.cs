@@ -7,13 +7,13 @@ namespace App.Entities.Player
 {
     public class PlayersEntitiesRepository
     {
-        private readonly Dictionary<PlayerRef, NetPlayerController> _players = new();
-        private readonly Dictionary<int, NetPlayerController> _playersById = new();
+        private readonly Dictionary<PlayerRef, NetPlayerEntity> _players = new();
+        private readonly Dictionary<int, NetPlayerEntity> _playersById = new();
 
-        public event Action<PlayerRef, NetPlayerController> OnPlayerAdd;
+        public event Action<PlayerRef, NetPlayerEntity> OnPlayerAdd;
         public event Action<PlayerRef> OnPlayerRemove;
         
-        public void Add(PlayerRef playerRef, NetPlayerController player)
+        public void Add(PlayerRef playerRef, NetPlayerEntity player)
         {
             if (_players.ContainsKey(playerRef))
             {
@@ -29,14 +29,14 @@ namespace App.Entities.Player
             OnPlayerAdd?.Invoke(playerRef, player);
         }
         
-        public void Remove(NetPlayerController player)
+        public void Remove(NetPlayerEntity player)
         {
             _players.Remove(player.PlayerRef);
             _playersById.Remove(player.Identifier.Id);
             OnPlayerRemove?.Invoke(player.PlayerRef);
         }
 
-        public bool TryGet(int identifier, out NetPlayerController player)
+        public bool TryGet(int identifier, out NetPlayerEntity player)
         {
             if (_playersById.TryGetValue(identifier, out var value))
             {
@@ -48,7 +48,7 @@ namespace App.Entities.Player
             return false;
         }
         
-        public bool TryGet(PlayerRef playerRef, out NetPlayerController player)
+        public bool TryGet(PlayerRef playerRef, out NetPlayerEntity player)
         {
             if (_players.TryGetValue(playerRef, out var value))
             {

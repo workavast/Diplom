@@ -5,7 +5,7 @@ namespace App.Entities
 {
     public class AnimController : MonoBehaviour
     {
-        [SerializeField] private PlayerView playerView;
+        [SerializeField] private SolderView solderView;
         [SerializeField] private Animator animator;
         
         [Tooltip("Debug")]
@@ -25,8 +25,8 @@ namespace App.Entities
             }
             else
             {
-                animator.SetFloat(VelocityX, playerView.AnimationVelocity.x);
-                animator.SetFloat(VelocityY, playerView.AnimationVelocity.y);
+                animator.SetFloat(VelocityX, solderView.AnimationVelocity.x);
+                animator.SetFloat(VelocityY, solderView.AnimationVelocity.y);
             }
         }
     }

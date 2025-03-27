@@ -1,9 +1,9 @@
 using Avastrad.Vector2Extension;
 using UnityEngine;
 
-namespace App.Entities.Player
+namespace App.Entities
 {
-    public class PlayerView : MonoBehaviour
+    public class SolderView : MonoBehaviour
     {
         public Vector2 AnimationVelocity { get; private set; }
 

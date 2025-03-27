@@ -940,7 +940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8b16a1ce50342cc93575d873f6df919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  netPlayerControllerPrefab: {fileID: 5137442269118526432, guid: bb24a2ac9ff8225438f62b24c50a7e70, type: 3}
+  netPlayerEntityPrefab: {fileID: 5137442269118526432, guid: bb24a2ac9ff8225438f62b24c50a7e70, type: 3}
 --- !u!114 &47313658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7513,7 +7513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e62b031fa8a40c6a7324acd77e157a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerView: {fileID: 0}
+  solderView: {fileID: 0}
   animator: {fileID: 2025065243}
   useDebug: 1
   velocityX: 0
@@ -11720,6 +11720,7 @@ MonoBehaviour:
   playerSpawner: {fileID: 47313656}
   playerReSpawnerPrefab: {fileID: 0}
   playerSpawnPointsProvider: {fileID: 536566524}
+  playersReady: {fileID: 0}
 --- !u!114 &396591823
 MonoBehaviour:
   m_ObjectHideFlags: 0

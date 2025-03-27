@@ -3,6 +3,7 @@ using App.Armor;
 using App.EventBus;
 using App.Weapons;
 using Avastrad.EventBusFramework;
+using Avastrad.Vector2Extension;
 using Fusion;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ namespace App.Entities
     public abstract class NetEntityBase : NetworkBehaviour, IEntity
     {
         [SerializeField] protected EntityConfig config;
+        [SerializeField, Tooltip("Can be null")] protected SolderView solderView;
+        [SerializeField, Tooltip("Can be null")] private CharacterController characterController;
 
         [Networked] [field: ReadOnly] public int NetHealthPoints { get; protected set; }
         [Networked] [OnChangedRender(nameof(ChangeArmor))] [field: ReadOnly] public int NetArmorLevel { get; protected set; }
@@ -36,6 +39,12 @@ namespace App.Entities
         protected virtual void Awake()
         {
             NetWeapon = GetComponent<NetWeapon>();
+            
+            if (solderView == null)
+                solderView = ComponentExt.GetComponent<SolderView>(this);
+            
+            if (characterController == null)
+                characterController = ComponentExt.GetComponent<CharacterController>(this);
         }
 
         public override void Spawned()
@@ -44,7 +53,12 @@ namespace App.Entities
             NetHealthPoints = config != null ? config.InitialHealthPoints : 100;
             Debug.Log($"Spawned: [{Object.InputAuthority}]: [{NetWeapon.NetEquippedWeapon}]");
         }
-        
+
+        public override void Render()
+        {
+            solderView.MoveView(NetVelocity, SprintSpeed);
+        }
+
         public void TakeDamage(float damage, IEntity shooter)
         {
             NetHealthPoints -= (int)damage;
@@ -75,5 +89,39 @@ namespace App.Entities
 
         private void ChangeArmor() 
             => _armor = ArmorsConfig.GetArmor(NetArmorLevel);
+        
+        protected void RotateByLookDirection(Vector2 lookDirection)
+        {
+            Vector3 lookPoint;
+            if (lookDirection == default || lookDirection == Vector2.zero)
+                lookPoint = solderView.transform.position + solderView.transform.forward;
+            else
+                lookPoint = solderView.transform.position + lookDirection.X0Y();
+                
+            solderView.SetLookPoint(lookPoint);
+        }
+        
+        protected Vector3 GetUnscaledVelocity(float horizontalInput, float verticalInput, bool isSprint)
+        {
+            var moveDirection = Vector3.right * horizontalInput + Vector3.forward * verticalInput;
+            var moveSpeed = isSprint ? SprintSpeed : WalkSpeed;
+           
+            var unscaledGravityVelocity = Gravity * Vector3.up;
+            var unscaledVelocity = moveSpeed * moveDirection;
+            
+            return  unscaledGravityVelocity + unscaledVelocity;
+        }
+        
+        protected void CalculateVelocity(float horizontalInput, float verticalInput, bool isSprint)
+        {
+            var targetVelocity = GetUnscaledVelocity(horizontalInput, verticalInput, isSprint);
+            
+            var currentVelocity = new Vector3(NetVelocity.x, 0, NetVelocity.z);
+            currentVelocity = Vector3.Lerp(currentVelocity, targetVelocity, MoveAcceleration * Runner.DeltaTime);
+            currentVelocity.y = 0;
+            
+            NetVelocity = new Vector3(currentVelocity.x, targetVelocity.y, currentVelocity.z);
+            characterController.Move(NetVelocity * Runner.DeltaTime);
+        }
     }
 }
