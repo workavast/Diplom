@@ -10,6 +10,8 @@ namespace App.Entities.Player
         private readonly Dictionary<PlayerRef, NetPlayerEntity> _players = new();
         private readonly Dictionary<int, NetPlayerEntity> _playersById = new();
 
+        public IReadOnlyCollection<NetPlayerEntity> PlayerEntities => _players.Values;
+        
         public event Action<PlayerRef, NetPlayerEntity> OnPlayerAdd;
         public event Action<PlayerRef> OnPlayerRemove;
         

@@ -1,3 +1,4 @@
+using System;
 using App.Armor;
 using App.Damage;
 using Fusion;
@@ -18,5 +19,18 @@ namespace App.Entities
 
         ArmorConfig GetArmor();
         string GetName();
+    }
+
+    public static class EntitiesEqualer
+    {
+        public static bool Is(this IEntity source, IEntity other)
+        {
+            if (source == null && other == null)
+                return true;
+            if (source == null || other == null)
+                return false;
+
+            return source.Identifier.Id == other.Identifier.Id;
+        }
     }
 }
