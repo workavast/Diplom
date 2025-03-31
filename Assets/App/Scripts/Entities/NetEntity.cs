@@ -19,6 +19,7 @@ namespace App.Entities
         [Networked] [OnChangedRender(nameof(ChangeArmor))] [field: ReadOnly] public int NetArmorLevel { get; protected set; }
         [Networked] [field: ReadOnly, SerializeField] protected Vector3 NetVelocity { get; set; }
 
+        public bool IsActive { get; private set; }
         public GameObject GameObject => gameObject;
         public EntityIdentifier Identifier { get; } = new();
         public abstract EntityType EntityType { get; }
@@ -50,9 +51,15 @@ namespace App.Entities
 
         public override void Spawned()
         {
+            IsActive = true;
             _armor = ArmorsConfig.GetArmor(0);
             NetHealthPoints = config != null ? config.InitialHealthPoints : 100;
             Debug.Log($"Spawned: [{Object.InputAuthority}]: [{NetWeapon.NetEquippedWeapon}]");
+        }
+
+        public override void Despawned(NetworkRunner runner, bool hasState)
+        {
+            IsActive = false;
         }
 
         public override void Render()

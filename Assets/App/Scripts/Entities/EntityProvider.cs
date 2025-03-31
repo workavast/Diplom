@@ -8,7 +8,8 @@ namespace App.Entities
     public class EntityProvider : MonoBehaviour, IEntity, IDamageable
     {
         [SerializeField] private NetEntity netEntity;
-        
+
+        public bool IsActive => netEntity.IsActive;
         public EntityIdentifier Identifier => netEntity.Identifier;
         public EntityType EntityType => netEntity.EntityType;
         public GameObject GameObject => netEntity.GameObject;

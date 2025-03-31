@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4f0caac602240a681219c623046c285, type: 3}
-  m_Name: DefaultPlayerEntityConfig
+  m_Name: EnemyEntityConfig
   m_EditorClassIdentifier: 
   <InitialHealthPoints>k__BackingField: 100
   <AttackDaley>k__BackingField: 0.2
-  <WalkSpeed>k__BackingField: 4
-  <SprintSpeed>k__BackingField: 6
+  <WalkSpeed>k__BackingField: 3
+  <SprintSpeed>k__BackingField: 5
   <MoveAcceleration>k__BackingField: 10
   <Gravity>k__BackingField: -9.8

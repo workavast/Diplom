@@ -1,4 +1,3 @@
-using System;
 using App.Armor;
 using App.Damage;
 using Fusion;
@@ -8,6 +7,7 @@ namespace App.Entities
 {
     public interface IEntity : IDamageable
     {
+        bool IsActive { get; }
         EntityIdentifier Identifier { get; }
         EntityType EntityType { get; }
         GameObject GameObject { get; }
@@ -21,7 +21,7 @@ namespace App.Entities
         string GetName();
     }
 
-    public static class EntitiesEqualer
+    public static class EntitiesExtension
     {
         public static bool Is(this IEntity source, IEntity other)
         {
@@ -32,5 +32,8 @@ namespace App.Entities
 
             return source.Identifier.Id == other.Identifier.Id;
         }
+        
+        public static bool IsAlive(this IEntity source) => source.IsActive && source.NetHealthPoints > 0;
+        public static bool IsDead(this IEntity source) => !IsAlive(source);
     }
 }

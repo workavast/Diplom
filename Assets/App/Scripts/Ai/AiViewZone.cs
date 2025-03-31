@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using App.Entities;
 using App.Entities.Player;
-using Avastrad.CheckOnNullLibrary;
 using Avastrad.Vector2Extension;
 using Fusion;
 using UnityEngine;
@@ -17,13 +15,23 @@ namespace App.Ai
         
         [Inject] private readonly PlayersEntitiesRepository _playersEntitiesRepository;
         
-        private readonly List<LagCompensatedHit> _colliders = new(16);
-        
         private PlayerRef Owner => ownerBehaviour.Object.InputAuthority;
         private NetworkRunner Runner => ownerBehaviour.Runner;
         private Vector3 Position => viewPivot.position;
         private float Radius => aiConfig.ViewRadius;
         private LayerMask PlayerLayers => aiConfig.PlayerLayers;
+        
+        public bool IsSeeAnyPlayer()
+        {
+            if (!HasPlayerInZone())
+                return false;
+
+            foreach (var playerEntity in _playersEntitiesRepository.PlayerEntities)
+                if (EntityIsVisible(playerEntity))
+                    return true;
+            
+            return false;
+        }
         
         public bool HasPlayerInZone()
         {
@@ -34,71 +42,51 @@ namespace App.Ai
                     return true;
             }
             return false;
-            
-            
-            
-            const QueryTriggerInteraction triggerInteraction = QueryTriggerInteraction.Ignore;
-            
-            int collisions = Runner.LagCompensation.OverlapSphere(Position, Radius, Owner, _colliders, 
-                PlayerLayers, HitOptions.None | HitOptions.IgnoreInputAuthority, true, triggerInteraction);
-
-            for (int i = 0; i < collisions; i++)
-            {
-                var entity = _colliders[i].GameObject.GetComponent<IEntity>();
-                if (!entity.IsAnyNull() && entity.EntityType == EntityType.Player)
-                {
-                    var direction = (entity.Transform.position.X0Z() - Position.X0Z()).normalized;
-                    var distance = Vector3.Distance(entity.Transform.position, Position);
-
-                    const HitOptions hitOptions = HitOptions.IncludePhysX;
-                    var isHit = Runner.LagCompensation.Raycast(Position, direction, distance, Owner,
-                        out var hit, -1, hitOptions, triggerInteraction);
-                    Debug.Log($"Player in zone: [{isHit}] [{direction}] [{distance}]");
-                    if (isHit)
-                    {
-                        var hitEntity = hit.GameObject.GetComponent<IEntity>();
-                        Debug.Log(entity == hitEntity);
-                        Debug.Log(entity.GameObject.name);
-                        Debug.Log(hitEntity.GameObject.name);
-                        if (entity == hitEntity)
-                        {
-                            Debug.Log("Player is visible");
-                            return true;
-                        }
-                    }
-                }
-            }
-            
-            return false;
         }
 
-        public bool IsSeePlayer()
+        public bool EntityIsVisible(IEntity entity)
         {
-            foreach (var playerEntity in _playersEntitiesRepository.PlayerEntities)
-            {
-                var distance = Vector3.Distance(playerEntity.transform.position, viewPivot.position);
-                if (Radius >= distance)
-                {
-                    var direction = (playerEntity.transform.position.X0Z() - Position.X0Z()).normalized;
+            if (entity.IsDead())
+                return false;
 
-                    const HitOptions hitOptions = HitOptions.IncludePhysX;
-                    const QueryTriggerInteraction triggerInteraction = QueryTriggerInteraction.Ignore;
-                    var isHit = Runner.LagCompensation.Raycast(Position, direction, distance, Owner,
-                        out var hit, -1, hitOptions, triggerInteraction);
-                    if (isHit)
-                    {
-                        var hitEntity = hit.GameObject.GetComponent<IEntity>();
-                        if (playerEntity.Is(hitEntity))
-                            return true;
-                    }                    
-                }
+            var distance = Vector3.Distance(entity.Transform.position, viewPivot.position);
+            if (!(Radius >= distance)) 
+                return false;
+            
+            const HitOptions hitOptions = HitOptions.IncludePhysX;
+            const QueryTriggerInteraction triggerInteraction = QueryTriggerInteraction.Ignore;
+            var direction = (entity.Transform.position.X0Z() - Position.X0Z()).normalized;
+            var isHit = Runner.LagCompensation.Raycast(Position, direction, distance, Owner, out var hit, 
+                -1, hitOptions, triggerInteraction);
+            if (isHit)
+            {
+                var hitEntity = hit.GameObject.GetComponent<IEntity>();
+                if (entity.Is(hitEntity))
+                    return true;
             }
+
             return false;
         }
         
-        public IEntity GetNearestPlayer()
+        public IEntity GetNearestVisiblePlayer()
         {
-            return null;
+            IEntity nearest = null;
+            float minDistance = float.MaxValue;
+
+            foreach (var playerEntity in _playersEntitiesRepository.PlayerEntities)
+            {
+                if (playerEntity.IsAlive() && EntityIsVisible(playerEntity))
+                {
+                    var distance = Vector3.Distance(playerEntity.transform.position, Position);
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        nearest = playerEntity;
+                    }
+                }
+            }
+
+            return nearest;
         }
 
         private void OnDrawGizmos()

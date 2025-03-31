@@ -144,6 +144,7 @@ MonoBehaviour:
   <AiConfig>k__BackingField: {fileID: 11400000, guid: 7f4deb217ee8cfa44b51a1eb3112f01b, type: 2}
   netEnemy: {fileID: 4582882483414412412}
   aiViewZone: {fileID: -7968970428407159630}
+  ActiveState: 
 --- !u!114 &-7968970428407159630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39f427d68dab40acb318807dcd390658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: 2e235d0bd95dfe34f95a57e634acc985, type: 2}
+  config: {fileID: 11400000, guid: ecdd91516da6a7f49871630af16c313b, type: 2}
   solderView: {fileID: 7333342798360998660}
   characterController: {fileID: -658295760547561401}
   _NetHealthPoints: 0
