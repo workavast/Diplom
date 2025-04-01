@@ -1,6 +1,6 @@
 using Fusion.Addons.FSM;
 
-namespace App.Entities.Health.FSM
+namespace App.Health.FSM
 {
     public class HealthStateMachine : StateMachine<HealthState>
     {

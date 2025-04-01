@@ -1,6 +1,6 @@
 using System;
 using App.Armor;
-using App.Entities.Health;
+using App.Health;
 using App.Weapons;
 using Avastrad.EventBusFramework;
 using Avastrad.Vector2Extension;

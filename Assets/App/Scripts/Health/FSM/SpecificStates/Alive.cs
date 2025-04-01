@@ -1,4 +1,4 @@
-namespace App.Entities.Health.FSM.SpecificStates
+namespace App.Health.FSM.SpecificStates
 {
     public class Alive : HealthState
     {

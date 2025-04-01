@@ -2,7 +2,7 @@ using App.PlayerInput;
 using Fusion;
 using UnityEngine;
 
-namespace App.Entities.Player.Controlling
+namespace App.Entities.Player
 {
     public class NetPlayerController : NetworkBehaviour
     {
