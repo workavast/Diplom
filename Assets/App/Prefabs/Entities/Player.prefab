@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 2284970520156573983}
   - component: {fileID: 8871018729791473402}
   - component: {fileID: 5137442269118526432}
+  - component: {fileID: -5481621240499054862}
   - component: {fileID: 3872098561446610495}
   - component: {fileID: 7541546581567901005}
   - component: {fileID: 5750785084461400786}
@@ -140,8 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd5735b3080b481593421d5de53c54dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerEntity: {fileID: 5137442269118526432}
-  netWeapon: {fileID: 5750785084461400786}
+  netEntity: {fileID: 5137442269118526432}
 --- !u!114 &5137442269118526432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,9 +157,25 @@ MonoBehaviour:
   config: {fileID: 11400000, guid: 2e235d0bd95dfe34f95a57e634acc985, type: 2}
   solderView: {fileID: 3872098561446610495}
   characterController: {fileID: -658295760547561401}
-  _NetHealthPoints: 0
-  _NetArmorLevel: 0
+  health: {fileID: -5481621240499054862}
   _NetVelocity: {x: 0, y: 0, z: 0}
+  _NetArmorLevel: 0
+--- !u!114 &-5481621240499054862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072648177644592389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fb2234351884bcb8c86b5286f600ec3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: 2e235d0bd95dfe34f95a57e634acc985, type: 2}
+  entity: {fileID: 5137442269118526432}
+  _NetHealthPoints: 0
+  ActiveState: 
 --- !u!114 &3872098561446610495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,6 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dca9430a4c0429093690f3a4dd5892a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <IsAlive>k__BackingField: 0
 --- !u!114 &7541546581567901005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,6 +208,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 8871018729791473402}
   - {fileID: 5137442269118526432}
+  - {fileID: -5481621240499054862}
   - {fileID: 5750785084461400786}
   - {fileID: 8581854729729584098}
   - {fileID: 7942052991263362750}

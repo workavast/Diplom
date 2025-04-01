@@ -1,36 +1,38 @@
-using System;
-using System.Collections.Generic;
-using App.Entities.Player.Controlling.FSM;
-using App.Entities.Player.Controlling.FSM.SpecificStates;
+using App.PlayerInput;
 using Fusion;
-using Fusion.Addons.FSM;
 using UnityEngine;
 
 namespace App.Entities.Player.Controlling
 {
-    public class NetPlayerController : NetworkBehaviour, IStateMachineOwner
+    public class NetPlayerController : NetworkBehaviour
     {
-        [SerializeField] private NetEntity playerEntity;
-
-        private Alive _alive;
-        private Dead _dead;
-
-        private readonly Dictionary<Type, PlayerState> _states = new(4);
-        private PlayerStateMachine _fsm;
+        [SerializeField] private NetEntity netEntity;
         
-        public void CollectStateMachines(List<IStateMachine> stateMachines)
+        public override void FixedUpdateNetwork()
         {
-            _alive = new Alive(this, playerEntity);
-            _dead = new Dead(this, playerEntity);
+            if (!netEntity.IsAlive())
+                return;
+
+            var hasInput = GetInput(out PlayerInputData input);
+            if (hasInput)
+            {
+                netEntity.RotateByLookDirection(input.LookDirection);
+
+                var isSprint = input.Buttons.IsSet(PlayerButtons.Sprint);
+                netEntity.CalculateVelocity(input.HorizontalInput, input.VerticalInput, isSprint);
+                
+                if ((HasStateAuthority || HasInputAuthority) && input.Buttons.IsSet(PlayerButtons.Fire))
+                    netEntity.TryShoot();
+
+                var reloadRequest = input.Buttons.IsSet(PlayerButtons.Reload) || netEntity.RequiredReload;
+                if ((HasStateAuthority || HasInputAuthority) && reloadRequest) 
+                    netEntity.TryReload();
+            }
             
-            _states.Add(_alive.GetType(), _alive);
-            _states.Add(_dead.GetType(), _dead);
-            
-            _fsm = new PlayerStateMachine("PlayerController", _alive, _dead);
-            stateMachines.Add(_fsm);
+#if UNITY_EDITOR
+            if (HasStateAuthority && Input.GetKeyDown(KeyCode.Q)) 
+                netEntity.TakeDamage(999, netEntity);
+#endif
         }
-        
-        public void TryActivateState<TState>() where TState : PlayerState =>
-            _fsm.TryActivateState(_states[typeof(TState)]);
     }
 }

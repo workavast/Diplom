@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Profiling;
 using Debug = UnityEngine.Debug;
@@ -168,8 +169,17 @@ namespace Fusion.Addons.FSM
 
 			var owners = GetComponentsInChildren<IStateMachineOwner>(true);
 			var tempMachines = ListPool.Get<IStateMachine>(32);
-
-			for (int i = 0; i < owners.Length; i++)
+			
+			/*
+			 * Here was default "for loop" (from 0 to owners.Length).
+			 * But it is very stupid, cus by this way we initialize parent before children,
+			 * but parent may depend on children (that happened in my case),
+			 * so i revert loop for initialize children before parent
+			 *
+			 * p.s. also they have another stupid thing: after fsm initialized it called FixedUpdate of it.
+			 * That mean that this fsm updated before all fsm of the object will be initialized.
+			 */
+			for (int i = owners.Length - 1; i >= 0; i--)
 			{
 				owners[i].CollectStateMachines(tempMachines);
 

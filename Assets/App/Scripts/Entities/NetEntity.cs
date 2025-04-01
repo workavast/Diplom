@@ -1,7 +1,6 @@
 using System;
 using App.Armor;
-using App.Entities.FSM;
-using App.EventBus;
+using App.Entities.Health;
 using App.Weapons;
 using Avastrad.EventBusFramework;
 using Avastrad.Vector2Extension;
@@ -15,10 +14,11 @@ namespace App.Entities
         [SerializeField] protected EntityConfig config;
         [SerializeField, Tooltip("Can be null")] protected SolderView solderView;
         [SerializeField, Tooltip("Can be null")] private CharacterController characterController;
+        [SerializeField] private NetHealth health;
 
-        [Networked] [field: ReadOnly] public float NetHealthPoints { get; protected set; }
-        [Networked] [OnChangedRender(nameof(ChangeArmor))] [field: ReadOnly] public int NetArmorLevel { get; protected set; }
-        [Networked] [field: ReadOnly, SerializeField] protected Vector3 NetVelocity { get; set; }
+        public float NetHealthPoints => health.NetHealthPoints;
+        [Networked] [field: ReadOnly, SerializeField] public Vector3 NetVelocity { get; private set; }
+        [Networked] [OnChangedRender(nameof(ChangeArmor))] [field: ReadOnly] public int NetArmorLevel { get; private set; }
 
         public bool IsActive { get; private set; }
         public GameObject GameObject => gameObject;
@@ -36,7 +36,7 @@ namespace App.Entities
         protected NetWeapon NetWeapon;
 
         private ArmorConfig _armor;
-        
+
         public event Action OnDeath;
         public event Action<IEntity> OnDeathEntity;
         public event Action OnWeaponShot; 
@@ -56,7 +56,6 @@ namespace App.Entities
         {
             IsActive = true;
             _armor = ArmorsConfig.GetArmor(0);
-            NetHealthPoints = config != null ? config.InitialHealthPoints : 100;
             Debug.Log($"Spawned: [{Object.InputAuthority}]: [{NetWeapon.NetEquippedWeapon}]");
         }
 
@@ -67,31 +66,13 @@ namespace App.Entities
 
         public override void Render()
         {
-            solderView.SetAliveState(NetHealthPoints > 0);
+            solderView.SetAliveState(health.IsAlive);
             solderView.MoveView(NetVelocity, SprintSpeed);
         }
 
-        public void Review(int healthPoints)
-        {
-            NetHealthPoints = healthPoints;
-        }
+        public void TakeDamage(float damage, IEntity killer) 
+            => health.TakeDamage(damage, killer);
 
-        public void TakeDamage(float damage, IEntity shooter)
-        {
-            NetHealthPoints -= damage;
-
-            if (HasStateAuthority && NetHealthPoints <= 0)
-            {
-                EventBus.Invoke(new OnKill(Identifier.Id, shooter.Identifier.Id));
-                OnDeath?.Invoke();
-                OnDeathEntity?.Invoke(this);
-                Debug.Log($"{GetName()} is dead");
-
-                if (EntityType == EntityType.Default)
-                    Runner.Despawn(Object);
-            }
-        }
-        
         public void SetWeapon(WeaponId weaponId)
         {
             NetWeapon = GetComponent<NetWeapon>();
@@ -101,6 +82,9 @@ namespace App.Entities
         public void SetArmor(int armorLevel) 
             => NetArmorLevel = armorLevel;
 
+        public bool IsAlive() 
+            => IsActive && health.IsAlive;
+
         public ArmorConfig GetArmor()
             => _armor;
 
@@ -108,6 +92,12 @@ namespace App.Entities
 
         public void TryShoot()
         {
+            if (!health.IsAlive)
+            {
+                Debug.LogError($"You try shoot by entity that un full alive: [{gameObject.name}]");
+                return;
+            }
+            
             if (NetWeapon.CanShot && NetWeapon.TryShoot())
                 OnWeaponShot?.Invoke();
         }
@@ -120,6 +110,12 @@ namespace App.Entities
         
         public void RotateByLookDirection(Vector2 lookDirection)
         {
+            if (!health.IsAlive)
+            {
+                Debug.LogError($"You try rotate entity that un full alive: [{gameObject.name}]");
+                return;
+            }
+            
             Vector3 lookPoint;
             if (lookDirection == default || lookDirection == Vector2.zero)
                 lookPoint = solderView.transform.position + solderView.transform.forward;
@@ -131,6 +127,12 @@ namespace App.Entities
         
         public void CalculateVelocity(float horizontalInput, float verticalInput, bool isSprint)
         {
+            if (!health.IsAlive)
+            {
+                Debug.LogError($"You try move entity that un full alive: [{gameObject.name}]");
+                return;
+            }
+            
             var targetVelocity = GetUnscaledVelocity(horizontalInput, verticalInput, isSprint);
             
             var currentVelocity = new Vector3(NetVelocity.x, 0, NetVelocity.z);
@@ -139,15 +141,6 @@ namespace App.Entities
             
             NetVelocity = new Vector3(currentVelocity.x, targetVelocity.y, currentVelocity.z);
             characterController.Move(NetVelocity * Runner.DeltaTime);
-        }
-
-        public string ActiveState;
-        public void TryActivateState<TState>() 
-            where TState : EntityState
-        {
-            Debug.Log("TryActivateState");
-            ActiveState = typeof(TState).ToString();
-            // _fsm.TryActivateState(_states[typeof(TState)]);
         }
 
         private Vector3 GetUnscaledVelocity(float horizontalInput, float verticalInput, bool isSprint)

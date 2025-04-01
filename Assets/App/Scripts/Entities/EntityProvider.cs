@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace App.Entities
 {
-    public class EntityProvider : MonoBehaviour, IEntity, IDamageable
+    public class EntityProvider : MonoBehaviour, IEntity
     {
         [SerializeField] private NetEntity netEntity;
 
@@ -20,11 +20,13 @@ namespace App.Entities
         public int NetArmorLevel => netEntity.NetArmorLevel;
         public event Action<IEntity> OnDeathEntity;
 
+        public bool IsAlive() => netEntity.IsAlive();
+
         public ArmorConfig GetArmor() => netEntity.GetArmor();
         
         public string GetName() => netEntity.GetName();
 
-        public void TakeDamage(float damage, IEntity shooter) => netEntity.TakeDamage(damage, shooter);
+        public void TakeDamage(float damage, IEntity killer) => netEntity.TakeDamage(damage, killer);
 
         private void Awake()
         {
