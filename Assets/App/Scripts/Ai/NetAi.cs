@@ -37,7 +37,6 @@ namespace App.Ai
             _states.Add(_combat.GetType(), _combat);
             
             _fsm = new AiStateMachine("Ai", _idle, _chase, _wait, _combat);
-
             stateMachines.Add(_fsm);
         }
 

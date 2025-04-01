@@ -67,6 +67,7 @@ namespace App.Pvp
 
             PlayerIsAlive = false;
             _netPlayerEntity.OnDeath -= OnPlayerDeath;
+            Runner.Despawn(_netPlayerEntity.Object);
             PrepareSpawn();
         }
         

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace App.Entities
@@ -14,6 +15,10 @@ namespace App.Entities
 
         private static readonly int VelocityX = Animator.StringToHash("VelocityX");
         private static readonly int VelocityY = Animator.StringToHash("VelocityY");
+        private static readonly int IsAlive = Animator.StringToHash("IsAlive");
+
+        private void Awake() 
+            => solderView.OnAliveStateChanged += SetAliveState;
 
         private void LateUpdate()
         {
@@ -28,5 +33,8 @@ namespace App.Entities
                 animator.SetFloat(VelocityY, solderView.AnimationVelocity.y);
             }
         }
+
+        private void SetAliveState(bool isAlive) 
+            => animator.SetBool(IsAlive, solderView.IsAlive);
     }
 }

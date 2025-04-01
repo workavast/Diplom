@@ -30,9 +30,15 @@ namespace App.Entities.Enemy
             netEnemy.SetWeapon(WeaponId.Pistol);
             netEnemy.SetArmor(0);
 
-            netEnemy.OnDeath += () => StartCoroutine(Spawn());
+            netEnemy.OnDeathEntity += OnEnemyDeath;
             
             return netEnemy;
+        }
+
+        private void OnEnemyDeath(IEntity entity)
+        {
+            entity.OnDeathEntity -= OnEnemyDeath;
+            StartCoroutine(Spawn());
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using App.Armor;
 using App.Damage;
 using Fusion;
@@ -14,8 +15,10 @@ namespace App.Entities
         Transform Transform => GameObject.transform;
         NetworkRunner Runner { get; }
         NetworkObject Object { get; }
-        int NetHealthPoints { get; }
+        float NetHealthPoints { get; }
         int NetArmorLevel { get; }
+
+        public event Action<IEntity> OnDeathEntity;
 
         ArmorConfig GetArmor();
         string GetName();

@@ -1,5 +1,6 @@
 using System;
 using App.Armor;
+using App.Entities.FSM;
 using App.EventBus;
 using App.Weapons;
 using Avastrad.EventBusFramework;
@@ -15,7 +16,7 @@ namespace App.Entities
         [SerializeField, Tooltip("Can be null")] protected SolderView solderView;
         [SerializeField, Tooltip("Can be null")] private CharacterController characterController;
 
-        [Networked] [field: ReadOnly] public int NetHealthPoints { get; protected set; }
+        [Networked] [field: ReadOnly] public float NetHealthPoints { get; protected set; }
         [Networked] [OnChangedRender(nameof(ChangeArmor))] [field: ReadOnly] public int NetArmorLevel { get; protected set; }
         [Networked] [field: ReadOnly, SerializeField] protected Vector3 NetVelocity { get; set; }
 
@@ -23,6 +24,7 @@ namespace App.Entities
         public GameObject GameObject => gameObject;
         public EntityIdentifier Identifier { get; } = new();
         public abstract EntityType EntityType { get; }
+        public bool RequiredReload => NetWeapon.RequiredReload;
 
         protected float Gravity => config.Gravity;
         protected float WalkSpeed => config.WalkSpeed - _armor.WalkSpeedDecrease;
@@ -36,6 +38,7 @@ namespace App.Entities
         private ArmorConfig _armor;
         
         public event Action OnDeath;
+        public event Action<IEntity> OnDeathEntity;
         public event Action OnWeaponShot; 
 
         protected virtual void Awake()
@@ -64,20 +67,28 @@ namespace App.Entities
 
         public override void Render()
         {
+            solderView.SetAliveState(NetHealthPoints > 0);
             solderView.MoveView(NetVelocity, SprintSpeed);
+        }
+
+        public void Review(int healthPoints)
+        {
+            NetHealthPoints = healthPoints;
         }
 
         public void TakeDamage(float damage, IEntity shooter)
         {
-            NetHealthPoints -= (int)damage;
+            NetHealthPoints -= damage;
 
             if (HasStateAuthority && NetHealthPoints <= 0)
             {
                 EventBus.Invoke(new OnKill(Identifier.Id, shooter.Identifier.Id));
                 OnDeath?.Invoke();
-                OnDeath = null;
+                OnDeathEntity?.Invoke(this);
                 Debug.Log($"{GetName()} is dead");
-                Runner.Despawn(Object);
+
+                if (EntityType == EntityType.Default)
+                    Runner.Despawn(Object);
             }
         }
         
@@ -94,9 +105,6 @@ namespace App.Entities
             => _armor;
 
         public abstract string GetName();
-
-        private void ChangeArmor() 
-            => _armor = ArmorsConfig.GetArmor(NetArmorLevel);
 
         public void TryShoot()
         {
@@ -121,17 +129,6 @@ namespace App.Entities
             solderView.SetLookPoint(lookPoint);
         }
         
-        protected Vector3 GetUnscaledVelocity(float horizontalInput, float verticalInput, bool isSprint)
-        {
-            var moveDirection = Vector3.right * horizontalInput + Vector3.forward * verticalInput;
-            var moveSpeed = isSprint ? SprintSpeed : WalkSpeed;
-           
-            var unscaledGravityVelocity = Gravity * Vector3.up;
-            var unscaledVelocity = moveSpeed * moveDirection;
-            
-            return  unscaledGravityVelocity + unscaledVelocity;
-        }
-        
         public void CalculateVelocity(float horizontalInput, float verticalInput, bool isSprint)
         {
             var targetVelocity = GetUnscaledVelocity(horizontalInput, verticalInput, isSprint);
@@ -143,5 +140,28 @@ namespace App.Entities
             NetVelocity = new Vector3(currentVelocity.x, targetVelocity.y, currentVelocity.z);
             characterController.Move(NetVelocity * Runner.DeltaTime);
         }
+
+        public string ActiveState;
+        public void TryActivateState<TState>() 
+            where TState : EntityState
+        {
+            Debug.Log("TryActivateState");
+            ActiveState = typeof(TState).ToString();
+            // _fsm.TryActivateState(_states[typeof(TState)]);
+        }
+
+        private Vector3 GetUnscaledVelocity(float horizontalInput, float verticalInput, bool isSprint)
+        {
+            var moveDirection = Vector3.right * horizontalInput + Vector3.forward * verticalInput;
+            var moveSpeed = isSprint ? SprintSpeed : WalkSpeed;
+           
+            var unscaledGravityVelocity = Gravity * Vector3.up;
+            var unscaledVelocity = moveSpeed * moveDirection;
+            
+            return  unscaledGravityVelocity + unscaledVelocity;
+        }
+        
+        private void ChangeArmor() 
+            => _armor = ArmorsConfig.GetArmor(NetArmorLevel);
     }
 }
