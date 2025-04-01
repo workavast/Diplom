@@ -61,5 +61,26 @@ namespace App.Entities.Player
             player = null;
             return false;
         }
+        
+        public bool TryGetNearestPlayer(Vector3 position, float maxDistance, out NetPlayerEntity nearestPlayer)
+        {
+            nearestPlayer = null;
+            var minDistance = maxDistance;
+
+            foreach (var playerEntity in PlayerEntities)
+            {
+                if (playerEntity.IsAlive())
+                {
+                    var distance = Vector3.Distance(playerEntity.transform.position, position);
+                    if (distance <= minDistance)
+                    {
+                        minDistance = distance;
+                        nearestPlayer = playerEntity;
+                    }
+                }
+            }
+
+            return nearestPlayer != null;
+        }
     }
 }
