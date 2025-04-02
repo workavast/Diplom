@@ -3,7 +3,7 @@ using Fusion.Addons.FSM;
 
 namespace App.Weapons.FSM
 {
-    public abstract class WeaponState : State
+    public abstract class WeaponState : State<WeaponState>
     {
         protected readonly NetWeaponModel NetWeaponModel;
         protected NetworkRunner Runner => NetWeaponModel.Runner;

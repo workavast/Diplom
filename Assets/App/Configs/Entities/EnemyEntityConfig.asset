@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: EnemyEntityConfig
   m_EditorClassIdentifier: 
   <InitialHealthPoints>k__BackingField: 100
-  <AttackDaley>k__BackingField: 0.2
+  <ReviveHealthPoints>k__BackingField: 10
+  <KnockoutHealthPoints>k__BackingField: 1
+  <KnockoutTime>k__BackingField: 2
   <WalkSpeed>k__BackingField: 3
   <SprintSpeed>k__BackingField: 5
   <MoveAcceleration>k__BackingField: 10

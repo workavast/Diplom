@@ -4,7 +4,7 @@ using Fusion.Addons.FSM;
 
 namespace App.Ai.FSM
 {
-    public abstract class AiState : State
+    public abstract class AiState : State<AiState>
     {
         protected readonly NetAi NetAi;
         protected readonly NetEntity NetEntity;

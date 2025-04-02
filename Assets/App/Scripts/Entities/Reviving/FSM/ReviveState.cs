@@ -4,7 +4,7 @@ using Fusion.Addons.FSM;
 
 namespace App.Entities.Reviving.FSM
 {
-    public abstract class ReviveState : State
+    public abstract class ReviveState : State<ReviveState>
     {
         protected readonly NetReviver NetReviver;
         protected readonly NetHealth NetHealth;

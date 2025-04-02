@@ -12,7 +12,7 @@ namespace App.Ai
     public class NetAi : NetworkBehaviour, IStateMachineOwner
     {
         [field: SerializeField] public AiConfig AiConfig { get; private set; }
-        [SerializeField] private NetEntity netEnemy;
+        [SerializeField] private NetEntity netEntity;
         [SerializeField] private AiViewZone aiViewZone;
 
         private readonly Dictionary<Type, AiState> _states = new(4);
@@ -23,30 +23,35 @@ namespace App.Ai
         private ChaseState _chase;
         private WaitState _wait;
         private CombatState _combat;
+        private Knockout _knockout;
+        private Dead _dead;
         
          public void CollectStateMachines(List<IStateMachine> stateMachines)
         {
-            _idle = new Idle(this, netEnemy, _aiModel, aiViewZone);
-            _chase = new ChaseState(this, netEnemy, _aiModel, aiViewZone);
-            _wait = new WaitState(this, netEnemy, _aiModel, aiViewZone);
-            _combat = new CombatState(this, netEnemy, _aiModel, aiViewZone);
+            _idle = new Idle(this, netEntity, _aiModel, aiViewZone);
+            _chase = new ChaseState(this, netEntity, _aiModel, aiViewZone);
+            _wait = new WaitState(this, netEntity, _aiModel, aiViewZone);
+            _combat = new CombatState(this, netEntity, _aiModel, aiViewZone);
+            _knockout = new Knockout(this, netEntity, _aiModel, aiViewZone);
+            _dead = new Dead(this, netEntity, _aiModel, aiViewZone);
             
             _states.Add(_idle.GetType(), _idle);
             _states.Add(_chase.GetType(), _chase);
             _states.Add(_wait.GetType(), _wait);
             _states.Add(_combat.GetType(), _combat);
+            _states.Add(_knockout.GetType(), _knockout);
+            _states.Add(_dead.GetType(), _dead);
             
-            _fsm = new AiStateMachine("Ai", _idle, _chase, _wait, _combat);
+            _fsm = new AiStateMachine("Ai", _idle, _chase, _wait, _combat, _knockout, _dead);
             stateMachines.Add(_fsm);
         }
 
-         public string ActiveState;
-         public void TryActivateState<TState>() 
-             where TState : AiState
+         public override void FixedUpdateNetwork()
          {
-             Debug.Log("TryActivateState");
-             ActiveState = typeof(TState).ToString();
-             _fsm.TryActivateState(_states[typeof(TState)]);
+             if (!netEntity.IsAlive() && _fsm.ActiveState != null && _fsm.ActiveState != _knockout && _fsm.ActiveState != _dead)
+             {
+                 _fsm.TryActivateState<Dead>();
+             }
          }
     }
 }

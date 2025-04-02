@@ -20,17 +20,15 @@ namespace App.Entities.Reviving.FSM.SpecificStates
         {
             if (NetHealth.IsDead || NetHealth.IsAlive)
             {
-                NetReviver.TryActivateState<None>();
+                TryActivateState<None>();
                 return;
             }
             
             if (_playersEntitiesRepository.TryGetNearestPlayer(NetReviver.transform.position, _config.ReviveDistance, out _))
-                NetReviver.TryActivateState<ReviveProcess>();
+                TryActivateState<ReviveProcess>();
         }
 
-        protected override void OnRender()
-        {
-            ReviveView.ToggleVisibility(false);
-        }
+        protected override void OnEnterStateRender() 
+            => ReviveView.ToggleVisibility(false);
     }
 }

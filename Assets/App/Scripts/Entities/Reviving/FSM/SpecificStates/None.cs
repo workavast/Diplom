@@ -10,12 +10,10 @@ namespace App.Entities.Reviving.FSM.SpecificStates
         protected override void OnFixedUpdate()
         {
             if (NetHealth.IsKnockout) 
-                NetReviver.TryActivateState<WaitRevive>();
+                TryActivateState<WaitRevive>();
         }
-        
-        protected override void OnRender()
-        {
-            ReviveView.ToggleVisibility(false);
-        }
+
+        protected override void OnEnterStateRender() 
+            => ReviveView.ToggleVisibility(false);
     }
 }

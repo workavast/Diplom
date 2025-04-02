@@ -47,7 +47,7 @@ namespace App.Weapons
         public override void Spawned()
         {
             netWeaponModel.Shooter = _shooterFactory.CreateShoot(GetComponent<IEntity>());
-                
+            
             SetWeapon(netWeaponModel.NetEquippedWeapon, true);
             netWeaponModel.OnEquippedWeaponChanged += SetWeapon;
 
@@ -82,7 +82,10 @@ namespace App.Weapons
         private void SetWeapon(WeaponId weaponId, bool force)
         {
             if (!force && netWeaponModel.NetEquippedWeapon == weaponId)
+            {
+                Debug.LogWarning($"You try set weapon that already setted: [{netWeaponModel.NetEquippedWeapon}] [{weaponId}]");
                 return;
+            }
                 
             netWeaponModel.NetEquippedWeapon = weaponId;
          

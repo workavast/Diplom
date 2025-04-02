@@ -14,7 +14,7 @@ namespace App.Ai.FSM
             NetEntity.CalculateVelocity(0, 0, false);
 
             if (AiViewZone.IsSeeAnyPlayer()) 
-                NetAi.TryActivateState<CombatState>();
+                TryActivateState<CombatState>();
         }
     }
 }

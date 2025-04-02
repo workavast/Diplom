@@ -23,11 +23,11 @@ namespace App.Ai.FSM
 
             // Проверка таймера ожидания
             if (Runner.SimulationTime - _startWaitTime > AiConfig.WaitDuration) 
-                NetAi.TryActivateState<ChaseState>();
+                TryActivateState<ChaseState>();
 
             // Если игрок появился - переходим в бой
             if (AiViewZone.IsSeeAnyPlayer()) 
-                NetAi.TryActivateState<CombatState>();
+                TryActivateState<CombatState>();
         }
 
         private void Stay() 

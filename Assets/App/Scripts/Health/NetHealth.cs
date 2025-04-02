@@ -14,10 +14,12 @@ namespace App.Health
 {
     public class NetHealth : NetworkBehaviour, IStateMachineOwner
     {
-        [SerializeField] protected EntityConfig config;
+        [SerializeField] private EntityConfig config;
         [SerializeField] private NetEntity entity;
-        
+        [SerializeField] private SolderView solderView;
+     
         [Networked] [field: ReadOnly] public float NetHealthPoints { get; private set; }
+        [Networked] [field: ReadOnly] public TickTimer NetKnockout { get; set; }
 
         [Inject] private IEventBus EventBus { get; set; }
 
@@ -30,6 +32,8 @@ namespace App.Health
         private Alive _alive;
         private Knockout _knockout;
         private Dead _dead;
+
+        private IEntity _lastDamager;
         
         public event Action OnDeath;
         public event Action<IEntity> OnDeathEntity;
@@ -44,13 +48,19 @@ namespace App.Health
             _states.Add(_knockout.GetType(), _knockout);
             _states.Add(_dead.GetType(), _dead);
             
-            _fsm = new HealthStateMachine("Entity", _alive, _knockout, _dead);
+            _fsm = new HealthStateMachine("Health", _alive, _knockout, _dead);
             stateMachines.Add(_fsm);
         }
 
         public override void Spawned()
         {
             NetHealthPoints = config.InitialHealthPoints;
+            solderView.SetAliveState(IsAlive);
+        }
+
+        public override void Render()
+        {
+            solderView.SetAliveState(IsAlive);
         }
 
         public void SetHealth(int value)
@@ -67,10 +77,21 @@ namespace App.Health
             }
             
             NetHealthPoints -= damage;
-
+            
             if (HasStateAuthority && NetHealthPoints <= 0)
             {
-                EventBus.Invoke(new OnKill(entity.Identifier.Id, killer.Identifier.Id));
+                _lastDamager = killer;
+            }
+        }
+
+        public void PermanentDeath()
+        {
+            NetHealthPoints = 0;
+            if (HasStateAuthority)
+            {
+                _fsm.TryActivateState<Dead>();
+                
+                EventBus.Invoke(new OnKill(entity.Identifier.Id, _lastDamager.Identifier.Id));
                 OnDeath?.Invoke();
                 OnDeathEntity?.Invoke(entity);
                 Debug.Log($"{entity.GetName()} is dead");
@@ -80,23 +101,10 @@ namespace App.Health
             }
         }
 
-        public void PermanentDeath() 
-            => TryActivateState<Dead>();
-        
         public void Revive()
         {
-            TryActivateState<Alive>();
             SetHealth(config.ReviveHealthPoints);
-        }
-
-        /// <summary> Used to debug </summary>
-        public string ActiveState;
-        public void TryActivateState<TState>() 
-            where TState : HealthState
-        {
-            Debug.Log("TryActivateState");
-            ActiveState = typeof(TState).ToString();
-            _fsm.TryActivateState(_states[typeof(TState)]);
+            _fsm.TryActivateState<Alive>();
         }
     }
 }

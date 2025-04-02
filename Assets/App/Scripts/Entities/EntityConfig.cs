@@ -6,8 +6,10 @@ namespace App.Entities
     public class EntityConfig : ScriptableObject
     {
         [field: SerializeField, Min(0)] public int InitialHealthPoints { get; private set; } = 100;
-        [field: SerializeField, Min(0)] public int KnockoutHealthPoints { get; private set; } = 1;
         [field: SerializeField, Min(0)] public int ReviveHealthPoints { get; private set; } = 10;
+        [field: Header("Knockout")]
+        [field: SerializeField, Min(0)] public int KnockoutHealthPoints { get; private set; } = 1;
+        [field: SerializeField, Min(0)] public int KnockoutTime { get; private set; } = 15;
         [field: Header("Movement")]
         [field: SerializeField, Min(0)] public float WalkSpeed { get; private set; } = 5f;
         [field: SerializeField, Min(0)] public float SprintSpeed { get; private set; } = 7.5f;

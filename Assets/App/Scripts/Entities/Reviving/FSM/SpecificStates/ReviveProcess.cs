@@ -1,9 +1,11 @@
+using System;
 using App.Entities.Player;
 using App.Health;
 using Fusion;
 
 namespace App.Entities.Reviving.FSM.SpecificStates
 {
+    [Serializable]
     public class ReviveProcess : ReviveState
     {
         private readonly PlayersEntitiesRepository _playersEntitiesRepository;
@@ -26,32 +28,37 @@ namespace App.Entities.Reviving.FSM.SpecificStates
         {
             NetReviver.ReviveTimer = TickTimer.None;
         }
+        
+        protected override void OnEnterStateRender() 
+            => ReviveView.ToggleVisibility(true);
+        
+        protected override void OnExitStateRender() 
+            => ReviveView.ToggleVisibility(false);
 
         protected override void OnFixedUpdate()
         {
-            if (NetHealth.IsDead || NetHealth.IsAlive)
-            {
-                NetReviver.TryActivateState<None>();
-                return;
-            }
-
             if (NetReviver.ReviveTimer.Expired(Runner))
             {
+                NetReviver.ReviveTimer = TickTimer.None;
                 NetHealth.Revive();
+                return;
+            }
+            
+            if (NetHealth.IsDead || NetHealth.IsAlive)
+            {
+                TryActivateState<None>();
                 return;
             }
 
             if (!_playersEntitiesRepository.TryGetNearestPlayer(NetReviver.transform.position, _config.ReviveDistance, out _))
             {
-                NetReviver.TryActivateState<WaitRevive>();
+                TryActivateState<WaitRevive>();
                 return;
             }
         }
-
+        
         protected override void OnRender()
         {
-            ReviveView.ToggleVisibility(true);
-
             if (NetReviver.ReviveTimer.IsRunning)
             {
                 var remainingTime = NetReviver.ReviveTimer.RemainingTime(Runner).Value;

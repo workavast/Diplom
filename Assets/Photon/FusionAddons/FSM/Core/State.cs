@@ -2,10 +2,6 @@
 
 namespace Fusion.Addons.FSM
 {
-	public abstract class State : State<State>
-	{
-	}
-
 	public abstract unsafe class State<TState> : IState, IOwnedState<TState> where TState : State<TState>
 	{
 		// PUBLIC MEMBERS
@@ -67,6 +63,9 @@ namespace Fusion.Addons.FSM
 		protected virtual void ReadNetworkData(int* ptr) {}
 		protected virtual void WriteNetworkData(int* ptr) {}
 
+		protected bool TryActivateState<T>(bool allowReset = false) where T : IState 
+			=> Machine.TryActivateState<T>();
+		
 		// IState INTERFACE
 
 		string IState.Name => string.IsNullOrEmpty(Name) == false ? Name : GetType().Name;

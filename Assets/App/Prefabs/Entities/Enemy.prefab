@@ -143,9 +143,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <AiConfig>k__BackingField: {fileID: 11400000, guid: 7f4deb217ee8cfa44b51a1eb3112f01b, type: 2}
-  netEnemy: {fileID: 4582882483414412412}
+  netEntity: {fileID: 4582882483414412412}
   aiViewZone: {fileID: -7968970428407159630}
-  ActiveState: 
 --- !u!114 &-7968970428407159630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,8 +192,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: ecdd91516da6a7f49871630af16c313b, type: 2}
   entity: {fileID: 4582882483414412412}
+  solderView: {fileID: 7333342798360998660}
   _NetHealthPoints: 0
-  ActiveState: 
 --- !u!114 &7333342798360998660
 MonoBehaviour:
   m_ObjectHideFlags: 0

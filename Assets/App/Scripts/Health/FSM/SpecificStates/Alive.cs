@@ -1,3 +1,5 @@
+using Fusion.Addons.FSM;
+
 namespace App.Health.FSM.SpecificStates
 {
     public class Alive : HealthState
@@ -8,7 +10,7 @@ namespace App.Health.FSM.SpecificStates
         protected override void OnFixedUpdate()
         {
             if (HealthPoints <= 0) 
-                NetHealth.TryActivateState<Knockout>();
+                Machine.TryActivateState<Knockout>();
         }
     }
 }

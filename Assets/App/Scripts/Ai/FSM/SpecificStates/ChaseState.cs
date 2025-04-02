@@ -24,7 +24,7 @@ namespace App.Ai.FSM
         {
             if (Target == null || Target.Transform == null)
             {
-                NetAi.TryActivateState<Idle>();
+                TryActivateState<Idle>();
                 return;
             }
 
@@ -33,11 +33,11 @@ namespace App.Ai.FSM
             // Проверка восстановления видимости
             if (AiViewZone.EntityIsVisible(Target))
             {
-                NetAi.TryActivateState<CombatState>();
+                TryActivateState<CombatState>();
             }
             else if (Runner.SimulationTime - _lostTime > AiConfig.ChaseDuration)
             {
-                NetAi.TryActivateState<WaitState>();
+                TryActivateState<WaitState>();
             }
         }
 

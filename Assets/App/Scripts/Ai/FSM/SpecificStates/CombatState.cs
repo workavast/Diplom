@@ -29,12 +29,12 @@ namespace App.Ai.FSM
         {
             if (Target == null)
             {
-                NetAi.TryActivateState<Idle>();
+                TryActivateState<Idle>();
                 return;
             }
 
             if (LostTarget()) 
-                NetAi.TryActivateState<WaitState>();
+                TryActivateState<WaitState>();
 
             // if(!AiViewZone.EntityIsVisible(Target))
             // {

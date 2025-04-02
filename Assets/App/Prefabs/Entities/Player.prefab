@@ -176,6 +176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 2e235d0bd95dfe34f95a57e634acc985, type: 2}
   entity: {fileID: 5137442269118526432}
+  solderView: {fileID: 3872098561446610495}
   _NetHealthPoints: 0
   ActiveState: 
 --- !u!114 &3872098561446610495

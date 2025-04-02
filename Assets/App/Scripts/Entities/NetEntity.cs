@@ -11,12 +11,11 @@ namespace App.Entities
 {
     public abstract class NetEntity : NetworkBehaviour, IEntity
     {
-        [SerializeField] protected EntityConfig config;
-        [SerializeField, Tooltip("Can be null")] protected SolderView solderView;
-        [SerializeField, Tooltip("Can be null")] private CharacterController characterController;
+        [SerializeField] private EntityConfig config;
+        [SerializeField] private SolderView solderView;
+        [SerializeField] private CharacterController characterController;
         [SerializeField] private NetHealth health;
 
-        public float NetHealthPoints => health.NetHealthPoints;
         [Networked] [field: ReadOnly, SerializeField] public Vector3 NetVelocity { get; private set; }
         [Networked] [OnChangedRender(nameof(ChangeArmor))] [field: ReadOnly] public int NetArmorLevel { get; private set; }
 
@@ -25,6 +24,7 @@ namespace App.Entities
         public EntityIdentifier Identifier { get; } = new();
         public abstract EntityType EntityType { get; }
         public bool RequiredReload => NetWeapon.RequiredReload;
+        public float NetHealthPoints => health.NetHealthPoints;
 
         protected float Gravity => config.Gravity;
         protected float WalkSpeed => config.WalkSpeed - _armor.WalkSpeedDecrease;
@@ -45,11 +45,8 @@ namespace App.Entities
         {
             NetWeapon = GetComponent<NetWeapon>();
             
-            if (solderView == null)
-                solderView = ComponentExt.GetComponent<SolderView>(this);
-            
-            if (characterController == null)
-                characterController = ComponentExt.GetComponent<CharacterController>(this);
+            health.OnDeath += () => OnDeath?.Invoke();
+            health.OnDeathEntity += (_) => OnDeathEntity?.Invoke(this);
         }
 
         public override void Spawned()
@@ -66,7 +63,6 @@ namespace App.Entities
 
         public override void Render()
         {
-            solderView.SetAliveState(health.IsAlive);
             solderView.MoveView(NetVelocity, SprintSpeed);
         }
 

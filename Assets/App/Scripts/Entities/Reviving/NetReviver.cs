@@ -40,8 +40,10 @@ namespace App.Entities.Reviving
             _fsm = new ReviveStateMachine("Revive", _none, _waitRevive, _reviveProcess);
             stateMachines.Add(_fsm);
         }
-        
-        public void TryActivateState<TState>() where TState : ReviveState =>
-            _fsm.TryActivateState(_states[typeof(TState)]);
+
+        public override void Spawned()
+        {
+            // _fsm.TryActivateState<None>();
+        }
     }
 }

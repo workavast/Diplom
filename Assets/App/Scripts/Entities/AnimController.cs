@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace App.Entities
@@ -34,7 +33,9 @@ namespace App.Entities
             }
         }
 
-        private void SetAliveState(bool isAlive) 
-            => animator.SetBool(IsAlive, solderView.IsAlive);
+        private void SetAliveState(bool isAlive)
+        {
+            animator.SetBool(IsAlive, solderView.IsAlive);
+        }
     }
 }
