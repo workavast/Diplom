@@ -48,11 +48,6 @@ namespace App.Audio.Ambience
             for (var i = 0; i < fadingSources.Capacity; i++) 
                 fadingSources.Add(_activeAmbiences[i].AudioSource);
 
-            // var fadingSources = _activeAmbiences
-            //     .Where(a => a != newAmbience)
-            //     .Select(a => a.AudioSource)
-            //     .ToList();
-
             var initialVolumes = fadingSources.ToDictionary(s => s, s => s.volume);
 
             while (time < duration)
