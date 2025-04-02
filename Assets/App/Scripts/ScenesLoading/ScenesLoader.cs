@@ -7,7 +7,7 @@ using Zenject;
 
 namespace App.ScenesLoading
 {
-    public class NetScenesLoader : ISceneLoader
+    public class ScenesLoader : ISceneLoader
     {
         private readonly int _loadingSceneIndex;
 
@@ -19,7 +19,7 @@ namespace App.ScenesLoading
         public event Action OnLoadingScreenHided;
 
         [Inject]
-        public NetScenesLoader(ILoadingScreen loadingScreen, int loadingSceneIndex, NetworkRunnerProvider networkRunnerProvider)
+        public ScenesLoader(ILoadingScreen loadingScreen, int loadingSceneIndex, NetworkRunnerProvider networkRunnerProvider)
         {
             _loadingScreen = loadingScreen;
             _loadingSceneIndex = loadingSceneIndex;
@@ -27,7 +27,10 @@ namespace App.ScenesLoading
             
             _loadingScreen.OnHided += () => OnLoadingScreenHided?.Invoke();
         }
-        
+
+        public void ShowLoadScreen(bool showInstantly, Action onShowedCallback)
+            => _loadingScreen.Show(showInstantly, onShowedCallback);
+
         public void HideLoadScreen(bool hideLoadScreenInstantly) 
             => _loadingScreen.Hide(hideLoadScreenInstantly);
 

@@ -29,7 +29,7 @@ namespace Avastrad.ScenesLoading
         
         private void BindSceneLoader()
         {
-            Container.BindInterfacesTo<NetScenesLoader>().FromNew().AsSingle().WithArguments(loadingSceneIndex);
+            Container.BindInterfacesTo<ScenesLoader>().FromNew().AsSingle().WithArguments(loadingSceneIndex);
         }
     }
 }

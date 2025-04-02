@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 namespace Avastrad.ScenesLoading
 {
-    public class SceneLoader : ISceneLoader
+    public class DefaultSceneLoader : ISceneLoader
     {
         private readonly int _loadingSceneIndex;
         
@@ -13,7 +13,7 @@ namespace Avastrad.ScenesLoading
         public event Action OnLoadingStarted;
         public event Action OnLoadingScreenHided;
 
-        public SceneLoader(ILoadingScreen loadingScreen, int loadingSceneIndex)
+        public DefaultSceneLoader(ILoadingScreen loadingScreen, int loadingSceneIndex)
         {
             _loadingScreen = loadingScreen;
             _loadingSceneIndex = loadingSceneIndex;
@@ -21,11 +21,12 @@ namespace Avastrad.ScenesLoading
             _loadingScreen.OnHided += () => OnLoadingScreenHided?.Invoke();
         }
         
-        public void HideLoadScreen(bool hideLoadScreenInstantly)
-        {
-            EndLoading(hideLoadScreenInstantly);
-        }
+        public void ShowLoadScreen(bool showInstantly, Action onShowedCallback)
+            => _loadingScreen.Show(showInstantly, onShowedCallback);
         
+        public void HideLoadScreen(bool hideLoadScreenInstantly)
+            => _loadingScreen.Hide(hideLoadScreenInstantly);
+
         public void LoadScene(int index, bool showLoadScreenInstantly = false, bool forceLoading = false)
         {
             _targetSceneIndex = index;
@@ -37,9 +38,6 @@ namespace Avastrad.ScenesLoading
             else
                 _loadingScreen.Show(showLoadScreenInstantly, () => SceneManager.LoadSceneAsync(_loadingSceneIndex));
         }
-
-        private void EndLoading(bool endInstantly) 
-            => _loadingScreen.Hide(endInstantly);
 
         public void LoadTargetScene() 
             => SceneManager.LoadSceneAsync(_targetSceneIndex);

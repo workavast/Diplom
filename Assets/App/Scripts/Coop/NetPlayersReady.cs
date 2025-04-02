@@ -7,7 +7,7 @@ namespace App.Coop
 {
     public class NetPlayersReady : NetworkBehaviour
     {
-        [Networked][field: ReadOnly] private bool allPlayersIsReady { get; set; }
+        [Networked][OnChangedRender(nameof(AllPlayersBecameReady))][field: SerializeField, ReadOnly] private bool allPlayersIsReady { get; set; }
         
         public bool AllPlayersIsReady => _isInitialized && allPlayersIsReady;
         
@@ -22,6 +22,9 @@ namespace App.Coop
         {
             _isInitialized = true;
             Runner.SetIsSimulated(Object, true);
+
+            if (allPlayersIsReady) 
+                OnAllPlayersIsReady?.Invoke();
         }
 
         public override void Despawned(NetworkRunner runner, bool hasState)
@@ -56,11 +59,13 @@ namespace App.Coop
                 return;
 
             _readyCounter++;
-            if (_readyCounter >= Runner.ActivePlayers.Count())
-            {
+            if (_readyCounter >= Runner.ActivePlayers.Count()) 
                 allPlayersIsReady = true;
-                OnAllPlayersIsReady?.Invoke();
-            }
+        }
+
+        private void AllPlayersBecameReady()
+        {
+            OnAllPlayersIsReady?.Invoke();
         }
     }
 }
