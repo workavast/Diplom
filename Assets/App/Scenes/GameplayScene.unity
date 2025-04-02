@@ -9221,6 +9221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62bbf118f5614cd8bc39e5e8377e8d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _AllPlayersIsReady: 0
 --- !u!4 &338389318
 Transform:
   m_ObjectHideFlags: 0
@@ -55828,6 +55829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ff59675a5540ee8255de0de65bc8ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  netPlayersReady: {fileID: 338389317}
 --- !u!4 &2125640828
 Transform:
   m_ObjectHideFlags: 0
