@@ -1,14 +1,18 @@
 using System;
 using Fusion;
+using UnityEngine;
 
 namespace App.Lobby.StartGameTimer
 {
     public class NetStartGameTimerModel : NetworkBehaviour, IReadOnlyGameStartTimer
     {
+        [SerializeField] private StartGameTimerConfig config;
+        
         [Networked, OnChangedRender(nameof(ActivityChanged))] private NetworkBool isActive { get; set; }
         [Networked] [field: ReadOnly] public TickTimer NetTimer { get; set; }
 
         private bool _isActiveHashed;
+        
         public NetworkBool IsActive
         {
             get
@@ -29,6 +33,9 @@ namespace App.Lobby.StartGameTimer
         public bool IsOver { get; private set; }
         public bool IsSpawned { get; private set; }
 
+        public float NonFullTeamStartTime => config.NonFullTeamStartTime;
+        public float FullTeamStartTime => config.FullTeamStartTime;
+        
         private int _lastRemainingTime;
         private TimeSpan _lastTimeSPan;
         

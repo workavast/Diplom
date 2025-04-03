@@ -9,9 +9,7 @@ namespace App.Lobby.StartGameTimer
 {
     public class NetStartGameTimer : MonoBehaviour
     {
-        [SerializeField, Min(0)] private float nonFullTeamStartTime = 90;
-        [SerializeField, Min(0)] private float fullTeamStartTime = 10;
-        [SerializeField] private NetStartGameTimerModel netStartGameTimerModel;
+        [SerializeField] private NetStartGameTimerModel netModel;
 
         [Inject] private readonly LobbySessionDataRepository _lobbySessionDataRepository;
 
@@ -24,10 +22,10 @@ namespace App.Lobby.StartGameTimer
             _stateMachine = new TimerStateMachine(
                 new TimerState[]
                 {
-                    new Idle(netStartGameTimerModel, _readyChecker, SetState), 
-                    new IsOver(netStartGameTimerModel, _readyChecker, SetState), 
-                    new LongTimer(netStartGameTimerModel, _readyChecker, SetState, nonFullTeamStartTime), 
-                    new ShortTimer(netStartGameTimerModel, _readyChecker, SetState, fullTeamStartTime)
+                    new Idle(netModel, _readyChecker, SetState), 
+                    new IsOver(netModel, _readyChecker, SetState), 
+                    new LongTimer(netModel, _readyChecker, SetState, netModel.NonFullTeamStartTime), 
+                    new ShortTimer(netModel, _readyChecker, SetState, netModel.FullTeamStartTime)
                 },
                 typeof(Idle)
             );

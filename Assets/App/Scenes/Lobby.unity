@@ -982,9 +982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 016d2a8182d7489b88661b90e5fe34fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nonFullTeamStartTime: 60
-  fullTeamStartTime: 10
-  netStartGameTimerModel: {fileID: 1006124269}
+  netModel: {fileID: 1006124269}
 --- !u!4 &1006124268
 Transform:
   m_ObjectHideFlags: 0
@@ -1012,6 +1010,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a55def6cf0248d188c68369bd664f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: d2b34a95669bb164aab83397bdfe2275, type: 2}
 --- !u!1 &1108610714
 GameObject:
   m_ObjectHideFlags: 0
