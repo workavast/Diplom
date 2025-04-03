@@ -1,9 +1,9 @@
 using System;
 using App.NetworkRunning;
+using App.SessionVisibility;
 using Avastrad.ScenesLoading;
 using Fusion;
 using UnityEngine.SceneManagement;
-using Zenject;
 
 namespace App.ScenesLoading
 {
@@ -13,13 +13,14 @@ namespace App.ScenesLoading
 
         private readonly ILoadingScreen _loadingScreen;
         private readonly NetworkRunnerProvider _networkRunnerProvider;
+        
         private int _targetSceneIndex = -1;
         
         public event Action OnLoadingStarted;
         public event Action OnLoadingScreenHided;
 
-        [Inject]
-        public ScenesLoader(ILoadingScreen loadingScreen, int loadingSceneIndex, NetworkRunnerProvider networkRunnerProvider)
+        public ScenesLoader(ILoadingScreen loadingScreen, int loadingSceneIndex, 
+            NetworkRunnerProvider networkRunnerProvider)
         {
             _loadingScreen = loadingScreen;
             _loadingSceneIndex = loadingSceneIndex;
