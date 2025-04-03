@@ -587,7 +587,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   missionSelectorPresenter: {fileID: 1510088420}
-  selectedMissionView: {fileID: 8243395022484324172}
+  selectedMissionView: {fileID: 2130941195}
   missionsConfig: {fileID: 11400000, guid: f696ba8590c3fdc4eb14a1caa3ca60fd, type: 2}
   _ActiveMissionIndex: 0
 --- !u!114 &612634027
@@ -1534,9 +1534,9 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 1930676348}
   ForceRemoteRenderTimeframe: 0
---- !u!114 &8243395022484324172 stripped
+--- !u!114 &2130941195 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8051513930122025309, guid: 0f53b2ef675818b4e9f4959215388ada, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6107527747869889359, guid: 0f53b2ef675818b4e9f4959215388ada, type: 3}
   m_PrefabInstance: {fileID: 8510986497660125436}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
