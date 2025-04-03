@@ -7,6 +7,7 @@ namespace App.ScenesLoading
         public const int MainMenuSceneIndex = 2;
         public const int GameplaySceneIndex = 3;
         public const int LobbySceneIndex = 4;
+        public const int Coop = 5;
         
         public static readonly Dictionary<int, string> SceneNamesByIndexes = new()
         {
@@ -14,7 +15,8 @@ namespace App.ScenesLoading
             { 1, "ScenesLoadingScene" },
             { MainMenuSceneIndex, "MainMenuScene" },
             { GameplaySceneIndex, "GameplayScene" },
-            { LobbySceneIndex, "Lobby" }
+            { LobbySceneIndex, "Lobby" },
+            { Coop, "Coop"}
         };
         
         public static string NameByIndex(int sceneIndex)

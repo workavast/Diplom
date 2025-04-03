@@ -32,12 +32,12 @@ namespace App.Session
         public async Task CreateSinglePlayer(int sceneIndex, Action successCallback = null, Action<ShutdownReason> failCallback = null)
             => await StartGame(GameMode.Single, GenerateUid(), sceneIndex, successCallback, failCallback);
         
-        public void QuickStart(Action successCallback = null, Action<ShutdownReason> failCallback = null) 
+        public void QuickStart(int sceneIndex, Action successCallback = null, Action<ShutdownReason> failCallback = null) 
         {
             var startGameArgs = new StartGameArgs()
             {
                 GameMode = GameMode.AutoHostOrClient,
-                PlayerCount = 5,
+                PlayerCount = Consts.MaxPlayersCount,
                 EnableClientSessionCreation = true,
                 SessionNameGenerator = GenerateUid,
                 IsOpen = true,
@@ -47,7 +47,7 @@ namespace App.Session
                 ObjectProvider = NetworkRunner.GetComponent<NetworkObjectPoolDefault>(),
             };
 
-            StartGame(startGameArgs, ScenesConfig.LobbySceneIndex, successCallback, failCallback);
+            StartGame(startGameArgs, sceneIndex, successCallback, failCallback);
         }
         
         public void ConnectToSession(string sessionName, int sceneIndex, Action successCallback = null, Action<ShutdownReason> failCallback = null) 

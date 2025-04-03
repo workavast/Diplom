@@ -17,6 +17,6 @@ namespace App.UI.SessionCreation
         }
 
         private void StartSinglePlayerSession() 
-            => _sessionCreator.CreateSinglePlayer(ScenesConfig.GameplaySceneIndex);
+            => _sessionCreator.CreateSinglePlayer(ScenesConfig.LobbySceneIndex);
     }
 }
