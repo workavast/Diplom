@@ -14,12 +14,17 @@ namespace App.UI
         
         private void Awake()
         {
-            var netRunner = _networkRunnerProvider.GetNetworkRunner();
-
-            if (netRunner.GameMode == GameMode.Single) 
-                Hide();
+            if (_networkRunnerProvider.TryGetNetworkRunner(out var netRunner))
+            {
+                if (netRunner.GameMode == GameMode.Single) 
+                    Hide();
+                else
+                    sessionName.text = netRunner.SessionInfo.Name;
+            }
             else
-                sessionName.text = netRunner.SessionInfo.Name;
+            {
+                Hide();
+            }
         }
 
         private void Hide() 
