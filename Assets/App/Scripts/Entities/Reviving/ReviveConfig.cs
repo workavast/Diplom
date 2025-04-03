@@ -7,5 +7,6 @@ namespace App.Entities.Reviving
     {
         [field: SerializeField, Min(0)] public float ReviveDistance { get; private set; } = 5f;
         [field: SerializeField, Min(0)] public float ReviveTime { get; private set; } = 5f;
+        [field: SerializeField, Min(0)] public float BleedingTime { get; private set; } = 20f;
     }
 }

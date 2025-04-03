@@ -8,16 +8,14 @@ namespace App.Entities.Reviving.FSM
     {
         protected readonly NetReviver NetReviver;
         protected readonly NetHealth NetHealth;
-        protected readonly ReviveView ReviveView;
 
         protected PlayerRef Owner => NetReviver.Object.InputAuthority;
         protected NetworkRunner Runner => NetReviver.Runner;
         
-        protected ReviveState(NetReviver netReviver, NetHealth netHealth, ReviveView reviveView)
+        protected ReviveState(NetReviver netReviver, NetHealth netHealth)
         {
             NetReviver = netReviver;
             NetHealth = netHealth;
-            ReviveView = reviveView;
         }
     }
 }

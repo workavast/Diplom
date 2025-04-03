@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 1625900555111658174}
   - component: {fileID: 7699165246983407009}
   - component: {fileID: 7569205443486142500}
+  - component: {fileID: 7390297459476550957}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -232,6 +233,7 @@ MonoBehaviour:
   - {fileID: 7942052991263362750}
   - {fileID: 7699165246983407009}
   - {fileID: 7569205443486142500}
+  - {fileID: 7390297459476550957}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &861037711003020237
 MonoBehaviour:
@@ -370,6 +372,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enableLogging: 0
+--- !u!114 &7390297459476550957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072648177644592389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 428b14d080a84ef4a5614eb9280297e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _BleedTimer: 0
+  reviveConfig: {fileID: 11400000, guid: 8f55cd6a026dc0042bab59d6798c4230, type: 2}
+  netHealth: {fileID: -2531509198763203047}
 --- !u!1 &1503522408539233729
 GameObject:
   m_ObjectHideFlags: 0

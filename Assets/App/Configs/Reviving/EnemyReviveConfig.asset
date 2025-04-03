@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 709882b170964b29a8deae8339804c57, type: 3}
-  m_Name: ReviveConfig
+  m_Name: EnemyReviveConfig
   m_EditorClassIdentifier: 
   <ReviveDistance>k__BackingField: 1
   <ReviveTime>k__BackingField: 5
+  <BleedingTime>k__BackingField: 5

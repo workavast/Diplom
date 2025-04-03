@@ -4,10 +4,5 @@ namespace App.Health.FSM.SpecificStates
     {
         public Dead(NetHealth netEntity)
             : base(netEntity) { }
-
-        protected override void OnEnterState()
-        {
-            NetHealth.PermanentDeath();
-        }
     }
 }

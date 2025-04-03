@@ -3,10 +3,10 @@ using App.Entities.Player;
 using App.Health;
 using Fusion;
 
-namespace App.Entities.Reviving.FSM.SpecificStates
+namespace App.Entities.Reviving.FSM.PlayerStates
 {
     [Serializable]
-    public class ReviveProcess : ReviveState
+    public class ReviveProcess : PlayerReviveState
     {
         private readonly PlayersEntitiesRepository _playersEntitiesRepository;
         private readonly ReviveConfig _config;
@@ -52,7 +52,7 @@ namespace App.Entities.Reviving.FSM.SpecificStates
 
             if (!_playersEntitiesRepository.TryGetNearestPlayer(NetReviver.transform.position, _config.ReviveDistance, out _))
             {
-                TryActivateState<WaitRevive>();
+                TryActivateState<Bleeding>();
                 return;
             }
         }

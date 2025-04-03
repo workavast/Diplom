@@ -19,7 +19,6 @@ namespace App.Health
         [SerializeField] private SolderView solderView;
      
         [Networked] [field: ReadOnly] public float NetHealthPoints { get; private set; }
-        [Networked] [field: ReadOnly] public TickTimer NetKnockout { get; set; }
 
         [Inject] private IEventBus EventBus { get; set; }
 
@@ -85,14 +84,13 @@ namespace App.Health
             if (HasStateAuthority)
             {
                 _fsm.TryActivateState<Dead>();
-                
                 EventBus.Invoke(new OnKill(entity.Identifier.Id, _lastDamager.Identifier.Id));
                 OnDeath?.Invoke();
                 OnDeathEntity?.Invoke(entity);
                 Debug.Log($"{entity.GetName()} is dead");
 
-                if (entity.EntityType == EntityType.Default)
-                    Runner.Despawn(Object);
+                // if (entity.EntityType == EntityType.Default)
+                //     Runner.Despawn(Object);
             }
         }
 

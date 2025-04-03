@@ -1,5 +1,4 @@
 using App.Entities;
-using Fusion;
 
 namespace App.Health.FSM.SpecificStates
 {
@@ -16,18 +15,6 @@ namespace App.Health.FSM.SpecificStates
         protected override void OnEnterState()
         {
             NetHealth.SetHealth(_config.KnockoutHealthPoints);
-            NetHealth.NetKnockout = TickTimer.CreateFromSeconds(Runner, _config.KnockoutTime);
-        }
-
-        protected override void OnExitState()
-        {
-            NetHealth.NetKnockout = TickTimer.None;
-        }
-
-        protected override void OnFixedUpdate()
-        {
-            if (NetHealth.NetKnockout.Expired(Runner)) 
-                TryActivateState<Dead>();
         }
     }
 }

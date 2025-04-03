@@ -1,8 +1,8 @@
 using App.Health;
 
-namespace App.Entities.Reviving.FSM.SpecificStates
+namespace App.Entities.Reviving.FSM.PlayerStates
 {
-    public class None : ReviveState
+    public class None : PlayerReviveState
     {
         public None(NetReviver netReviver, NetHealth netHealth, ReviveView reviveView) 
             : base(netReviver, netHealth, reviveView) { }
@@ -10,7 +10,7 @@ namespace App.Entities.Reviving.FSM.SpecificStates
         protected override void OnFixedUpdate()
         {
             if (NetHealth.IsKnockout) 
-                TryActivateState<WaitRevive>();
+                TryActivateState<StartBleeding>();
         }
 
         protected override void OnEnterStateRender() 

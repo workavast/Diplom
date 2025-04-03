@@ -13,6 +13,8 @@ namespace Fusion.Addons.FSM
 
 		public bool                 CheckPriorityOnExit = true;
 
+		protected float StateTime => Machine.StateTime;
+
 		// PRIVATE MEMBERS
 
 		private List<TransitionData<TState>> _transitions;
