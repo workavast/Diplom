@@ -25,11 +25,13 @@ namespace App.Weapons
         public bool RequiredReload => netWeaponModel.NetMagazine <= 0 && CanReload;
         public WeaponId NetEquippedWeapon => netWeaponModel.NetEquippedWeapon;
 
+        public int MaxAmmo => WeaponConfig.MagazineSize;
+        public int CurrentAmmo => netWeaponModel.NetMagazine;
+        
         private WeaponConfig WeaponConfig => netWeaponModel.WeaponConfig;
         private Shooter Shooter => netWeaponModel.Shooter;
         
-        [SerializeField, ReadOnly] private int _visibleFireCount;
-        
+        private int _visibleFireCount;
         private WeaponStateMachine _fsm;
         private ReloadingState _reloadingState;
         private ShotReadyState _shotReadyState;

@@ -18,7 +18,7 @@ namespace Avastrad.UI.Elements.BarView
         public RectTransform FillRect => fill;
         public float MinValue => minValue;
         public float MaxValue => maxValue;
-        public float Value { get; set; }
+        public float Value { get; private set; }
         public UnityEvent OnValueChanged => onValueChanged;
         public float FillPercentage
         {
@@ -55,7 +55,9 @@ namespace Avastrad.UI.Elements.BarView
             onValueChanged.Invoke();
         }
 
-        //This method invoked by using reflection, dont change it signature or name
+        /// <summary>
+        /// This method invoked by using reflection, dont change it signature or name
+        /// </summary>
         private void SetFill(RectTransform newFill)
         {
             _tracker.Clear();

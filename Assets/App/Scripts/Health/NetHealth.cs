@@ -25,6 +25,8 @@ namespace App.Health
         public bool IsAlive => _fsm.ActiveState == _alive;
         public bool IsKnockout => _fsm.ActiveState == _knockout;
         public bool IsDead => _fsm.ActiveState == _dead;
+
+        public float MaxHealthPoints => config.MaxHealthPoints;
         
         private HealthStateMachine _fsm;
         private Alive _alive;
@@ -48,7 +50,7 @@ namespace App.Health
 
         public override void Spawned()
         {
-            NetHealthPoints = config.InitialHealthPoints;
+            NetHealthPoints = config.MaxHealthPoints;
             solderView.SetAliveState(IsAlive);
         }
 

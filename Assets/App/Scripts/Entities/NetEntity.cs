@@ -24,8 +24,14 @@ namespace App.Entities
         public EntityIdentifier Identifier { get; } = new();
         public abstract EntityType EntityType { get; }
         public bool RequiredReload => NetWeapon.RequiredReload;
+        public float MaxHealthPoints => health.MaxHealthPoints;
         public float NetHealthPoints => health.NetHealthPoints;
 
+
+        public int MaxAmmo => NetWeapon.MaxAmmo;
+        public int CurrentAmmo => NetWeapon.CurrentAmmo;
+        
+        
         protected float Gravity => config.Gravity;
         protected float WalkSpeed => config.WalkSpeed - _armor.WalkSpeedDecrease;
         protected float SprintSpeed => config.SprintSpeed - _armor.SprintSpeedDecrease;

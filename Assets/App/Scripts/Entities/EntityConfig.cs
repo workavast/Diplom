@@ -5,7 +5,7 @@ namespace App.Entities
     [CreateAssetMenu(fileName = nameof(EntityConfig), menuName = Consts.AppName + "/Configs/" + nameof(EntityConfig))]
     public class EntityConfig : ScriptableObject
     {
-        [field: SerializeField, Min(0)] public int InitialHealthPoints { get; private set; } = 100;
+        [field: SerializeField, Min(0)] public int MaxHealthPoints { get; private set; } = 100;
         [field: SerializeField, Min(0)] public int ReviveHealthPoints { get; private set; } = 10;
         [field: Header("Knockout")]
         [field: SerializeField, Min(0)] public int KnockoutHealthPoints { get; private set; } = 1;
