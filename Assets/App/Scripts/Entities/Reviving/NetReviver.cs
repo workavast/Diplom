@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using App.Entities.Player;
 using App.Entities.Reviving.FSM;
@@ -21,7 +20,6 @@ namespace App.Entities.Reviving
 
         [Inject] private readonly PlayersEntitiesRepository _playersEntitiesRepository; 
         
-        private readonly Dictionary<Type, ReviveState> _states = new(4);
         private ReviveStateMachine _fsm;
         private None _none;
         private WaitRevive _waitRevive;
@@ -33,17 +31,8 @@ namespace App.Entities.Reviving
             _waitRevive = new WaitRevive(this, netHealth, reviveView,_playersEntitiesRepository, config);
             _reviveProcess = new ReviveProcess(this, netHealth, reviveView, _playersEntitiesRepository, config);
             
-            _states.Add(_none.GetType(), _none);
-            _states.Add(_waitRevive.GetType(), _waitRevive);
-            _states.Add(_reviveProcess.GetType(), _reviveProcess);
-            
             _fsm = new ReviveStateMachine("Revive", _none, _waitRevive, _reviveProcess);
             stateMachines.Add(_fsm);
-        }
-
-        public override void Spawned()
-        {
-            // _fsm.TryActivateState<None>();
         }
     }
 }

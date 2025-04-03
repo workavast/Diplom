@@ -27,7 +27,6 @@ namespace App.Health
         public bool IsKnockout => _fsm.ActiveState == _knockout;
         public bool IsDead => _fsm.ActiveState == _dead;
         
-        private readonly Dictionary<Type, HealthState> _states = new(3);
         private HealthStateMachine _fsm;
         private Alive _alive;
         private Knockout _knockout;
@@ -43,10 +42,6 @@ namespace App.Health
             _alive = new Alive(this);
             _knockout = new Knockout(this, config);
             _dead = new Dead(this);
-            
-            _states.Add(_alive.GetType(), _alive);
-            _states.Add(_knockout.GetType(), _knockout);
-            _states.Add(_dead.GetType(), _dead);
             
             _fsm = new HealthStateMachine("Health", _alive, _knockout, _dead);
             stateMachines.Add(_fsm);
