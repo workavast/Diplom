@@ -95,16 +95,16 @@ GameObject:
   - component: {fileID: 8871018729791473402}
   - component: {fileID: 5137442269118526432}
   - component: {fileID: -5481621240499054862}
-  - component: {fileID: 3872098561446610495}
-  - component: {fileID: 7541546581567901005}
+  - component: {fileID: -6147803082460343636}
   - component: {fileID: 5750785084461400786}
+  - component: {fileID: 1058040539379439012}
+  - component: {fileID: 3872098561446610495}
+  - component: {fileID: 7569205443486142500}
   - component: {fileID: 8581854729729584098}
   - component: {fileID: 7942052991263362750}
+  - component: {fileID: 7541546581567901005}
   - component: {fileID: -658295760547561401}
   - component: {fileID: 1625900555111658174}
-  - component: {fileID: 1058040539379439012}
-  - component: {fileID: 7569205443486142500}
-  - component: {fileID: -6147803082460343636}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -179,7 +179,7 @@ MonoBehaviour:
   entity: {fileID: 5137442269118526432}
   solderView: {fileID: 3872098561446610495}
   _NetHealthPoints: 0
---- !u!114 &3872098561446610495
+--- !u!114 &-6147803082460343636
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,37 +188,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1072648177644592389}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dca9430a4c0429093690f3a4dd5892a, type: 3}
+  m_Script: {fileID: 11500000, guid: 9537b83e855440b1a411a2f8f731bae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <IsAlive>k__BackingField: 0
---- !u!114 &7541546581567901005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072648177644592389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SortKey: 2064848571
-  ObjectInterest: 1
-  Flags: 262145
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 8871018729791473402}
-  - {fileID: 5137442269118526432}
-  - {fileID: -5481621240499054862}
-  - {fileID: 5750785084461400786}
-  - {fileID: 8581854729729584098}
-  - {fileID: 7942052991263362750}
-  - {fileID: 1058040539379439012}
-  - {fileID: 7569205443486142500}
-  - {fileID: -6147803082460343636}
-  ForceRemoteRenderTimeframe: 0
+  _BleedTimer: 0
+  netHealth: {fileID: -5481621240499054862}
+  config: {fileID: 11400000, guid: e45c09bcf9224e343a55a0c8e2158c28, type: 2}
+  reviveView: {fileID: 5272490003197365180}
+  bleedingView: {fileID: 3455370357219168438}
 --- !u!114 &5750785084461400786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,6 +212,51 @@ MonoBehaviour:
   shootPoint: {fileID: 8074423664287962504}
   weaponViewHolder: {fileID: 7914040448562380562}
   _visibleFireCount: 0
+--- !u!114 &1058040539379439012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072648177644592389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1543a9c84104ef88813b853815af12c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <HitLayers>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _NetEquippedWeapon: 0
+  _NetMagazine: 0
+  _NetFireCount: 0
+  <WeaponConfig>k__BackingField: {fileID: 0}
+--- !u!114 &3872098561446610495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072648177644592389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dca9430a4c0429093690f3a4dd5892a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsAlive>k__BackingField: 0
+--- !u!114 &7569205443486142500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072648177644592389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2615d364a70f4817830b874e07a6cc81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enableLogging: 0
 --- !u!114 &8581854729729584098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,6 +294,33 @@ MonoBehaviour:
   GizmosColor: {r: 1, g: 0, b: 0.005943775, a: 1}
   Hitboxes:
   - {fileID: 8539265002466645279}
+--- !u!114 &7541546581567901005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072648177644592389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 2064848571
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 8871018729791473402}
+  - {fileID: 5137442269118526432}
+  - {fileID: -5481621240499054862}
+  - {fileID: -6147803082460343636}
+  - {fileID: 5750785084461400786}
+  - {fileID: 1058040539379439012}
+  - {fileID: 7569205443486142500}
+  - {fileID: 8581854729729584098}
+  - {fileID: 7942052991263362750}
+  ForceRemoteRenderTimeframe: 0
 --- !u!143 &-658295760547561401
 CharacterController:
   m_ObjectHideFlags: 0
@@ -324,55 +373,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &1058040539379439012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072648177644592389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1543a9c84104ef88813b853815af12c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <HitLayers>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  _NetEquippedWeapon: 0
-  _NetMagazine: 0
-  _NetFireCount: 0
-  <WeaponConfig>k__BackingField: {fileID: 0}
---- !u!114 &7569205443486142500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072648177644592389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2615d364a70f4817830b874e07a6cc81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enableLogging: 0
---- !u!114 &-6147803082460343636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072648177644592389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9537b83e855440b1a411a2f8f731bae6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _BleedTimer: 0
-  netHealth: {fileID: -5481621240499054862}
-  config: {fileID: 11400000, guid: e45c09bcf9224e343a55a0c8e2158c28, type: 2}
-  reviveView: {fileID: 5272490003197365180}
-  bleedingView: {fileID: 3455370357219168438}
 --- !u!1 &5362835087198041564
 GameObject:
   m_ObjectHideFlags: 0

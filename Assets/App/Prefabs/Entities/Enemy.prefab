@@ -93,19 +93,18 @@ GameObject:
   m_Component:
   - component: {fileID: 2284970520156573983}
   - component: {fileID: 8179703725184387316}
-  - component: {fileID: -7968970428407159630}
   - component: {fileID: 4582882483414412412}
   - component: {fileID: -2531509198763203047}
-  - component: {fileID: 7333342798360998660}
-  - component: {fileID: 7541546581567901005}
+  - component: {fileID: 7390297459476550957}
   - component: {fileID: 861037711003020237}
+  - component: {fileID: 7699165246983407009}
+  - component: {fileID: 7333342798360998660}
+  - component: {fileID: 7569205443486142500}
   - component: {fileID: 8581854729729584098}
   - component: {fileID: 7942052991263362750}
+  - component: {fileID: 7541546581567901005}
   - component: {fileID: -658295760547561401}
   - component: {fileID: 1625900555111658174}
-  - component: {fileID: 7699165246983407009}
-  - component: {fileID: 7569205443486142500}
-  - component: {fileID: 7390297459476550957}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -145,22 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <AiConfig>k__BackingField: {fileID: 11400000, guid: 7f4deb217ee8cfa44b51a1eb3112f01b, type: 2}
   netEntity: {fileID: 4582882483414412412}
-  aiViewZone: {fileID: -7968970428407159630}
---- !u!114 &-7968970428407159630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072648177644592389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa1e6da56b924a3da410e0fde232560a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ownerBehaviour: {fileID: 4582882483414412412}
-  aiConfig: {fileID: 11400000, guid: 7f4deb217ee8cfa44b51a1eb3112f01b, type: 2}
-  viewPivot: {fileID: 7107134542198838135}
+  aiViewZone: {fileID: 7766818169016111262}
 --- !u!114 &4582882483414412412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,7 +179,7 @@ MonoBehaviour:
   entity: {fileID: 4582882483414412412}
   solderView: {fileID: 7333342798360998660}
   _NetHealthPoints: 0
---- !u!114 &7333342798360998660
+--- !u!114 &7390297459476550957
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -204,37 +188,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1072648177644592389}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dca9430a4c0429093690f3a4dd5892a, type: 3}
+  m_Script: {fileID: 11500000, guid: 428b14d080a84ef4a5614eb9280297e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <IsAlive>k__BackingField: 0
---- !u!114 &7541546581567901005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072648177644592389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SortKey: 80589625
-  ObjectInterest: 1
-  Flags: 262145
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 8179703725184387316}
-  - {fileID: 4582882483414412412}
-  - {fileID: -2531509198763203047}
-  - {fileID: 861037711003020237}
-  - {fileID: 8581854729729584098}
-  - {fileID: 7942052991263362750}
-  - {fileID: 7699165246983407009}
-  - {fileID: 7569205443486142500}
-  - {fileID: 7390297459476550957}
-  ForceRemoteRenderTimeframe: 0
+  _BleedTimer: 0
+  reviveConfig: {fileID: 11400000, guid: 8f55cd6a026dc0042bab59d6798c4230, type: 2}
+  netHealth: {fileID: -2531509198763203047}
 --- !u!114 &861037711003020237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,6 +210,51 @@ MonoBehaviour:
   shootPoint: {fileID: 8074423664287962504}
   weaponViewHolder: {fileID: 190664987957330581}
   _visibleFireCount: 0
+--- !u!114 &7699165246983407009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072648177644592389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1543a9c84104ef88813b853815af12c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <HitLayers>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _NetEquippedWeapon: 0
+  _NetMagazine: 0
+  _NetFireCount: 0
+  <WeaponConfig>k__BackingField: {fileID: 0}
+--- !u!114 &7333342798360998660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072648177644592389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dca9430a4c0429093690f3a4dd5892a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsAlive>k__BackingField: 0
+--- !u!114 &7569205443486142500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072648177644592389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2615d364a70f4817830b874e07a6cc81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enableLogging: 0
 --- !u!114 &8581854729729584098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,6 +292,33 @@ MonoBehaviour:
   GizmosColor: {r: 1, g: 0, b: 0, a: 1}
   Hitboxes:
   - {fileID: 8192084059082422202}
+--- !u!114 &7541546581567901005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072648177644592389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 80589625
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 8179703725184387316}
+  - {fileID: 4582882483414412412}
+  - {fileID: -2531509198763203047}
+  - {fileID: 7390297459476550957}
+  - {fileID: 861037711003020237}
+  - {fileID: 7699165246983407009}
+  - {fileID: 7569205443486142500}
+  - {fileID: 8581854729729584098}
+  - {fileID: 7942052991263362750}
+  ForceRemoteRenderTimeframe: 0
 --- !u!143 &-658295760547561401
 CharacterController:
   m_ObjectHideFlags: 0
@@ -340,53 +371,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &7699165246983407009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072648177644592389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1543a9c84104ef88813b853815af12c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <HitLayers>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  _NetEquippedWeapon: 0
-  _NetMagazine: 0
-  _NetFireCount: 0
-  <WeaponConfig>k__BackingField: {fileID: 0}
---- !u!114 &7569205443486142500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072648177644592389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2615d364a70f4817830b874e07a6cc81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enableLogging: 0
---- !u!114 &7390297459476550957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072648177644592389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 428b14d080a84ef4a5614eb9280297e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _BleedTimer: 0
-  reviveConfig: {fileID: 11400000, guid: 8f55cd6a026dc0042bab59d6798c4230, type: 2}
-  netHealth: {fileID: -2531509198763203047}
 --- !u!1 &1503522408539233729
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,6 +532,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7107134542198838135}
+  - component: {fileID: 7766818169016111262}
   m_Layer: 0
   m_Name: ViewPivot
   m_TagString: Untagged
@@ -570,6 +555,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2284970520156573983}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7766818169016111262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8712658989513495689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa1e6da56b924a3da410e0fde232560a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerBehaviour: {fileID: 4582882483414412412}
+  aiConfig: {fileID: 11400000, guid: 7f4deb217ee8cfa44b51a1eb3112f01b, type: 2}
+  viewPivot: {fileID: 7107134542198838135}
 --- !u!1001 &5573517263583762982
 PrefabInstance:
   m_ObjectHideFlags: 0
