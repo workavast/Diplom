@@ -13,8 +13,10 @@ namespace App.Entities
     {
         [SerializeField] private EntityConfig config;
         [SerializeField] private SolderView solderView;
-        [SerializeField] private CharacterController characterController;
         [SerializeField] private NetHealth health;
+        [SerializeField] private Hitbox hitbox;
+        [SerializeField] private CharacterController characterController;
+        [SerializeField] private NetworkCharacterController netCharacterController;
 
         [Networked] [field: ReadOnly, SerializeField] public Vector3 NetVelocity { get; private set; }
         [Networked] [OnChangedRender(nameof(ChangeArmor))] [field: ReadOnly] public int NetArmorLevel { get; private set; }
@@ -26,11 +28,9 @@ namespace App.Entities
         public bool RequiredReload => NetWeapon.RequiredReload;
         public float MaxHealthPoints => health.MaxHealthPoints;
         public float NetHealthPoints => health.NetHealthPoints;
-
-
+        
         public int MaxAmmo => NetWeapon.MaxAmmo;
         public int CurrentAmmo => NetWeapon.CurrentAmmo;
-        
         
         protected float Gravity => config.Gravity;
         protected float WalkSpeed => config.WalkSpeed - _armor.WalkSpeedDecrease;
@@ -59,12 +59,22 @@ namespace App.Entities
         {
             IsActive = true;
             _armor = ArmorsConfig.GetArmor(0);
+            hitbox.HitboxActive = 
+                characterController.enabled = 
+                netCharacterController.enabled = true;
             Debug.Log($"Spawned: [{Object.InputAuthority}]: [{NetWeapon.NetEquippedWeapon}]");
         }
 
         public override void Despawned(NetworkRunner runner, bool hasState)
         {
             IsActive = false;
+        }
+
+        public override void FixedUpdateNetwork()
+        {
+            hitbox.HitboxActive = 
+                characterController.enabled = 
+                    netCharacterController.enabled = health.IsAlive;
         }
 
         public override void Render()
@@ -132,6 +142,12 @@ namespace App.Entities
             if (!health.IsAlive)
             {
                 Debug.LogError($"You try move entity that un full alive: [{gameObject.name}]");
+                return;
+            }
+            
+            if (!characterController.enabled)
+            {
+                Debug.LogWarning($"You try move entity that characterController un active: [{gameObject.name}]");
                 return;
             }
             

@@ -100,12 +100,12 @@ GameObject:
   - component: {fileID: 7699165246983407009}
   - component: {fileID: 7333342798360998660}
   - component: {fileID: 7569205443486142500}
-  - component: {fileID: 8581854729729584098}
   - component: {fileID: 7942052991263362750}
   - component: {fileID: 7541546581567901005}
+  - component: {fileID: 8581854729729584098}
   - component: {fileID: -658295760547561401}
   - component: {fileID: 1625900555111658174}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,8 +159,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: ecdd91516da6a7f49871630af16c313b, type: 2}
   solderView: {fileID: 7333342798360998660}
-  characterController: {fileID: -658295760547561401}
   health: {fileID: -2531509198763203047}
+  hitbox: {fileID: 8192084059082422202}
+  characterController: {fileID: -658295760547561401}
+  netCharacterController: {fileID: 8581854729729584098}
   _NetVelocity: {x: 0, y: 0, z: 0}
   _NetArmorLevel: 0
 --- !u!114 &-2531509198763203047
@@ -209,7 +211,6 @@ MonoBehaviour:
   netWeaponModel: {fileID: 7699165246983407009}
   shootPoint: {fileID: 8074423664287962504}
   weaponViewHolder: {fileID: 190664987957330581}
-  _visibleFireCount: 0
 --- !u!114 &7699165246983407009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,7 +225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <HitLayers>k__BackingField:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 119
   _NetEquippedWeapon: 0
   _NetMagazine: 0
   _NetFireCount: 0
@@ -255,25 +256,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enableLogging: 0
---- !u!114 &8581854729729584098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072648177644592389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 378411a89480da345945c2f888327a2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stateAuthorityChangeErrorCorrectionDelta: 0.15
-  gravity: -20
-  jumpImpulse: 8
-  acceleration: 10
-  braking: 1000
-  maxSpeed: 100
-  rotationSpeed: 15
 --- !u!114 &7942052991263362750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,9 +298,29 @@ MonoBehaviour:
   - {fileID: 861037711003020237}
   - {fileID: 7699165246983407009}
   - {fileID: 7569205443486142500}
-  - {fileID: 8581854729729584098}
   - {fileID: 7942052991263362750}
+  - {fileID: 8581854729729584098}
+  - {fileID: 7666598989335036111}
   ForceRemoteRenderTimeframe: 0
+--- !u!114 &8581854729729584098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072648177644592389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 378411a89480da345945c2f888327a2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateAuthorityChangeErrorCorrectionDelta: 0.15
+  gravity: -20
+  jumpImpulse: 8
+  acceleration: 10
+  braking: 1000
+  maxSpeed: 100
+  rotationSpeed: 15
 --- !u!143 &-658295760547561401
 CharacterController:
   m_ObjectHideFlags: 0
@@ -468,7 +470,7 @@ GameObject:
   - component: {fileID: 8190228879593550958}
   - component: {fileID: 8192084059082422202}
   - component: {fileID: 7666598989335036111}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -522,6 +524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 952d5b4ffe494014b71e8c2c259269e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  netHealth: {fileID: -2531509198763203047}
   netEntity: {fileID: 4582882483414412412}
 --- !u!1 &8712658989513495689
 GameObject:

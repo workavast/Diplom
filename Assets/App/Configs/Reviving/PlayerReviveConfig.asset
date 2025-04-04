@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: PlayerReviveConfig
   m_EditorClassIdentifier: 
   <ReviveDistance>k__BackingField: 1
-  <ReviveTime>k__BackingField: 5
+  <ReviveTime>k__BackingField: 10
+  <BleedingTime>k__BackingField: 90

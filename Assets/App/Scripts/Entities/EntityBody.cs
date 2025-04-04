@@ -1,21 +1,22 @@
 using System;
 using App.Armor;
-using App.Damage;
+using App.Health;
 using Fusion;
 using UnityEngine;
 
 namespace App.Entities
 {
-    public class EntityProvider : MonoBehaviour, IEntity
+    public class EntityBody : NetworkBehaviour, IEntity
     {
+        [SerializeField] private NetHealth netHealth;
         [SerializeField] private NetEntity netEntity;
-
+        
         public bool IsActive => netEntity.IsActive;
         public EntityIdentifier Identifier => netEntity.Identifier;
         public EntityType EntityType => netEntity.EntityType;
         public GameObject GameObject => netEntity.GameObject;
-        public NetworkRunner Runner => netEntity.Runner;
-        public NetworkObject Object => netEntity.Object;
+        public new NetworkRunner Runner => netEntity.Runner;
+        public new NetworkObject Object => netEntity.Object;
         public float NetHealthPoints => netEntity.NetHealthPoints;
         public int NetArmorLevel => netEntity.NetArmorLevel;
         public event Action<IEntity> OnDeathEntity;
