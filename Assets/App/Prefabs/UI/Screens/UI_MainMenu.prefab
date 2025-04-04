@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.9764706}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -408,7 +408,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 200}
+  m_SizeDelta: {x: 670, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7369482046008379087
 GameObject:
@@ -550,7 +550,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Wait
+  m_text: Try To Connect
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -771,6 +771,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3333923939009713110, guid: a945e9519afc187409c9405044e14460, type: 3}
+      propertyPath: m_fontSize
+      value: 51.95
+      objectReference: {fileID: 0}
     - target: {fileID: 3665535832238534247, guid: a945e9519afc187409c9405044e14460, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -806,6 +810,10 @@ PrefabInstance:
     - target: {fileID: 4339966878429876373, guid: a945e9519afc187409c9405044e14460, type: 3}
       propertyPath: m_SortingOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4802662231724609111, guid: a945e9519afc187409c9405044e14460, type: 3}
+      propertyPath: m_fontSize
+      value: 51.95
       objectReference: {fileID: 0}
     - target: {fileID: 5717312150517642342, guid: a945e9519afc187409c9405044e14460, type: 3}
       propertyPath: m_AnchorMax.x
@@ -926,6 +934,10 @@ PrefabInstance:
     - target: {fileID: 7353140699421647072, guid: a945e9519afc187409c9405044e14460, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743858945355454993, guid: a945e9519afc187409c9405044e14460, type: 3}
+      propertyPath: m_fontSize
+      value: 51.95
       objectReference: {fileID: 0}
     - target: {fileID: 8694180150767836212, guid: a945e9519afc187409c9405044e14460, type: 3}
       propertyPath: m_AnchorMax.y
