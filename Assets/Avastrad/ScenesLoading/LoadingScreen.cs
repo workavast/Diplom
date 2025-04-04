@@ -10,13 +10,13 @@ namespace Avastrad.ScenesLoading
         [SerializeField] private float hideFadeTime = 1;
         [SerializeField] private float showFadeTime = 1;
         
-        public bool IsShow { get; private set; }
+        public bool IsVisible { get; private set; }
         
         public event Action OnPreShow;
         public event Action OnHided;
 
         public void Initialize() 
-            => IsShow = gameObject.activeSelf;
+            => IsVisible = gameObject.activeSelf;
 
         public void Show(bool instantly, Action onShowedCallback)
         {
@@ -40,14 +40,14 @@ namespace Avastrad.ScenesLoading
             StopAllCoroutines();
             canvasGroup.alpha = 1;
             gameObject.SetActive(true);
-            IsShow = true;
+            IsVisible = true;
             onShowedCallback?.Invoke();
         }
         
         private void ShowWithFade(Action onShowedCallback)
         {
             StopAllCoroutines();
-            IsShow = true;
+            IsVisible = true;
             gameObject.SetActive(true);
             StartCoroutine(ShowFade(onShowedCallback));
         }
@@ -55,7 +55,7 @@ namespace Avastrad.ScenesLoading
         private void HideInstantly()
         {
             StopAllCoroutines();
-            IsShow = false;
+            IsVisible = false;
             gameObject.SetActive(false);
             OnHided?.Invoke();
         }
@@ -63,6 +63,10 @@ namespace Avastrad.ScenesLoading
         private void HideWithFade()
         {
             StopAllCoroutines();
+            
+            if (!IsVisible)
+                return;
+
             StartCoroutine(HideFade());
         }
         
@@ -92,7 +96,7 @@ namespace Avastrad.ScenesLoading
                 timer += Time.unscaledDeltaTime;
             }
             
-            IsShow = false;
+            IsVisible = false;
             canvasGroup.alpha = 0;
             gameObject.SetActive(false);
             OnHided?.Invoke();

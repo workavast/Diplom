@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using App.ScenesLoading;
-using Avastrad.ScenesLoading;
+using App.NetworkRunning.Shutdowners;
 using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace App.NetworkRunning
@@ -13,19 +11,20 @@ namespace App.NetworkRunning
     [DisallowMultipleComponent]
     public class NetworkRunnerServerDisconnected : MonoBehaviour, INetworkRunnerCallbacks
     {
-        [Inject] private readonly ISceneLoader _sceneLoader;
+        [Inject] private readonly ShutdownerProvider _shutdownerProvider;
         
         public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
         {
-            if (SceneManager.GetActiveScene().buildIndex == ScenesConfig.MainMenuSceneIndex)
-            {
-                Debug.LogWarning("You are trying return in the menu when you already in the menu");
-                return;
-            }
-
-            _sceneLoader.LoadScene(ScenesConfig.MainMenuSceneIndex, true);
+            _shutdownerProvider.OnShutdown(runner, shutdownReason);
         }
 
+        public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)
+        {
+            // Shuts down the local NetworkRunner when the client is disconnected from the server.
+            GetComponent<NetworkRunner>().Shutdown();
+        }
+
+        #region UnUsed
         public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
         {
         }
@@ -52,12 +51,6 @@ namespace App.NetworkRunning
 
         public void OnConnectedToServer(NetworkRunner runner)
         {
-        }
-
-        public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)
-        {
-            // Shuts down the local NetworkRunner when the client is disconnected from the server.
-            GetComponent<NetworkRunner>().Shutdown();
         }
 
         public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
@@ -99,5 +92,6 @@ namespace App.NetworkRunning
         public void OnSceneLoadStart(NetworkRunner runner)
         {
         }
+        #endregion
     }
 }

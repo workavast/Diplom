@@ -314,6 +314,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 837bf8027c3b5f945ba2d6892e86fddd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &5390647566085210667
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8582973051563719165}
+  - component: {fileID: 4512959907586808005}
+  m_Layer: 0
+  m_Name: ShutdownProvider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8582973051563719165
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5390647566085210667}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4878349267077142881}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4512959907586808005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5390647566085210667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9f972a533f342f1986e3efba6b854a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5688987465828161489
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,6 +442,7 @@ Transform:
   - {fileID: 1924430771809972208}
   - {fileID: 8898976541843835045}
   - {fileID: 157061133161545809}
+  - {fileID: 8582973051563719165}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7415664030999650130
@@ -424,6 +469,7 @@ MonoBehaviour:
   - {fileID: 3974122930644588416}
   - {fileID: 2023672719738286432}
   - {fileID: 5071786305908680124}
+  - {fileID: 4512959907586808005}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 1
   _editorReflectionBakingCoverageMode: 0

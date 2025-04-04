@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using App.NetworkRunning;
-using App.ScenesLoading;
 using App.UI;
 using Avastrad.ScenesLoading;
 using Fusion;
@@ -12,7 +11,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using WebSocketSharp;
 
-namespace App.Session
+namespace App.Session.Creation
 {
     public class SessionCreator
     {

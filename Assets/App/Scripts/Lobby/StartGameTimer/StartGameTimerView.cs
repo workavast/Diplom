@@ -6,26 +6,19 @@ namespace App.Lobby.StartGameTimer
 {
     public class StartGameTimerView : MonoBehaviour
     {
+        [SerializeField] private string unActiveValue = "--:--";
         [SerializeField] private TMP_Text textField;
         
         [Inject] private IReadOnlyGameStartTimer _netStartGameTimer;
 
-        private void Awake()
-        {
-            _netStartGameTimer.OnActivityChanged += ChangeState;
-            ChangeState(_netStartGameTimer.IsActive);
-        }
-
         private void LateUpdate()
         {
-            textField.text = GetTimeString();
+            if (_netStartGameTimer.IsActive)
+                textField.text = GetTimeString();
+            else
+                textField.text = unActiveValue;
         }
 
-        private void ChangeState(bool isActive)
-        {
-            gameObject.SetActive(isActive);
-        }
-        
         private string GetTimeString()
         {
             var time = _netStartGameTimer.GetTimeSpan();

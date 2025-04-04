@@ -1,6 +1,6 @@
 using Zenject;
 
-namespace App.SessionVisibility
+namespace App.Session.Visibility
 {
     public class SessionVisibilityInstaller : MonoInstaller
     {

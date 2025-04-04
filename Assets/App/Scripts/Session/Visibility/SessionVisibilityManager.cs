@@ -3,7 +3,7 @@ using App.NetworkRunning;
 using UnityEngine;
 using Zenject;
 
-namespace App.SessionVisibility
+namespace App.Session.Visibility
 {
     public class SessionVisibilityManager
     {

@@ -4,7 +4,7 @@ namespace Avastrad.ScenesLoading
 {
     public interface ILoadingScreen
     {
-        public bool IsShow { get; }
+        public bool IsVisible { get; }
 
         public event Action OnHided;
         

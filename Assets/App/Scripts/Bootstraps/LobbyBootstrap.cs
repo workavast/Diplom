@@ -2,8 +2,11 @@ using App.Lobby;
 using App.Lobby.SelectedMission;
 using App.Lobby.StartGameTimer;
 using App.NetworkRunning;
+using App.NetworkRunning.Shutdowners;
+using App.NetworkRunning.Shutdowners.LocalShutdowners;
 using App.Session;
-using App.SessionVisibility;
+using App.Session.Creation;
+using App.Session.Visibility;
 using Avastrad.ScenesLoading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,7 +22,8 @@ namespace App.Bootstraps
         [Inject] private readonly IReadOnlyGameStartTimer _gameStartTimer;
         [Inject] private readonly ISelectedMissionProvider _selectedMissionProvider;
         [Inject] private readonly SessionVisibilityManager _sessionVisibilityManager;
-        
+        [Inject] private readonly ShutdownerProvider _shutdownerProvider;
+  
         private GameStarter _gameStarter;
         
         private async void Start()
@@ -27,6 +31,7 @@ namespace App.Bootstraps
             if (!_runnerProvider.TryGetNetworkRunner(out _))
                 await _sessionCreator.CreateSinglePlayer(SceneManager.GetActiveScene().buildIndex);
 
+            _shutdownerProvider.SetLocalShutdownProvider(new LobbyShutdowner(_sceneLoader));
             _sessionVisibilityManager.SetHardVisibility(true);
             
             _sceneLoader.HideLoadScreen(true);

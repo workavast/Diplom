@@ -1,6 +1,9 @@
 using App.NetworkRunning;
+using App.NetworkRunning.Shutdowners;
+using App.NetworkRunning.Shutdowners.LocalShutdowners;
 using App.Session;
-using App.SessionVisibility;
+using App.Session.Creation;
+using App.Session.Visibility;
 using Avastrad.ScenesLoading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,12 +19,14 @@ namespace App.Coop
         [Inject] private readonly NetworkRunnerProvider _runnerProvider;
         [Inject] private readonly SessionCreator _sessionCreator;
         [Inject] private readonly SessionVisibilityManager _sessionVisibilityManager;
+        [Inject] private readonly ShutdownerProvider _shutdownerProvider;
 
         private async void Start()
         {
             if (!_runnerProvider.TryGetNetworkRunner(out _))
                 await _sessionCreator.CreateSinglePlayer(SceneManager.GetActiveScene().buildIndex);
 
+            _shutdownerProvider.SetLocalShutdownProvider(new DefaultShutdowner(_sceneLoader));
             _sessionVisibilityManager.SetHardVisibility(false);
             
             if (netPlayersReady.AllPlayersIsReady)

@@ -2,7 +2,7 @@ using App.UI;
 using UnityEngine;
 using Zenject;
 
-namespace App.Session
+namespace App.Session.Creation
 {
     public class SessionCreatorInstaller : MonoInstaller
     {

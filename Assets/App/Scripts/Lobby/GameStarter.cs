@@ -1,7 +1,7 @@
 using System;
 using App.Lobby.SelectedMission;
 using App.Lobby.StartGameTimer;
-using App.SessionVisibility;
+using App.Session.Visibility;
 using Avastrad.ScenesLoading;
 
 namespace App.Lobby
