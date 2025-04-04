@@ -1,8 +1,8 @@
 using System;
 using App.NetworkRunning;
-using App.SessionVisibility;
 using Avastrad.ScenesLoading;
 using Fusion;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace App.ScenesLoading
@@ -44,11 +44,11 @@ namespace App.ScenesLoading
 
             if (forceLoading)
             {
-                var netRunner = _networkRunnerProvider.GetNetworkRunner();
-                if (netRunner.IsRunning && !netRunner.IsShutdown)
+                if (_networkRunnerProvider.TryGetNetworkRunner(out var netRunner) && netRunner.IsRunning &&
+                    !netRunner.IsShutdown)
                     netRunner.LoadScene(SceneRef.FromIndex(_targetSceneIndex));
                 else
-                    SceneManager.LoadSceneAsync(_loadingSceneIndex);
+                    SceneManager.LoadScene(_targetSceneIndex);
             }
             else
             {
