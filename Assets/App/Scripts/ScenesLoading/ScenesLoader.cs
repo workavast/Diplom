@@ -38,14 +38,22 @@ namespace App.ScenesLoading
         /// <param name="forceLoading"> skip loading scene </param>
         public void LoadScene(int index, bool showLoadScreenInstantly = false, bool forceLoading = false)
         {
+            var hasNetRunner = false;
+            if (_networkRunnerProvider.TryGetNetworkRunner(out var netRunner) &&
+                netRunner.IsRunning && !netRunner.IsShutdown)
+            {
+                if (!netRunner.IsServer)
+                    throw new Exception("You try load scene when you are not a server");
+                hasNetRunner = true;
+            }
+            
             _targetSceneIndex = index;
             
             OnLoadingStarted?.Invoke();
-
+            
             if (forceLoading)
             {
-                if (_networkRunnerProvider.TryGetNetworkRunner(out var netRunner) && netRunner.IsRunning &&
-                    !netRunner.IsShutdown)
+                if (hasNetRunner)
                     netRunner.LoadScene(SceneRef.FromIndex(_targetSceneIndex));
                 else
                     SceneManager.LoadScene(_targetSceneIndex);
@@ -55,8 +63,7 @@ namespace App.ScenesLoading
                 _loadingScreen.Show(showLoadScreenInstantly, 
                     () =>
                     {
-                        var netRunner = _networkRunnerProvider.GetNetworkRunner();
-                        if (netRunner.IsRunning && !netRunner.IsShutdown)
+                        if (hasNetRunner)
                             netRunner.LoadScene(SceneRef.FromIndex(_loadingSceneIndex));
                         else
                             SceneManager.LoadSceneAsync(_loadingSceneIndex);
