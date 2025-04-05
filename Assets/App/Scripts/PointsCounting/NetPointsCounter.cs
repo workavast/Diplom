@@ -27,9 +27,9 @@ namespace App.PointsCounting
                 _gameplaySessionDataRepository.GetData(playerRef).ChangePoints(1);
         }
 
-        public void OnEvent(OnKill t)
+        public void OnEvent(OnKill e)
         {
-            if (_entitiesRepository.TryGetPlayer(t.Killer, out var player)) 
+            if (_entitiesRepository.TryGetPlayer(e.Killer, out var player)) 
                 AddPoints(player.PlayerRef);
         }
     }

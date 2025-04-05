@@ -43,6 +43,7 @@ namespace App.Entities
 
         private ArmorConfig _armor;
 
+        public event Action OnKnockout;
         public event Action OnDeath;
         public event Action<IEntity> OnDeathEntity;
         public event Action OnWeaponShot; 
@@ -50,7 +51,8 @@ namespace App.Entities
         protected virtual void Awake()
         {
             NetWeapon = GetComponent<NetWeapon>();
-            
+
+            health.OnKnockout += () => OnKnockout?.Invoke();
             health.OnDeath += () => OnDeath?.Invoke();
             health.OnDeathEntity += (_) => OnDeathEntity?.Invoke(this);
         }

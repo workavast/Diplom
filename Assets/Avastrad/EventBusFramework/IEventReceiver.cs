@@ -5,6 +5,6 @@
     {
         public EventBusReceiverIdentifier EventBusReceiverIdentifier { get; }
         
-        public void OnEvent(T t);
+        public void OnEvent(T e);
     }
 }

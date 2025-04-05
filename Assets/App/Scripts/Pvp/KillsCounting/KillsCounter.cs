@@ -33,9 +33,9 @@ namespace App.Pvp.KillsCounting
                 _gameplaySessionDataRepository.GetData(playerRef).ChangeKills(1);
         }
 
-        public void OnEvent(OnKill t)
+        public void OnEvent(OnKill e)
         {
-            if (_entitiesRepository.TryGetPlayer(t.Killer, out var player)) 
+            if (_entitiesRepository.TryGetPlayer(e.Killer, out var player)) 
                 AddKills(player.PlayerRef);
         }
 

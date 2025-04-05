@@ -35,6 +35,7 @@ namespace App.Health
 
         private IEntity _lastDamager;
         
+        public event Action OnKnockout;
         public event Action OnDeath;
         public event Action<IEntity> OnDeathEntity;
         
@@ -43,8 +44,11 @@ namespace App.Health
             _alive = new Alive(this);
             _knockout = new Knockout(this, config);
             _dead = new Dead(this);
+
+            _knockout.OnActivate += () => OnKnockout?.Invoke();
             
             _fsm = new HealthStateMachine("Health", _alive, _knockout, _dead);
+            
             stateMachines.Add(_fsm);
         }
 

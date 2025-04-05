@@ -36,6 +36,8 @@ namespace Avastrad.UI.UiSystem
                     return GetScreen<GameplayScreen>();
                 case ScreenType.GameplayMenu:
                     return GetScreen<GameplayMenuScreen>();
+                case ScreenType.EndGame:
+                    return GetScreen<EndGameScreen>();
                 case ScreenType.MainMenu:
                     return GetScreen<MainMenuScreen>();
                 case ScreenType.Lobby:

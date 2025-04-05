@@ -1,4 +1,5 @@
 using App.Armor;
+using App.EventBus;
 using App.Players.Nicknames;
 using Avastrad.EventBusFramework;
 using Fusion;
@@ -25,8 +26,11 @@ namespace App.Entities.Player
             _nicknamesProvider = nicknamesProvider;
             EventBus = eventBus;
             ArmorsConfig = armorsConfig;
+            
+            OnKnockout += () => EventBus.Invoke(new OnPlayerKnockout());
+            OnDeath += () => EventBus.Invoke(new OnPlayerDeath());
         }
-
+        
         public override void Spawned()
         {
             base.Spawned();

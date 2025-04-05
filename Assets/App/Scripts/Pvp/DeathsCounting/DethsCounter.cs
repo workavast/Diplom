@@ -32,9 +32,9 @@ namespace App.Pvp.DeathsCounting
                 _gameplaySessionDataRepository.GetData(playerRef).ChangeDeaths(1);
         }
 
-        public void OnEvent(OnKill t)
+        public void OnEvent(OnKill e)
         {
-            if (_entitiesRepository.TryGetPlayer(t.Killed, out var player)) 
+            if (_entitiesRepository.TryGetPlayer(e.Killed, out var player)) 
                 AddDeaths(player.PlayerRef);
         }
 

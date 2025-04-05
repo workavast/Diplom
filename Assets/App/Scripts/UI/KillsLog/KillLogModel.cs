@@ -29,9 +29,9 @@ namespace App.UI.KillsLog
             _eventBus.UnSubscribe(this);
         }
 
-        public void OnEvent(OnKill t)
+        public void OnEvent(OnKill e)
         {
-            if (_entitiesRepository.TryGet(t.Killer, out var killer) && _entitiesRepository.TryGet(t.Killed, out var killed))
+            if (_entitiesRepository.TryGet(e.Killer, out var killer) && _entitiesRepository.TryGet(e.Killed, out var killed))
                 Rpc_OnKill(killer.GetName(), killed.GetName());
         }
 
