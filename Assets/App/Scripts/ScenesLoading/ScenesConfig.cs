@@ -10,7 +10,8 @@ namespace App.ScenesLoading
         public const int GameplaySceneIndex = 3;
         public const int LobbySceneIndex = 4;
         public const int CoopSceneIndex = 5;
-        
+        public const int TrainSceneIndex = 6;
+
         public static readonly Dictionary<int, string> SceneNamesByIndexes = new()
         {
             { BootstrapSceneIndex, "BootstrapScene" },
@@ -18,7 +19,8 @@ namespace App.ScenesLoading
             { MainMenuSceneIndex, "MainMenuScene" },
             { GameplaySceneIndex, "GameplayScene" },
             { LobbySceneIndex, "Lobby" },
-            { CoopSceneIndex, "Coop" }
+            { CoopSceneIndex, "Coop" },
+            { TrainSceneIndex, "Train" }
         };
 
         public static string NameByIndex(int sceneIndex)
@@ -40,6 +42,7 @@ namespace App.ScenesLoading
         MainMenuScene = ScenesConfig.MainMenuSceneIndex,
         GameplayScene = ScenesConfig.GameplaySceneIndex,
         Lobby = ScenesConfig.LobbySceneIndex,
-        Coop = ScenesConfig.CoopSceneIndex
+        Coop = ScenesConfig.CoopSceneIndex,
+        Train = ScenesConfig.TrainSceneIndex
     }
 }

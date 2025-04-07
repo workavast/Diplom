@@ -1,5 +1,4 @@
 using App.ScenesLoading;
-using App.Session;
 using App.Session.Creation;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +9,8 @@ namespace App.UI.SessionCreation
     [RequireComponent(typeof(Button))]
     public class SinglePlayerSessionButton : MonoBehaviour
     {
+        [SerializeField] private SceneType scene;
+        
         [Inject] private SessionCreator _sessionCreator;
         
         private void Awake()
@@ -18,6 +19,6 @@ namespace App.UI.SessionCreation
         }
 
         private void StartSinglePlayerSession() 
-            => _sessionCreator.CreateSinglePlayer(ScenesConfig.LobbySceneIndex);
+            => _sessionCreator.CreateSinglePlayer(scene.GetIndex());
     }
 }
