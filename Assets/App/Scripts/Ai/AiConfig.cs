@@ -10,12 +10,18 @@ namespace App.Ai
         [field: SerializeField, Min(0)] public float ViewRadius { get; private set; } = 5f;
         
         [field: Header("Combat")]
-        [field: SerializeField] public float PositionChangeInterval { get; private set; } = 5f;
-        [field: SerializeField] public float PositionChangeDistance { get; private set; } = 3f;
+        [field: SerializeField] public float PositionChangeIntervalMin { get; private set; } = 5f;
+        [field: SerializeField] public float PositionChangeIntervalMax { get; private set; } = 5f;
+        [field: SerializeField] public float PositionChangeMinDistance { get; private set; } = 3f;
+        [field: SerializeField] public float PositionChangeMaxDistance { get; private set; } = 3f;
+        [field: SerializeField] public float ChangePositionTolerance { get; private set; } = 0.01f;
 
         [field: Header("Behavior")]
-        [field: SerializeField] public float ChaseDuration { get; private set; } = 10f;
-        [field: SerializeField] public float WaitDuration { get; private set; } = 5f;
         [field: SerializeField] public float AttackDistance { get; private set; } = 15f;
+        [field: SerializeField] public float ChaseMinDuration { get; private set; } = 5f;
+        [field: SerializeField] public float ChaseMaxDuration { get; private set; } = 5f;
+        [field: SerializeField] public float WaitMinDuration { get; private set; } = 5f;
+        [field: SerializeField] public float WaitMaxDuration { get; private set; } = 5f;
+
     }
 }

@@ -6,7 +6,7 @@ namespace App.Ai.FSM
     public class WaitState : AiState
     {
         private float _startWaitTime;
-        private Vector3 _waitPosition;
+        private float _targetWaitTime;
 
         public WaitState(NetAi netAi, NetEntity netEntity, AiModel aiModel, AiViewZone aiViewZone)
             : base(netAi, netEntity, aiModel, aiViewZone) { }
@@ -14,20 +14,24 @@ namespace App.Ai.FSM
         protected override void OnEnterState()
         {
             _startWaitTime = Runner.SimulationTime;
-            _waitPosition = NetEntity.transform.position;
+            _targetWaitTime = Random.Range(Config.WaitMinDuration, Config.WaitMaxDuration);
         }
 
         protected override void OnFixedUpdate()
         {
             Stay();
 
-            // Проверка таймера ожидания
-            if (Runner.SimulationTime - _startWaitTime > AiConfig.WaitDuration) 
-                TryActivateState<ChaseState>();
-
-            // Если игрок появился - переходим в бой
-            if (AiViewZone.IsSeeAnyPlayer()) 
+            if (AiViewZone.IsSeeAnyPlayer())
+            {
                 TryActivateState<CombatState>();
+                return;
+            }
+            
+            if (Runner.SimulationTime - _startWaitTime >= _targetWaitTime)
+            {
+                TryActivateState<ChaseState>();
+                return;
+            }
         }
 
         private void Stay() 

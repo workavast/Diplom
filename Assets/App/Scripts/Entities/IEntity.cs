@@ -37,13 +37,6 @@ namespace App.Entities
             return source.Identifier.Id == other.Identifier.Id;
         }
         
-        // public static bool IsAlive(this IEntity source)
-        // {
-        //     
-        //     return source.IsActive && source.NetHealthPoints > 0;
-        // }
-
-        // public static bool IsDead(this IEntity source) => !IsAlive(source);
         public static bool IsDead(this IEntity source) => !source.IsAlive();
     }
 }

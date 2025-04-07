@@ -18,7 +18,7 @@ namespace App.Ai.FSM
         }
 
         protected PlayerRef Owner => NetAi.Object.InputAuthority;
-        protected AiConfig AiConfig => NetAi.AiConfig;
+        protected AiConfig Config => NetAi.AiConfig;
         protected NetworkRunner Runner => NetAi.Runner;
         
         protected AiState(NetAi netAi, NetEntity netEntity, AiModel aiModel, AiViewZone aiViewZone)

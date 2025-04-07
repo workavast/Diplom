@@ -5,8 +5,9 @@ namespace App.Ai.FSM
 {
     public class CombatState : AiState
     {
-        private float _lastPositionChangeTime;
-        private Vector3 _currentCombatPosition;
+        private float _startStaySimulationTime;
+        private float _targetChangePositionTime;
+        private Vector3 _targetCombatPosition;
 
         public CombatState(NetAi netAi, NetEntity netEntity, AiModel aiModel, AiViewZone aiViewZone)
             : base(netAi, netEntity, aiModel, aiViewZone) { }
@@ -16,8 +17,8 @@ namespace App.Ai.FSM
         protected override void OnEnterState()
         {
             Target = AiViewZone.GetNearestVisiblePlayer();
-            _currentCombatPosition = NetEntity.transform.position;
-            _lastPositionChangeTime = Runner.SimulationTime;
+            _targetCombatPosition = NetEntity.transform.position;
+            SetChangePositionInterval();
         }
 
         protected override void OnExitState()
@@ -33,24 +34,24 @@ namespace App.Ai.FSM
                 return;
             }
 
-            if (LostTarget()) 
+            if (LostTarget())
+            {
                 TryActivateState<WaitState>();
-
-            // if(!AiViewZone.EntityIsVisible(Target))
-            // {
-            //     var newTarget = AiViewZone.GetNearestVisiblePlayer();
-            //     if (newTarget == null)
-            //     {
-            //         NetAi.TryActivateState<WaitState>();
-            //         return;
-            //     }
-            //
-            //     Target = newTarget;
-            // }
+                return;
+            }
 
             LookAtTarget();
+
+            CheckChangePositionTimer();
+            if (!ArriveTargetPosition()) 
+                MoveToTargetPosition();
+            else
+            {
+                _targetCombatPosition = NetEntity.transform.position;
+                NetEntity.CalculateVelocity(0, 0, false);
+            }
+
             NetEntity.TryShoot();
-            HandlePositionChange();
         }
 
         private bool LostTarget()
@@ -73,18 +74,31 @@ namespace App.Ai.FSM
             NetEntity.RotateByLookDirection(new Vector2(lookDirection.x, lookDirection.z));
         }
         
-        private void HandlePositionChange()
+        private void MoveToTargetPosition()
         {
-            if (Runner.SimulationTime - _lastPositionChangeTime > AiConfig.PositionChangeInterval)
+            var direction = (_targetCombatPosition - NetEntity.transform.position).normalized;
+            NetEntity.CalculateVelocity(direction.x, direction.z, false);
+        }
+
+        private void CheckChangePositionTimer()
+        {
+            if (Runner.SimulationTime - _startStaySimulationTime > _targetChangePositionTime)
             {
                 var moveDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
 
-                _currentCombatPosition += moveDirection * AiConfig.PositionChangeDistance;
-                _lastPositionChangeTime = Runner.SimulationTime;
+                var changeDistance = Random.Range(Config.PositionChangeMinDistance, Config.PositionChangeMaxDistance);
+                _targetCombatPosition += moveDirection * changeDistance;
+                SetChangePositionInterval();
             }
+        }
 
-            var direction = (_currentCombatPosition - NetEntity.transform.position).normalized;
-            NetEntity.CalculateVelocity(direction.x, direction.z, false);
+        private bool ArriveTargetPosition() 
+            => Vector3.Distance(NetEntity.transform.position, _targetCombatPosition) <= Config.ChangePositionTolerance;
+
+        private void SetChangePositionInterval()
+        {
+            _startStaySimulationTime = Runner.SimulationTime;
+            _targetChangePositionTime = Random.Range(Config.PositionChangeIntervalMin, Config.PositionChangeIntervalMax);
         }
     }
 }

@@ -13,8 +13,11 @@ namespace App.Ai.FSM
             NetEntity.RotateByLookDirection(NetEntity.transform.forward.XZ());
             NetEntity.CalculateVelocity(0, 0, false);
 
-            if (AiViewZone.IsSeeAnyPlayer()) 
+            if (AiViewZone.IsSeeAnyPlayer())
+            {
                 TryActivateState<CombatState>();
+                return;
+            }
         }
     }
 }
