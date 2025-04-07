@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ExtractionZoneConfig
   m_EditorClassIdentifier: 
   <ExtractionRadius>k__BackingField: 3
-  <ExtractionTime>k__BackingField: 5
+  <ExtractionTime>k__BackingField: 30
