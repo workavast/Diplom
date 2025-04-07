@@ -14,6 +14,7 @@ namespace App.NewDirectory1
         [Inject] private readonly IEventBus _eventBus;
         
         public EventBusReceiverIdentifier EventBusReceiverIdentifier { get; } = new();
+        public bool AllPlayersUnAlive { get; private set; }
 
         private void Awake()
         {
@@ -28,7 +29,8 @@ namespace App.NewDirectory1
             foreach (var playerEntity in playerEntities)
                 if (playerEntity.IsAlive())
                     return;
-            
+
+            AllPlayersUnAlive = true;
             netGameState.SetGameState(false);
         }
         
@@ -39,7 +41,8 @@ namespace App.NewDirectory1
             foreach (var playerEntity in playerEntities)
                 if (playerEntity.IsAlive())
                     return;
-            
+
+            AllPlayersUnAlive = true;
             netGameState.SetGameState(false);
         }
     }
