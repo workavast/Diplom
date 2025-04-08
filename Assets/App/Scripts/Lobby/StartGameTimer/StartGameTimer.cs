@@ -7,7 +7,7 @@ using Zenject;
 
 namespace App.Lobby.StartGameTimer
 {
-    public class NetStartGameTimer : MonoBehaviour
+    public class StartGameTimer : MonoBehaviour
     {
         [SerializeField] private NetStartGameTimerModel netModel;
 
