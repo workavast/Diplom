@@ -56,7 +56,7 @@ namespace App.Coop
         {
             var weaponId = _coopSessionDataRepository.GetData(playerRef).SelectedWeapon;
             var armorLevel = _coopSessionDataRepository.GetData(playerRef).EquippedArmorLevel;
-            playerSpawner.Spawn(playerRef, playerSpawnPointsProvider.GetRandomFreeSpawnPoint(), armorLevel, weaponId);
+            playerSpawner.Spawn(playerRef, playerSpawnPointsProvider.SpawnPoints[playerRef.PlayerId - 1], armorLevel, weaponId);
         }
     }
 }

@@ -19,8 +19,8 @@ MonoBehaviour:
   <AttackDistance>k__BackingField: 15
   <MoveTolerance>k__BackingField: 0.05
   <CombatConfig>k__BackingField:
-    <StayMinDuration>k__BackingField: 1
-    <StayMaxDuration>k__BackingField: 3
+    <StayMinDuration>k__BackingField: 0.5
+    <StayMaxDuration>k__BackingField: 2
     <WaitMinDuration>k__BackingField: 1
     <WaitMaxDuration>k__BackingField: 2
     <MoveMinDistance>k__BackingField: 1.5
@@ -39,13 +39,3 @@ MonoBehaviour:
     <StayMaxDuration>k__BackingField: 3
     <MoveMinDistance>k__BackingField: 1.5
     <MoveMaxDistance>k__BackingField: 3
-  <StayMinDuration>k__BackingField: 1
-  <StayMaxDuration>k__BackingField: 3
-  <WaitMinDuration>k__BackingField: 1
-  <WaitMaxDuration>k__BackingField: 2
-  <MoveMinDistance>k__BackingField: 1.5
-  <MoveMaxDistance>k__BackingField: 3
-  <PauseMinDuration>k__BackingField: 0.4
-  <PauseMaxDuration>k__BackingField: 1.2
-  <ShotsMinCount>k__BackingField: 2
-  <ShotsMaxCount>k__BackingField: 5

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace App.Entities.Enemy
 {
-    public class EnemySpawner : NetworkBehaviour
+    public class NetEnemySpawner : NetworkBehaviour
     {
         [SerializeField] private NetEnemy netEnemyPrefab;
 

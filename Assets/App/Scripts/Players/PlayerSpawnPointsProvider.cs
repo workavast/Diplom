@@ -9,6 +9,8 @@ namespace App.Players
         [SerializeField] private LayerMask playerLayers;
         [SerializeField] private List<Transform> spawnPoints;
 
+        public IReadOnlyList<Transform> SpawnPoints => spawnPoints;
+        
         public Transform GetRandomFreeSpawnPoint()
         {
             if (spawnPoints.Count == 0)
