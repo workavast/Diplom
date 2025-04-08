@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6bd78f778a84ac8af6c66824d91f530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <AiConfig>k__BackingField: {fileID: 11400000, guid: 7f4deb217ee8cfa44b51a1eb3112f01b, type: 2}
+  aiConfig: {fileID: 11400000, guid: 7f4deb217ee8cfa44b51a1eb3112f01b, type: 2}
   netEntity: {fileID: 4582882483414412412}
   aiViewZone: {fileID: 7766818169016111262}
 --- !u!114 &4582882483414412412

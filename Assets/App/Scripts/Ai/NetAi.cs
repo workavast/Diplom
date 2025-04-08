@@ -12,13 +12,13 @@ namespace App.Ai
     [RequireComponent(typeof(StateMachineController))]
     public class NetAi : NetworkBehaviour, IStateMachineOwner, IEventReceiver<OnGameStateChanged>
     {
-        [field: SerializeField] public AiConfig AiConfig { get; private set; }
+        [SerializeField] private AiConfig aiConfig;
         [SerializeField] private NetEntity netEntity;
         [SerializeField] private AiViewZone aiViewZone;
      
         public EventBusReceiverIdentifier EventBusReceiverIdentifier { get; } = new();
         
-        private readonly AiModel _aiModel = new();
+        private AiModel _aiModel;
         
         private StateMachine<AiState> _fsm;
         private Idle _idle;
@@ -26,8 +26,13 @@ namespace App.Ai
         private HoldPositionState _holdPosition;
         private CombatState _combat;
         private Stop _stop;
-        
-         public void CollectStateMachines(List<IStateMachine> stateMachines)
+
+        private void Awake()
+        {
+            _aiModel = new AiModel(aiConfig);
+        }
+
+        public void CollectStateMachines(List<IStateMachine> stateMachines)
         {
             _idle = new Idle(this, netEntity, _aiModel, aiViewZone);
             _chase = new ChaseState(this, netEntity, _aiModel, aiViewZone);
