@@ -68,10 +68,11 @@ namespace App.Ai.FSMs.Ai
             {
                 _lostTargetSimulationTime = 0;
                 _lostTargetTime = 0;
+                
+                AiModel.LastTargetPosition = Target.Transform.position;
             }
 
-            AiModel.LastTargetPosition = Target.Transform.position;
-            LookAtTarget();
+            LookAt(AiModel.LastTargetPosition);
         }
 
         private bool LostTarget()
@@ -88,9 +89,9 @@ namespace App.Ai.FSMs.Ai
             return false;
         }
 
-        private void LookAtTarget()
+        private void LookAt(Vector3 point)
         {
-            var lookDirection = (Target.Transform.position - NetEntity.transform.position).normalized;
+            var lookDirection = (point - NetEntity.transform.position).normalized;
             NetEntity.RotateByLookDirection(lookDirection.XZ());
         }
     }

@@ -17,7 +17,6 @@ namespace App.Ai.FSMs.Ai
             set => AiModel.Target = value;
         }
 
-        protected PlayerRef Owner => NetAi.Object.InputAuthority;
         protected AiConfig Config => AiModel.Config;
         protected NetworkRunner Runner => NetAi.Runner;
         
