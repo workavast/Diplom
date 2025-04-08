@@ -66,7 +66,7 @@ namespace Fusion.Addons.FSM
 		protected virtual void WriteNetworkData(int* ptr) {}
 
 		protected bool TryActivateState<T>(bool allowReset = false) where T : IState 
-			=> Machine.TryActivateState<T>();
+			=> Machine.TryActivateState<T>(allowReset);
 		
 		// IState INTERFACE
 
