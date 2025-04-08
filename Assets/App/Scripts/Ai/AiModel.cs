@@ -1,3 +1,4 @@
+using App.Ai.Config;
 using App.Entities;
 using UnityEngine;
 

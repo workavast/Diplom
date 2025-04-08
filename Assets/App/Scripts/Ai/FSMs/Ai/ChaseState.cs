@@ -1,3 +1,4 @@
+using App.Ai.Config;
 using App.Entities;
 using Avastrad.Vector2Extension;
 using UnityEngine;
@@ -6,6 +7,8 @@ namespace App.Ai.FSMs.Ai
 {
     public class ChaseState : AiState
     {
+        private ChaseConfig Config => AiConfig.ChaseConfig;
+        
         private float _startChaseSimulationTime;
         private float _targetChaseDuration;
 

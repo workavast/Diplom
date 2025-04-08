@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using App.Ai.Config;
 using App.Ai.FSMs.Movement;
 using App.Ai.FSMs.Weapon;
 using App.Entities;
@@ -10,6 +11,8 @@ namespace App.Ai.FSMs.Ai
 {
     public class CombatState : AiState
     {
+        private CombatConfig Config => AiConfig.CombatConfig;
+        
         private float _lostTargetSimulationTime;
         private float _lostTargetTime;
 
@@ -23,7 +26,7 @@ namespace App.Ai.FSMs.Ai
         {
             var stay = new Stay(NetEntity, Config.StayMinDuration, Config.StayMaxDuration);
             var randomMove = new RandomMove(NetEntity, Config.MoveMinDistance, Config.MoveMaxDistance,
-                Config.MoveTolerance);
+                AiConfig.MoveTolerance);
             _movementFsm = new StateMachine<MovementState>("Combat-Movement", stay, randomMove);
             stateMachines.Add(_movementFsm);
 

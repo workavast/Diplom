@@ -1,3 +1,4 @@
+using App.Ai.Config;
 using App.Entities;
 using Fusion;
 using Fusion.Addons.FSM;
@@ -17,7 +18,7 @@ namespace App.Ai.FSMs.Ai
             set => AiModel.Target = value;
         }
 
-        protected AiConfig Config => AiModel.Config;
+        protected AiConfig AiConfig => AiModel.Config;
         protected NetworkRunner Runner => NetAi.Runner;
         
         protected AiState(NetAi netAi, NetEntity netEntity, AiModel aiModel, AiViewZone aiViewZone)
