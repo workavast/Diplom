@@ -68,6 +68,9 @@ namespace Fusion.Addons.FSM
 		protected bool TryActivateState<T>(bool allowReset = false) where T : IState 
 			=> Machine.TryActivateState<T>(allowReset);
 		
+		protected bool ForceActivateState<T>(bool allowReset = false) where T : IState 
+			=> Machine.ForceActivateState<T>(allowReset);
+		
 		// IState INTERFACE
 
 		string IState.Name => string.IsNullOrEmpty(Name) == false ? Name : GetType().Name;

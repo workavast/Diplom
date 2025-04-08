@@ -1,5 +1,6 @@
 using App.Entities;
 using App.Entities.Player;
+using Avastrad.CheckOnNullLibrary;
 using Avastrad.Vector2Extension;
 using Fusion;
 using UnityEngine;
@@ -48,13 +49,15 @@ namespace App.Ai
 
         public bool EntityIsVisible(IEntity entity)
         {
+            if (entity.IsAnyNull())
+                return false;
+
             if (entity.IsDead())
                 return false;
 
             var viewDistance = Vector3.Distance(entity.Transform.position, ViewPosition);
             if (viewDistance > Radius) 
                 return false;
-            
             
             const HitOptions hitOptions = HitOptions.IncludePhysX;
             const QueryTriggerInteraction triggerInteraction = QueryTriggerInteraction.Ignore;
