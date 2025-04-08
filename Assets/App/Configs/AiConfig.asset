@@ -18,8 +18,8 @@ MonoBehaviour:
   <ViewRadius>k__BackingField: 5
   <StayMinDuration>k__BackingField: 1
   <StayMaxDuration>k__BackingField: 3
-  <WaitMinDuration>k__BackingField: 2
-  <WaitMaxDuration>k__BackingField: 4
+  <WaitMinDuration>k__BackingField: 1
+  <WaitMaxDuration>k__BackingField: 2
   <MoveMinDistance>k__BackingField: 1.5
   <MoveMaxDistance>k__BackingField: 3
   <MoveTolerance>k__BackingField: 0.05
