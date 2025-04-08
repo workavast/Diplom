@@ -24,13 +24,13 @@ namespace App.Ai.FSMs.Ai
             var stay = new Stay(NetEntity, Config.StayMinDuration, Config.StayMaxDuration);
             var randomMove = new RandomMove(NetEntity, Config.MoveMinDistance, Config.MoveMaxDistance,
                 Config.MoveTolerance);
-            _movementFsm = new StateMachine<MovementState>("Ai-Movement", stay, randomMove);
+            _movementFsm = new StateMachine<MovementState>("Combat-Movement", stay, randomMove);
             stateMachines.Add(_movementFsm);
 
             var pause = new Pause(NetEntity, Config.PauseMinDuration, Config.PauseMaxDuration, AiViewZone, AiModel);
             var reload = new Reload(NetEntity);
             var shooting = new Shooting(NetEntity, Config.ShotsMinCount, Config.ShotsMaxCount);
-            _weaponFsm = new StateMachine<WeaponState>("Ai-Weapon", pause, reload, shooting);
+            _weaponFsm = new StateMachine<WeaponState>("Combat-Weapon", pause, reload, shooting);
             stateMachines.Add(_weaponFsm);
         }
 

@@ -18,6 +18,9 @@ namespace App.Ai.FSMs.Ai
                 TryActivateState<CombatState>();
                 return;
             }
+
+            if (NetEntity.CanReload) 
+                NetEntity.TryReload();
         }
     }
 }

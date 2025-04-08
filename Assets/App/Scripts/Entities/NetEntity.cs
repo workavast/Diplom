@@ -25,10 +25,11 @@ namespace App.Entities
         public GameObject GameObject => gameObject;
         public EntityIdentifier Identifier { get; } = new();
         public abstract EntityType EntityType { get; }
-        public bool RequiredReload => NetWeapon.RequiredReload;
         public float MaxHealthPoints => health.MaxHealthPoints;
         public float NetHealthPoints => health.NetHealthPoints;
-        
+
+        public bool RequiredReload => NetWeapon.RequiredReload;
+        public bool CanReload => NetWeapon.CanReload;
         public int MaxAmmo => NetWeapon.MaxAmmo;
         public int CurrentAmmo => NetWeapon.CurrentAmmo;
         

@@ -1,40 +1,47 @@
+using System.Collections.Generic;
+using App.Ai.FSMs.Movement;
 using App.Entities;
+using Fusion.Addons.FSM;
 using UnityEngine;
 
 namespace App.Ai.FSMs.Ai
 {
     public class HoldPositionState : AiState
     {
-        private float _startWaitTime;
         private float _targetWaitTime;
+
+        private StateMachine<MovementState> _movementFsm;
 
         public HoldPositionState(NetAi netAi, NetEntity netEntity, AiModel aiModel, AiViewZone aiViewZone)
             : base(netAi, netEntity, aiModel, aiViewZone) { }
 
+        protected override void CollectChildStateMachines(List<IStateMachine> stateMachines)
+        {
+            var stay = new Stay(NetEntity, Config.StayMinDuration, Config.StayMaxDuration);
+            var randomMove = new RandomMove(NetEntity, Config.MoveMinDistance, Config.MoveMaxDistance, Config.MoveTolerance);
+            
+            _movementFsm = new StateMachine<MovementState>("HoldPosition-Movement", stay, randomMove);
+            stateMachines.Add(_movementFsm);
+        }
+
         protected override void OnEnterState()
         {
-            _startWaitTime = Runner.SimulationTime;
             _targetWaitTime = Random.Range(Config.HoldPositionMinDuration, Config.HoldPositionMaxDuration);
         }
 
         protected override void OnFixedUpdate()
         {
-            Stay();
-
             if (AiViewZone.IsSeeAnyPlayer())
             {
                 TryActivateState<CombatState>();
                 return;
             }
             
-            if (Runner.SimulationTime - _startWaitTime >= _targetWaitTime)
+            if (StateTime >= _targetWaitTime)
             {
                 TryActivateState<ChaseState>();
                 return;
             }
         }
-
-        private void Stay() 
-            => NetEntity.CalculateVelocity(0, 0, false);
     }
 }

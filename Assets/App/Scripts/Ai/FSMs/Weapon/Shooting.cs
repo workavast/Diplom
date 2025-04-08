@@ -28,7 +28,7 @@ namespace App.Ai.FSMs.Weapon
         {
             Entity.TryShoot();
             
-            if (Entity.CurrentAmmo <= 0)
+            if (Entity.RequiredReload)
             {
                 TryActivateState<Reload>();
                 return;
