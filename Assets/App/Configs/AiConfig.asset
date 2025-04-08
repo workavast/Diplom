@@ -16,13 +16,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   <ViewRadius>k__BackingField: 5
-  <PositionChangeIntervalMin>k__BackingField: 2
-  <PositionChangeIntervalMax>k__BackingField: 4
-  <PositionChangeMinDistance>k__BackingField: 1
-  <PositionChangeMaxDistance>k__BackingField: 3
-  <ChangePositionTolerance>k__BackingField: 0.05
+  <StayMinDuration>k__BackingField: 1
+  <StayMaxDuration>k__BackingField: 3
+  <WaitMinDuration>k__BackingField: 2
+  <WaitMaxDuration>k__BackingField: 4
+  <MoveMinDistance>k__BackingField: 1.5
+  <MoveMaxDistance>k__BackingField: 3
+  <MoveTolerance>k__BackingField: 0.05
   <AttackDistance>k__BackingField: 15
   <ChaseMinDuration>k__BackingField: 3
   <ChaseMaxDuration>k__BackingField: 5
-  <WaitMinDuration>k__BackingField: 2
-  <WaitMaxDuration>k__BackingField: 3
+  <HoldPositionMinDuration>k__BackingField: 5
+  <HoldPositionMaxDuration>k__BackingField: 5

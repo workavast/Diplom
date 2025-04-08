@@ -2,7 +2,7 @@ using App.Entities;
 using Fusion;
 using Fusion.Addons.FSM;
 
-namespace App.Ai.FSM
+namespace App.Ai.FSMs.Ai
 {
     public abstract class AiState : State<AiState>
     {

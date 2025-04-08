@@ -1,6 +1,6 @@
 using App.Entities;
 
-namespace App.Ai.FSM
+namespace App.Ai.FSMs.Ai
 {
     public class Stop : AiState
     {

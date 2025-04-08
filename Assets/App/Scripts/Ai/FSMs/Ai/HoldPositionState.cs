@@ -1,20 +1,20 @@
 using App.Entities;
 using UnityEngine;
 
-namespace App.Ai.FSM
+namespace App.Ai.FSMs.Ai
 {
-    public class WaitState : AiState
+    public class HoldPositionState : AiState
     {
         private float _startWaitTime;
         private float _targetWaitTime;
 
-        public WaitState(NetAi netAi, NetEntity netEntity, AiModel aiModel, AiViewZone aiViewZone)
+        public HoldPositionState(NetAi netAi, NetEntity netEntity, AiModel aiModel, AiViewZone aiViewZone)
             : base(netAi, netEntity, aiModel, aiViewZone) { }
 
         protected override void OnEnterState()
         {
             _startWaitTime = Runner.SimulationTime;
-            _targetWaitTime = Random.Range(Config.WaitMinDuration, Config.WaitMaxDuration);
+            _targetWaitTime = Random.Range(Config.HoldPositionMinDuration, Config.HoldPositionMaxDuration);
         }
 
         protected override void OnFixedUpdate()

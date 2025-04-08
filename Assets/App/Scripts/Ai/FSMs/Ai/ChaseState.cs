@@ -2,7 +2,7 @@ using App.Entities;
 using Avastrad.Vector2Extension;
 using UnityEngine;
 
-namespace App.Ai.FSM
+namespace App.Ai.FSMs.Ai
 {
     public class ChaseState : AiState
     {

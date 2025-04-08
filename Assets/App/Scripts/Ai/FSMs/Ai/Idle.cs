@@ -1,7 +1,7 @@
 using App.Entities;
 using Avastrad.Vector2Extension;
 
-namespace App.Ai.FSM
+namespace App.Ai.FSMs.Ai
 {
     public class Idle : AiState
     {
