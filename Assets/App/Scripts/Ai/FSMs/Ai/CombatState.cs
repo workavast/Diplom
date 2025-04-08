@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace App.Ai.FSMs.Ai
 {
-        public class CombatState : AiState
+    public class CombatState : AiState
     {
         private float _lostTargetSimulationTime;
         private float _lostTargetTime;
@@ -22,7 +22,8 @@ namespace App.Ai.FSMs.Ai
         protected override void CollectChildStateMachines(List<IStateMachine> stateMachines)
         {
             var stay = new Stay(NetEntity, Config.StayMinDuration, Config.StayMaxDuration);
-            var randomMove = new RandomMove(NetEntity, Config.MoveMinDistance, Config.MoveMaxDistance, Config.MoveTolerance);
+            var randomMove = new RandomMove(NetEntity, Config.MoveMinDistance, Config.MoveMaxDistance,
+                Config.MoveTolerance);
             _movementFsm = new StateMachine<MovementState>("Ai-Movement", stay, randomMove);
             stateMachines.Add(_movementFsm);
 
@@ -75,7 +76,7 @@ namespace App.Ai.FSMs.Ai
 
         private bool LostTarget()
         {
-            if(!AiViewZone.EntityIsVisible(Target))
+            if (!AiViewZone.EntityIsVisible(Target))
             {
                 var newTarget = AiViewZone.GetNearestVisiblePlayer();
                 if (newTarget == null)
