@@ -69,10 +69,11 @@ namespace App.Ai.FSMs.Ai
                 _lostTargetSimulationTime = 0;
                 _lostTargetTime = 0;
                 
-                AiModel.LastTargetPosition = Target.Transform.position;
+                AiModel.LastVisibleTargetPosition = Target.Transform.position;
             }
 
-            LookAt(AiModel.LastTargetPosition);
+            AiModel.LastHashedTargetPosition = Target.Transform.position;
+            LookAt(AiModel.LastVisibleTargetPosition);
         }
 
         private bool LostTarget()

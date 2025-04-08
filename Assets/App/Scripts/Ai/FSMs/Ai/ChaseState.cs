@@ -31,7 +31,7 @@ namespace App.Ai.FSMs.Ai
                 return;
             }
 
-            MoveToTheTarget();
+            MoveToThePoint(AiModel.LastHashedTargetPosition);
 
             if (AiViewZone.EntityIsVisible(Target))
             {
@@ -48,9 +48,9 @@ namespace App.Ai.FSMs.Ai
             }
         }
 
-        private void MoveToTheTarget()
+        private void MoveToThePoint(Vector3 point)
         {
-            var direction = (Target.Transform.position - NetEntity.transform.position).normalized;
+            var direction = (point - NetEntity.transform.position).normalized;
             NetEntity.CalculateVelocity(direction.x, direction.z, true);
             NetEntity.RotateByLookDirection(direction.XZ());
         }
