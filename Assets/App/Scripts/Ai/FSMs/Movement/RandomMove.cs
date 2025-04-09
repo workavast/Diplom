@@ -11,7 +11,7 @@ namespace App.Ai.FSMs.Movement
         private readonly float _maxDistance;
         private readonly float _tolerance;
         
-        private Vector3 _targetPosition;
+        private int _currentCorner;
         
         public RandomMove(NetEntity entity, float minDistance, float maxDistance, float tolerance) 
             : base(entity)
@@ -25,41 +25,24 @@ namespace App.Ai.FSMs.Movement
         {
             var moveDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
             var moveDistance = Random.Range(_minDistance, _maxDistance);
-            _targetPosition = Entity.transform.position + moveDirection * moveDistance;
+            var targetPosition = Entity.transform.position + moveDirection * moveDistance;
+            
+            Entity.GetPath(targetPosition, _path);
+            _currentCorner = 0;
+        }
+        
+        protected override void OnEnterStateRender()
+        {
+            Entity.DrawPath(_path);
         }
 
         protected override void OnFixedUpdate()
         {
-            if (ArrivePosition(_targetPosition, _tolerance))
+            if (Entity.MoveToPoint(_path, _tolerance, ref _currentCorner))
             {
                 TryActivateState<Stay>();
                 return;
             }
-
-            MoveToTargetPosition();
-        }
-
-        private void MoveToTargetPosition()
-        {
-            if (NavMesh.CalculatePath(Entity.transform.position, _targetPosition, NavMesh.AllAreas, _path))
-            {
-                if (_path.corners.Length > 1)
-                {
-                    // Берем следующую точку пути
-                    var nextPoint = _path.corners[1];
-                
-                    // Направление к следующей точке
-                    var direction = (nextPoint - Entity.transform.position).normalized;
-
-                    // Отображение пути в редакторе
-                    Debug.DrawLine(Entity.transform.position, nextPoint, Color.red);
-
-                    Entity.CalculateVelocity(direction.x, direction.z, false);
-                }
-            }
-            
-            // var direction = (_targetPosition - Entity.transform.position).normalized;
-            // Entity.CalculateVelocity(direction.x, direction.z, false);
         }
     }
 }
