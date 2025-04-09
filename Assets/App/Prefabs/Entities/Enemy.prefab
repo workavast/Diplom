@@ -226,7 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <HitLayers>k__BackingField:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 115
   _NetEquippedWeapon: 0
   _NetMagazine: 0
   _NetFireCount: 0
