@@ -1,14 +1,16 @@
 using App.Entities;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace App.Ai.FSMs.Movement
 {
     public class RandomMove : MovementState
     {
+        private readonly NavMeshPath _path = new();
         private readonly float _minDistance;
         private readonly float _maxDistance;
         private readonly float _tolerance;
-
+        
         private Vector3 _targetPosition;
         
         public RandomMove(NetEntity entity, float minDistance, float maxDistance, float tolerance) 
@@ -36,11 +38,28 @@ namespace App.Ai.FSMs.Movement
 
             MoveToTargetPosition();
         }
-        
+
         private void MoveToTargetPosition()
         {
-            var direction = (_targetPosition - Entity.transform.position).normalized;
-            Entity.CalculateVelocity(direction.x, direction.z, false);
+            if (NavMesh.CalculatePath(Entity.transform.position, _targetPosition, NavMesh.AllAreas, _path))
+            {
+                if (_path.corners.Length > 1)
+                {
+                    // Берем следующую точку пути
+                    var nextPoint = _path.corners[1];
+                
+                    // Направление к следующей точке
+                    var direction = (nextPoint - Entity.transform.position).normalized;
+
+                    // Отображение пути в редакторе
+                    Debug.DrawLine(Entity.transform.position, nextPoint, Color.red);
+
+                    Entity.CalculateVelocity(direction.x, direction.z, false);
+                }
+            }
+            
+            // var direction = (_targetPosition - Entity.transform.position).normalized;
+            // Entity.CalculateVelocity(direction.x, direction.z, false);
         }
     }
 }
