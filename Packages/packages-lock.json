@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.dcfa_pixels.debugx": {
+      "version": "https://github.com/DCFApixels/Unity-DebugX.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "a7b06f5af778b17f5781ad6669cdf149a12f0d3f"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
